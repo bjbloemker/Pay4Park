@@ -13,7 +13,7 @@ public class HelloWorldResource {
         if(name != null)
             return "Hello " + name + "!";
         else
-            return "Hello not World!";
+            return "Hello not World! ";
 
     }
 }
