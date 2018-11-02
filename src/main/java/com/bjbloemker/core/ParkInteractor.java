@@ -21,5 +21,13 @@ package com.bjbloemker.core;
 
 public class ParkInteractor {
 
+    String PID;
+    LocationInfoInteractor locationInfo;
+    ChargeInfoInteractor paymentInfo;
 
+    public ParkInteractor(String PID, LocationInfoInteractor locationInfo, ChargeInfoInteractor paymentInfo) {
+        this.PID = PID;
+        this.locationInfo = locationInfo;
+        this.paymentInfo = paymentInfo;
+    }
 }

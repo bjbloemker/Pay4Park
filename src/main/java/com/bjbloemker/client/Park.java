@@ -12,11 +12,6 @@ public class Park {
         visitorCount = 0;
     }
 
-
-
-
-
-
     public void setAdmissionFee(double admissionFee){
         if(validAdmissonFee(admissionFee)){
             this.admissionFee = admissionFee;
