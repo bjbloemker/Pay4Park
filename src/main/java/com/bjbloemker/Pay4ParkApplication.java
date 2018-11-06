@@ -1,6 +1,6 @@
 package com.bjbloemker;
 
-import com.bjbloemker.resources.HelloWorldResource;
+import com.bjbloemker.resources.ParkResource;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -24,7 +24,7 @@ public class Pay4ParkApplication extends Application<Pay4ParkConfiguration> {
     @Override
     public void run(final Pay4ParkConfiguration configuration,
                     final Environment environment) {
-        environment.jersey().register(new HelloWorldResource());
+        environment.jersey().register(new ParkResource());
 
     }
 

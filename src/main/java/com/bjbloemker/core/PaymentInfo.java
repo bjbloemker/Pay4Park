@@ -1,4 +1,7 @@
 package com.bjbloemker.core;
+
+import com.bjbloemker.api.PaymentInfoObj;
+
 /*
 "payment_info": {
           "card": "4388567890987654",
@@ -7,40 +10,31 @@ package com.bjbloemker.core;
           "zip": 60616
         }
  */
-public class PaymentInfo {
-    private long card;
-    private String nameOnCard;
-    private String expirationDate;
-    private int zip;
+public class PaymentInfo extends PaymentInfoObj{
+
 
     public PaymentInfo(long card, String nameOnCard, String expirationDate, int zip) {
-        this.card = card;
-        this.nameOnCard = nameOnCard;
-        this.expirationDate = expirationDate;
-        this.zip = zip;
+        super(card, nameOnCard, expirationDate, zip);
     }
 
     public PaymentInfo() {
-        this.card = -1;
-        this.nameOnCard = null;
-        this.expirationDate = null;
-        this.zip = -1;
+        super(-1,null,null, -1);
     }
 
     public void setCard(long card) {
-        this.card = card;
+        super.card = card;
     }
 
     public void setNameOnCard(String nameOnCard) {
-        this.nameOnCard = nameOnCard;
+        super.nameOnCard = nameOnCard;
     }
 
     public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
+        super.expirationDate = expirationDate;
     }
 
     public void setZip(int zip) {
-        this.zip = zip;
+        super.zip = zip;
     }
 
     @Override

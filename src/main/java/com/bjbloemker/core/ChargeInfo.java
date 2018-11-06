@@ -5,35 +5,30 @@ car (required): first element of the array is for in-state license plates and th
 rv (required): first element of the array is for in-state license plates and the second is for out of state
  */
 
+import com.bjbloemker.api.ChargeInfoObj;
+
 import java.util.Arrays;
 
-public class ChargeInfo {
-    double motorcyclePrice[];
-    double carPrice[];
-    double rvPrice[];
+public class ChargeInfo extends ChargeInfoObj{
 
     public ChargeInfo(double motorcyclePrice[], double carPrice[], double rvPrice[]) {
-        this.motorcyclePrice = motorcyclePrice;
-        this.carPrice = carPrice;
-        this.rvPrice = rvPrice;
+        super(motorcyclePrice, carPrice, rvPrice);
     }
 
     public ChargeInfo() {
-        this.motorcyclePrice = null;
-        this.carPrice = null;
-        this.rvPrice = null;
+        super(null, null, null);
     }
 
     public void setMotorcyclePrice(double[] motorcyclePrice) {
-        this.motorcyclePrice = motorcyclePrice;
+        super.motorcyclePrice = motorcyclePrice;
     }
 
     public void setCarPrice(double[] carPrice) {
-        this.carPrice = carPrice;
+        super.carPrice = carPrice;
     }
 
     public void setRvPrice(double[] rvPrice) {
-        this.rvPrice = rvPrice;
+        super.rvPrice = rvPrice;
     }
 
     @Override

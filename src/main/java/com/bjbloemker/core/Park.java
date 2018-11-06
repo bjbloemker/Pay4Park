@@ -1,5 +1,10 @@
 package com.bjbloemker.core;
 
+import com.bjbloemker.api.ChargeInfoObj;
+import com.bjbloemker.api.LocationInfoObj;
+import com.bjbloemker.api.ParkObj;
+
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -21,51 +26,24 @@ import java.util.UUID;
  }
  */
 
-public class Park {
+public class Park extends ParkObj{
 
-    private UUID PID;
-    private LocationInfo locationInfo;
-    private ChargeInfo paymentInfo;
-
-    public Park(UUID PID, LocationInfo location_info, ChargeInfo payment_info) {
-        this.PID = PID;
-        this.locationInfo = location_info;
-        this.paymentInfo = payment_info;
+    public Park(UUID PID, LocationInfoObj location_info, ChargeInfoObj payment_info) {
+        super(PID, location_info, payment_info);
     }
-
-    public Park(LocationInfo location_info, ChargeInfo payment_info) {
-        this.PID = UUID.randomUUID();
-        this.locationInfo = location_info;
-        this.paymentInfo = payment_info;
+    public Park(LocationInfoObj location_info, ChargeInfoObj payment_info) {
+        super(location_info, payment_info);
     }
     public Park() {
-        this.PID = UUID.randomUUID();
-        this.locationInfo = null;
-        this.paymentInfo = null;
+        super(UUID.randomUUID(), null, null);
     }
 
-    public void setLocationInfo(LocationInfo locationInfo) {
-        this.locationInfo = locationInfo;
+    public void setLocationInfo(LocationInfoObj locationInfo) {
+        super.locationInfo = locationInfo;
     }
 
-    public void setPaymentInfo(ChargeInfo paymentInfo) {
-        this.paymentInfo = paymentInfo;
-    }
-
-    public UUID getPID() {
-        return PID;
-    }
-
-    public void setPID(UUID PID) {
-        this.PID = PID;
-    }
-
-    public LocationInfo getLocationInfo() {
-        return locationInfo;
-    }
-
-    public ChargeInfo getPaymentInfo() {
-        return paymentInfo;
+    public String getPIDAsString(){
+        return PID.toString();
     }
 
     @Override
