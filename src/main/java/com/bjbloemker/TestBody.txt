@@ -13,3 +13,14 @@
    	    "rv": [10,13]
     }
 }
+
+
+
+---------NOTE with PARK
+
+
+{
+    "vid": 411,
+    "title": "No campground",
+    "text": "This place is beautiful, too bad that there is no campground here."
+}

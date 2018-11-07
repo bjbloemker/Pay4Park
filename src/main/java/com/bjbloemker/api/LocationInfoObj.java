@@ -19,17 +19,59 @@ public abstract class LocationInfoObj {
         this.lng = lng;
     }
 
-    public abstract void setName(String name);
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public abstract void setRegion(String region);
+    public void setRegion(String region) {
+        this.region = region;
+    }//TODO: CHECK USE
 
-    public abstract void setAddress(String address);
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-    public abstract void setPhone(String phone);
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-    public abstract void setWebsite(String website);
+    public void setWebsite(String website) {
+        this.website = website;
+    }
 
-    public abstract void setLat(float lat);
+    public void setLat(float lat) {
+        this.lat = lat;
+    }
 
-    public abstract void setLng(float lng);
+    public void setLng(float lng) {
+        this.lng = lng;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public float getLat() {
+        return lat;
+    }
+
+    public float getLng() {
+        return lng;
+    }
 }

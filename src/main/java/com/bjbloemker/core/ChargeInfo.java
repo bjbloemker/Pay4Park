@@ -19,17 +19,7 @@ public class ChargeInfo extends ChargeInfoObj{
         super(null, null, null);
     }
 
-    public void setMotorcyclePrice(double[] motorcyclePrice) {
-        super.motorcyclePrice = motorcyclePrice;
-    }
 
-    public void setCarPrice(double[] carPrice) {
-        super.carPrice = carPrice;
-    }
-
-    public void setRvPrice(double[] rvPrice) {
-        super.rvPrice = rvPrice;
-    }
 
     @Override
     public String toString() {

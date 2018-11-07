@@ -23,8 +23,18 @@ public abstract class ParkObj {
         this.paymentInfo = payment_info;
     }
 
-    public abstract void setLocationInfo(LocationInfoObj locationInfo);
+    public void setLocationInfo(LocationInfoObj locationInfo) {
+        this.locationInfo = locationInfo;
+    }
 
-    public abstract String getPIDAsString();
+    public LocationInfoObj getLocationInfo() {
+        return this.locationInfo;
+    }
+
+    public String getPIDAsString(){
+        return PID.toString();
+    }
+
+
 
 }

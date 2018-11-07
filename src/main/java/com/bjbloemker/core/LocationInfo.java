@@ -23,35 +23,6 @@ public class LocationInfo extends LocationInfoObj {
         super(null, null, null, null, null, -1,-1);
     }
 
-
-    public void setName(String name) {
-        super.name = name;
-    }
-
-    public void setRegion(String region) {
-        super.region = region;
-    }
-
-    public void setAddress(String address) {
-        super.address = address;
-    }
-
-    public void setPhone(String phone) {
-        super.phone = phone;
-    }
-
-    public void setWebsite(String website) {
-        super.website = website;
-    }
-
-    public void setLat(float lat) {
-        super.lat = lat;
-    }
-
-    public void setLng(float lng) {
-        super.lng = lng;
-    }
-
     @Override
     public String toString() {
         return "LocationInfo{" +

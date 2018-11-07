@@ -38,14 +38,6 @@ public class Park extends ParkObj{
         super(UUID.randomUUID(), null, null);
     }
 
-    public void setLocationInfo(LocationInfoObj locationInfo) {
-        super.locationInfo = locationInfo;
-    }
-
-    public String getPIDAsString(){
-        return PID.toString();
-    }
-
     @Override
     public String toString() {
         return "Park{" +

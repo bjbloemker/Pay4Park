@@ -1,15 +1,22 @@
 package com.bjbloemker.core;
 
-public class Note {
-    String NID;
-    String date;
-    String title;
-    String content;
+import com.bjbloemker.api.NoteObj;
 
-    public Note(String NID, String date, String title, String content) {
-        this.NID = NID;
-        this.date = date;
-        this.title = title;
-        this.content = content;
+public class Note extends NoteObj{
+
+    public Note(String title, String content, String PID, String VID) {
+        super(title, content, PID, VID);
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "NID=" + NID +
+                ", date='" + date + '\'' +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", PID='" + PID + '\'' +
+                ", VID='" + VID + '\'' +
+                '}';
     }
 }

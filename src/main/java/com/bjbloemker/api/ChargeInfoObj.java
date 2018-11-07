@@ -17,9 +17,15 @@ public abstract class ChargeInfoObj {
         this.rvPrice = null;
     }
 
-    public abstract void setMotorcyclePrice(double[] motorcyclePrice);
+    public void setMotorcyclePrice(double[] motorcyclePrice) {
+        this.motorcyclePrice = motorcyclePrice;
+    }
 
-    public abstract void setCarPrice(double[] carPrice);
+    public void setCarPrice(double[] carPrice) {
+        this.carPrice = carPrice;
+    }
 
-    public abstract void setRvPrice(double[] rvPrice);
+    public void setRvPrice(double[] rvPrice) {
+        this.rvPrice = rvPrice;
+    }
 }

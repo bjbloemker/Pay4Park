@@ -20,11 +20,19 @@ public abstract class PaymentInfoObj {
         this.zip = -1;
     }
 
-    public abstract void setCard(long card);
+    public void setCard(long card) {
+        this.card = card;
+    }
 
-    public abstract void setNameOnCard(String nameOnCard);
+    public void setNameOnCard(String nameOnCard) {
+        this.nameOnCard = nameOnCard;
+    }
 
-    public abstract void setExpirationDate(String expirationDate);
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
+    }
 
-    public abstract void setZip(int zip);
+    public void setZip(int zip) {
+        this.zip = zip;
+    }
 }

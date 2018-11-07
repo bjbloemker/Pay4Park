@@ -21,21 +21,7 @@ public class PaymentInfo extends PaymentInfoObj{
         super(-1,null,null, -1);
     }
 
-    public void setCard(long card) {
-        super.card = card;
-    }
 
-    public void setNameOnCard(String nameOnCard) {
-        super.nameOnCard = nameOnCard;
-    }
-
-    public void setExpirationDate(String expirationDate) {
-        super.expirationDate = expirationDate;
-    }
-
-    public void setZip(int zip) {
-        super.zip = zip;
-    }
 
     @Override
     public String toString() {
