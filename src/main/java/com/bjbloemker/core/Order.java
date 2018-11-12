@@ -1,13 +1,21 @@
 package com.bjbloemker.core;
 
-public class Order {
-    String oid;
-    Vehicle vehicle;
-    Visitor visitor;
+import com.bjbloemker.api.OrderObj;
 
-    public Order(String oid, Vehicle vehicle, Visitor visitor) {
-        this.oid = oid;
-        this.vehicle = vehicle;
-        this.visitor = visitor;
+public class Order extends OrderObj{
+
+    public Order(String pid, Vehicle vehicle, Visitor visitor){
+        super(pid, vehicle, visitor);
     }
+
+    @Override
+    public String toString() {
+        return "OrderObj{" +
+                "oid='" + oid + '\'' +
+                ", vehicle=" + vehicle +
+                ", visitor=" + visitor +
+                '}';
+    }
+
+
 }

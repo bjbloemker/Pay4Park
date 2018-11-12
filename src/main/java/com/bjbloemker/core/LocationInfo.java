@@ -11,28 +11,17 @@ package com.bjbloemker.core;
  },
  */
 
+import com.bjbloemker.api.GeoCordsObj;
 import com.bjbloemker.api.LocationInfoObj;
 
 public class LocationInfo extends LocationInfoObj {
 
-    public LocationInfo(String name, String region, String address, String phone, String website, float lat, float lng) {
-        super(name, region, address, phone, website, lat, lng);
+    public LocationInfo(String name, String region, String address, String phone, String website, GeoCordsObj geo) {
+        super(name, region, address, phone, website, geo);
     }
 
     public LocationInfo() {
-        super(null, null, null, null, null, -1,-1);
+        super(null, null, null, null, null, null);
     }
 
-    @Override
-    public String toString() {
-        return "LocationInfo{" +
-                "name='" + name + '\'' +
-                ", region='" + region + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", website='" + website + '\'' +
-                ", lat=" + lat +
-                ", lng=" + lng +
-                '}';
-    }
 }

@@ -5,25 +5,26 @@ import java.util.Date;
 import java.util.UUID;
 
 public abstract class NoteObj {
-    protected UUID NID;
+    protected UUID nid;
+    protected String pid;
+    protected String vid;
     protected String date;
     protected String title;
-    protected String content;
-    protected String PID;
-    protected String VID;
+    protected String text;
 
 
-    public NoteObj(String title, String content, String PID, String VID) {
-        this.NID = UUID.randomUUID();
+
+    public NoteObj(String title, String text, String pid, String vid) {
+        this.nid = UUID.randomUUID();
         this.date = new SimpleDateFormat("yyyy.MM.dd").format(new Date());
         this.title = title;
-        this.content = content;
-        this.PID = PID;
-        this.VID = VID;
+        this.text = text;
+        this.pid = pid;
+        this.vid = vid;
     }
 
     public String getNIDAsString() {
-        return NID.toString();
+        return nid.toString();
     }
 
     public String getDate() {
@@ -38,15 +39,15 @@ public abstract class NoteObj {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
+    public String getText() {
+        return text;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getPIDAsString() {
-        return PID;
+        return pid;
     }
 }

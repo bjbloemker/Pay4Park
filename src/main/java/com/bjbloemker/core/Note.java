@@ -11,12 +11,12 @@ public class Note extends NoteObj{
     @Override
     public String toString() {
         return "Note{" +
-                "NID=" + NID +
+                "nid=" + nid +
                 ", date='" + date + '\'' +
                 ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", PID='" + PID + '\'' +
-                ", VID='" + VID + '\'' +
+                ", text='" + text + '\'' +
+                ", pid='" + pid + '\'' +
+                ", vid='" + vid + '\'' +
                 '}';
     }
 }

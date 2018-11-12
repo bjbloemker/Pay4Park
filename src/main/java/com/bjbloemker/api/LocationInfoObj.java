@@ -6,17 +6,16 @@ public abstract class LocationInfoObj {
     protected String region;
     protected String address;
     protected String phone;
-    protected String website;
-    protected float lat, lng;
+    protected String web;
+    protected GeoCordsObj geo;
 
-    public LocationInfoObj(String name, String region, String address, String phone, String website, float lat, float lng) {
+    public LocationInfoObj(String name, String region, String address, String phone, String web, GeoCordsObj geo) {
         this.name = name;
         this.region = region;
         this.address = address;
         this.phone = phone;
-        this.website = website;
-        this.lat = lat;
-        this.lng = lng;
+        this.web = web;
+        this.geo = geo;
     }
 
     public void setName(String name) {
@@ -35,16 +34,12 @@ public abstract class LocationInfoObj {
         this.phone = phone;
     }
 
-    public void setWebsite(String website) {
-        this.website = website;
+    public void setWeb(String web) {
+        this.web = web;
     }
 
-    public void setLat(float lat) {
-        this.lat = lat;
-    }
-
-    public void setLng(float lng) {
-        this.lng = lng;
+    public void setGeo(GeoCordsObj geo) {
+        this.geo = geo;
     }
 
     public String getName() {
@@ -63,15 +58,11 @@ public abstract class LocationInfoObj {
         return phone;
     }
 
-    public String getWebsite() {
-        return website;
+    public String getWeb() {
+        return web;
     }
 
-    public float getLat() {
-        return lat;
-    }
-
-    public float getLng() {
-        return lng;
+    public GeoCordsObj getGeo() {
+        return geo;
     }
 }

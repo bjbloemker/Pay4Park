@@ -13,15 +13,9 @@ import com.bjbloemker.api.PaymentInfoObj;
 public class PaymentInfo extends PaymentInfoObj{
 
 
-    public PaymentInfo(long card, String nameOnCard, String expirationDate, int zip) {
+    public PaymentInfo(String card, String nameOnCard, String expirationDate, int zip) {
         super(card, nameOnCard, expirationDate, zip);
     }
-
-    public PaymentInfo() {
-        super(-1,null,null, -1);
-    }
-
-
 
     @Override
     public String toString() {
