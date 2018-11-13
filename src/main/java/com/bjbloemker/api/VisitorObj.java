@@ -12,9 +12,9 @@ public abstract class VisitorObj {
     protected String name;
     protected String email;
     @SerializedName("payment_info")
-    protected PaymentInfo paymentInfo;
+    protected PaymentInfoObj paymentInfo;
 
-    public VisitorObj(String name, String email, PaymentInfo paymentInfo) {
+    public VisitorObj(String name, String email, PaymentInfoObj paymentInfo) {
         this.vid = UUID.randomUUID();
         this.name = name;
         this.email = email;
@@ -33,7 +33,7 @@ public abstract class VisitorObj {
         return email;
     }
 
-    public PaymentInfo getPaymentInfo() {
+    public PaymentInfoObj getPaymentInfo() {
         return paymentInfo;
     }
 }

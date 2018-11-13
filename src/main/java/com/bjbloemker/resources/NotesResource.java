@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
@@ -89,5 +90,7 @@ public class NotesResource {
         return Response.status(Response.Status.OK).entity(gson.toJson((Note) note)).build();
     }
 
+
+    //TODO: UPDATE NOTE
 
 }

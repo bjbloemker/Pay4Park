@@ -1,5 +1,6 @@
 package com.bjbloemker.api;
 
+import com.bjbloemker.core.PaymentProcessing;
 import com.bjbloemker.core.Vehicle;
 import com.bjbloemker.core.Visitor;
 
@@ -14,14 +15,16 @@ public abstract class OrderObj {
     protected String date;
     protected VehicleObj vehicle;
     protected VisitorObj visitor;
+    protected PaymentProcessingObj paymentProcessing;
 
 
-    public OrderObj(String pid, Vehicle vehicle, Visitor visitor) {
+    public OrderObj(String pid, VehicleObj vehicle, VisitorObj visitor) {
         this.oid = pid;
         this.date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         this.pid = pid;
         this.vehicle = vehicle;
         this.visitor = visitor;
+        this.paymentProcessing = new PaymentProcessing("123-4567-89");
     }
 
     public String getOIDAsString(){
@@ -42,5 +45,9 @@ public abstract class OrderObj {
 
     public VisitorObj getVisitor() {
         return visitor;
+    }
+
+    public PaymentProcessingObj getPaymentProcessing() {
+        return paymentProcessing;
     }
 }

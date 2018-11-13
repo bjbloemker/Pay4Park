@@ -49,8 +49,6 @@ public class VisitorsResource {
         return Response.status(Response.Status.OK).entity(gson.toJson(output)).build();
     }
 
-
-
     @GET
     public Response searchVisitors(@QueryParam("key") String key) {
 
@@ -61,22 +59,16 @@ public class VisitorsResource {
         }
 
         key = key.toUpperCase();
-        ArrayList<OrderObj> results = new ArrayList<>();
+        ArrayList<VisitorObj> results = new ArrayList<>();
 
-        for(int i =0; i< MemoryManager.orders.size(); i++){
-            OrderObj order = (Order) MemoryManager.orders.get(i);
+        for(int i =0; i < MemoryManager.visitors.size(); i++){
+            VisitorObj visitor = MemoryManager.visitors.get(i);
 
-            String OIDAsString = order.getOIDAsString().toUpperCase();
-            String PIDAsString = order.getPIDAsString().toUpperCase();
 
-            VehicleObj vehicleOfOrder = order.getVehicle();
-            String state = vehicleOfOrder.getState().toUpperCase();
-            String plate = vehicleOfOrder.getPlate().toUpperCase();
-            String type = vehicleOfOrder.getType().toUpperCase();
-
-            VisitorObj visitor = order.getVisitor();
             String VIDAsString = visitor.getVIDAsString().toUpperCase();
             String visitorName = visitor.getName().toUpperCase();
+            String visitorEmail = visitor.getEmail().toUpperCase();
+
 
             PaymentInfoObj paymentInfoOfVisitorOfOrder = visitor.getPaymentInfo();
             String card = paymentInfoOfVisitorOfOrder.getCard().toUpperCase();
@@ -84,24 +76,18 @@ public class VisitorsResource {
             String expirationDate = paymentInfoOfVisitorOfOrder.getExpirationDate().toUpperCase();
             String zipCode = (paymentInfoOfVisitorOfOrder.getZip() + "").toUpperCase();
 
-            if(OIDAsString.contains(key) ||
-                    PIDAsString.contains(key) ||
-                    state.contains(key) ||
-                    plate.contains(key) ||
-                    type.contains(key) ||
-                    VIDAsString.contains(key) ||
+            if(VIDAsString.contains(key) ||
                     visitorName.contains(key) ||
+                    visitorEmail.contains(key) ||
                     card.contains(key) ||
                     nameOnCard.contains(key) ||
                     expirationDate.contains(key) ||
                     zipCode.contains(key))
-                results.add(order);
+                results.add(visitor);
         }
 
-        JsonElement output = GeneralResources.simplifyOrders(results);
+        JsonElement output = GeneralResources.simplifyVisitors(results);
         String outputAsString = gson.toJson(output);
         return Response.status(Response.Status.OK).entity(outputAsString).build();
     }
-
-
 }

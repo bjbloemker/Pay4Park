@@ -65,7 +65,15 @@ public class GeneralResources {
         return null;
     }
 
-
+    public static VisitorObj findVisitorByEmail(String email){
+        for(int i = 0; i < MemoryManager.visitors.size(); i++){
+            VisitorObj visitor = MemoryManager.visitors.get(i);
+            if(visitor.getEmail().equals(email)){
+                return visitor;
+            }
+        }
+        return null;
+    }
 
 
     public static JsonElement parksWithoutProperty(List<ParkObj> parks,String property){
@@ -197,6 +205,26 @@ public class GeneralResources {
         return output;
     }
 
+    public static JsonElement simplifyVisitors(List<VisitorObj> visitors){
+        JsonArray output = new JsonArray();
+
+        for(int i =0; i < visitors.size(); i++){
+            VisitorObj currentVisitor = visitors.get(i);
+            JsonObject outputVisitorAsJson = new JsonObject();
+
+            String vid = currentVisitor.getVIDAsString();
+            String name = currentVisitor.getName();
+            String email = currentVisitor.getEmail();
+
+            outputVisitorAsJson.addProperty("vid", vid);
+            outputVisitorAsJson.addProperty("name", name);
+            outputVisitorAsJson.addProperty("email", email);
+
+            output.add(outputVisitorAsJson);
+        }
+        return output;
+    }
+
 
 
     public static JsonElement visitorsWithoutProperty(List<VisitorObj> visitors, String property){
@@ -215,7 +243,7 @@ public class GeneralResources {
 
 
 
-    private static double calculateCost(VehicleObj vehicle, ParkObj park){
+    public static double calculateCost(VehicleObj vehicle, ParkObj park){
         String vehicleState = vehicle.getState();
         String vehicleType = vehicle.getType();
         String parkAddr = park.getLocationInfo().getAddress();

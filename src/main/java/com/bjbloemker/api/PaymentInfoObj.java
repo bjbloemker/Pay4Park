@@ -1,8 +1,12 @@
 package com.bjbloemker.api;
 
+import com.google.gson.annotations.SerializedName;
+
 public abstract class PaymentInfoObj {
     protected String card;
+    @SerializedName("name_on_card")
     protected String nameOnCard;
+    @SerializedName("expiration_date")
     protected String expirationDate;
     protected int zip;
 

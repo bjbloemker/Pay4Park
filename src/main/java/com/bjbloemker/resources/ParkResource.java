@@ -139,8 +139,6 @@ public class ParkResource {
         String title = jsonObject.get("title").getAsString();
         String content = jsonObject.get("text").getAsString();
 
-        //if vid is not associated with order
-        ///get all orders from vid
         ArrayList<OrderObj> orders = GeneralResources.getAllOrdersFromVisitor(vid);
 
         boolean beenToPark = false;
@@ -169,6 +167,11 @@ public class ParkResource {
     @Path("/{pid}/notes")
     public Response notesByPark(@PathParam("pid") String pid){
         JsonArray output = new JsonArray();
+        JsonObject outputObject = new JsonObject();
+
+        outputObject.addProperty("pid", pid);
+
+        JsonArray notesJson = new JsonArray();
 
         for(int i = 0; i < MemoryManager.notes.size(); i++){
             NoteObj note = MemoryManager.notes.get(i);
@@ -182,10 +185,13 @@ public class ParkResource {
                 simplifiedNote.addProperty("nid", nid);
                 simplifiedNote.addProperty("date", date);
                 simplifiedNote.addProperty("title", title);
-                output.add(simplifiedNote);
+                notesJson.add(simplifiedNote);
             }
         }
 
+        outputObject.add("notes", notesJson);
+
+        output.add(outputObject);
 
         return Response.status(Response.Status.OK).entity(gson.toJson(output)).build();
     }

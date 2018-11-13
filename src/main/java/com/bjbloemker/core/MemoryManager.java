@@ -18,16 +18,19 @@ public class MemoryManager {
 
 
 
-    public static void requestAddToVisitor(VisitorObj visitor){
+    public static VisitorObj requestAddToVisitor(VisitorObj visitor){
         boolean add = true;
 
-        for(VisitorObj v : visitors){
+        for(VisitorObj v : visitors)
             if(v.getEmail().equals(visitor.getEmail()))
                 add = false;
-        }
 
-        if(add)
+        if(add){
             MemoryManager.visitors.add(visitor);
+            return visitor;
+        }
+        return null;//null if visitor already exist
+
     }
 
 }
