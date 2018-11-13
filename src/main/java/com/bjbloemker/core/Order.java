@@ -10,12 +10,12 @@ public class Order extends OrderObj{
 
     @Override
     public String toString() {
-        return "OrderObj{" +
-                "oid='" + oid + '\'' +
+        return "Order{" +
+                "oid=" + oid +
+                ", pid='" + pid + '\'' +
+                ", date='" + date + '\'' +
                 ", vehicle=" + vehicle +
                 ", visitor=" + visitor +
                 '}';
     }
-
-
 }

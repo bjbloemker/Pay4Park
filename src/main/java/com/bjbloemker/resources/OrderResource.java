@@ -3,6 +3,7 @@ package com.bjbloemker.resources;
 import com.bjbloemker.api.*;
 import com.bjbloemker.core.*;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import javax.ws.rs.*;
@@ -23,7 +24,6 @@ public class OrderResource {
         OrderObj order = GeneralResources.findOrderById(id);
         if(order == null)
             return Response.status(Response.Status.NOT_FOUND).build();
-
         return Response.status(Response.Status.OK).entity(gson.toJson((Order)order)).build();
     }
 
@@ -42,17 +42,22 @@ public class OrderResource {
 
         OrderObj order = new Order(pid, (Vehicle) vehicle, (Visitor) visitor);
         MemoryManager.orders.add(order);
+        MemoryManager.requestAddToVisitor(visitor);
 
-
-
-        return Response.status(Response.Status.OK).entity(gson.toJson(order.getOIDAsString())).build();
+        JsonObject output = new JsonObject();
+        output.addProperty("oid", order.getPIDAsString());
+        String outputAsString = gson.toJson(output);
+        return Response.status(Response.Status.CREATED).entity(outputAsString).header("Location", "parkpay/orders/" + order.getOIDAsString()).build();
     }
 
     @GET
     public Response searchOrder(@QueryParam("key") String key) {
+        if(key == null || key.length() == 0){
+            JsonElement output = GeneralResources.simplifyOrders(MemoryManager.orders);
+            String outputAsString = gson.toJson(output);
+            return Response.status(Response.Status.OK).entity(outputAsString).build();
+        }
 
-        if(key == null || key.length() == 0)
-            return Response.status(Response.Status.OK).entity(gson.toJson(MemoryManager.orders)).build();
 
         key = key.toUpperCase();
         ArrayList<OrderObj> results = new ArrayList<>();
@@ -63,10 +68,10 @@ public class OrderResource {
             String OIDAsString = order.getOIDAsString().toUpperCase();
             String PIDAsString = order.getPIDAsString().toUpperCase();
 
-            VehicleObj vehicleOfOoder = order.getVehicle();
-            String state = vehicleOfOoder.getState().toUpperCase();
-            String plate = vehicleOfOoder.getPlate().toUpperCase();
-            String type = vehicleOfOoder.getType().toUpperCase();
+            VehicleObj vehicleOfOrder = order.getVehicle();
+            String state = vehicleOfOrder.getState().toUpperCase();
+            String plate = vehicleOfOrder.getPlate().toUpperCase();
+            String type = vehicleOfOrder.getType().toUpperCase();
 
             VisitorObj visitor = order.getVisitor();
             String VIDAsString = visitor.getVIDAsString().toUpperCase();
@@ -92,7 +97,9 @@ public class OrderResource {
                 results.add(order);
         }
 
-        return Response.status(Response.Status.OK).entity(gson.toJson(results)).build();
+        JsonElement output = GeneralResources.simplifyOrders(results);
+        String outputAsString = gson.toJson(output);
+        return Response.status(Response.Status.OK).entity(outputAsString).build();
     }
 
 

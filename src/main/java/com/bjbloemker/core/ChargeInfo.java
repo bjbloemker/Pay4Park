@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class ChargeInfo extends ChargeInfoObj{
 
-    public ChargeInfo(int motorcyclePrice[], int carPrice[], int rvPrice[]) {
+    public ChargeInfo(double motorcyclePrice[], double carPrice[], double rvPrice[]) {
         super(motorcyclePrice, carPrice, rvPrice);
     }
 

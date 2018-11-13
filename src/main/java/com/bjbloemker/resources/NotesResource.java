@@ -27,12 +27,9 @@ public class NotesResource {
         if(key == null || key.length() == 0)
             keyPresent = false;
 
-
         ArrayList<NoteObj> results = new ArrayList<>();
 
         if(keyPresent) {
-
-
 
             key = key.toUpperCase();
 

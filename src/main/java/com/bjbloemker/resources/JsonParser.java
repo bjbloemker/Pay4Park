@@ -67,20 +67,20 @@ public class JsonParser {
     public static ChargeInfo JsonToChargeInfo(JsonObject locationJson) throws InvalidPriceException{
         ChargeInfoObj chargeInfo = new ChargeInfo();
 
-        int [] motorcyclePrices = new int[2];
+        double [] motorcyclePrices = new double[2];
         JsonArray motorcyclePricesAsJsonArray = locationJson.get("motorcycle").getAsJsonArray();
         for(int i = 0; i < motorcyclePrices.length; i++)
-            motorcyclePrices[i] = motorcyclePricesAsJsonArray.get(i).getAsInt();
+            motorcyclePrices[i] = motorcyclePricesAsJsonArray.get(i).getAsDouble();
 
-        int [] carPrices = new int[2];
+        double [] carPrices = new double[2];
         JsonArray carPricesAsJsonArray = locationJson.get("car").getAsJsonArray();
         for(int i = 0; i < carPrices.length; i++)
-            carPrices[i] = carPricesAsJsonArray.get(i).getAsInt();
+            carPrices[i] = carPricesAsJsonArray.get(i).getAsDouble();
 
-        int [] rvPrices = new int[2];
+        double [] rvPrices = new double[2];
         JsonArray rvPricesAsJsonArray = locationJson.get("rv").getAsJsonArray();
         for(int i = 0; i < rvPrices.length; i++)
-            rvPrices[i] = rvPricesAsJsonArray.get(i).getAsInt();
+            rvPrices[i] = rvPricesAsJsonArray.get(i).getAsDouble();
 
         //validate prices
         for(int i = 0; i < motorcyclePrices.length; i++)
