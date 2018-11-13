@@ -1,6 +1,8 @@
 package com.bjbloemker.resources;
 import com.bjbloemker.api.*;
 import com.bjbloemker.core.*;
+import com.bjbloemker.core.Error;
+import com.bjbloemker.exceptions.*;
 import com.google.gson.*;
 import com.google.gson.JsonParser;
 
@@ -24,7 +26,7 @@ public class ParkResource {
         if(park == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
-        return Response.status(Response.Status.OK).entity(gson.toJson((Park)park)).build();
+        return Response.status(Response.Status.OK).entity(gson.toJson(park)).build();
     }
 
 
@@ -32,12 +34,37 @@ public class ParkResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createPark(String data){
         JsonObject jsonObject = parser.parse(data).getAsJsonObject();
+        ErrorObj error = new Error("http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation", "Your request data didn't pass validation", Response.Status.BAD_REQUEST.getStatusCode(), "/parks");
 
         JsonObject locationInfoAsJsonObject = jsonObject.get("location_info").getAsJsonObject();
-        LocationInfoObj location_info = localJsonParser.JsonToLocation(locationInfoAsJsonObject);
+        LocationInfoObj location_info = null;
+        try {
+            location_info = localJsonParser.JsonToLocation(locationInfoAsJsonObject);
+        } catch (NullAddressException e) {
+            ((Error) error).setDetail("Address is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (NullNameException e) {
+            ((Error) error).setDetail("Name is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (NullPhoneException e) {
+            ((Error) error).setDetail("Phone number is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (NullWebException e) {
+            ((Error) error).setDetail("Website is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (NullGeoException e) {
+            ((Error) error).setDetail("Geo information is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
 
         JsonObject chargeInfoAsJsonObject = jsonObject.get("payment_info").getAsJsonObject();
-        ChargeInfoObj charge_info = localJsonParser.JsonToChargeInfo(chargeInfoAsJsonObject);
+        ChargeInfoObj charge_info = null;
+        try {
+            charge_info = localJsonParser.JsonToChargeInfo(chargeInfoAsJsonObject);
+        } catch (InvalidPriceException e) {
+            ((Error) error).setDetail("All payment data must be a number greater than or equal to zero");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
 
         ParkObj park = new Park(location_info, charge_info);
         MemoryManager.parks.add(park);
@@ -45,7 +72,7 @@ public class ParkResource {
         JsonObject output = new JsonObject();
         output.addProperty("pid", park.getPIDAsString());
         String outputAsString = gson.toJson(output);
-        return Response.status(Response.Status.OK).entity(outputAsString).build();
+        return Response.status(Response.Status.CREATED).entity(outputAsString).header("Location", "parkpay/parks/" + park.getPIDAsString()).build();
     }
 
     @DELETE
@@ -158,5 +185,59 @@ public class ParkResource {
 
         return Response.status(Response.Status.OK).entity(gson.toJson(note)).build();
     }
+
+    @PUT
+    @Path("/{pid}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updatePark(String data, @PathParam("pid") String pid){
+        ParkObj oldPark = GeneralResources.findParkById(pid);
+        if(oldPark == null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        ErrorObj error = new Error("http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation", "Your request data didn't pass validation", Response.Status.BAD_REQUEST.getStatusCode(), "/parks");
+
+
+        JsonObject jsonObject = parser.parse(data).getAsJsonObject();
+
+        JsonObject locationInfoAsJsonObject = jsonObject.get("location_info").getAsJsonObject();
+        LocationInfoObj location_info = null;
+        try {
+            location_info = localJsonParser.JsonToLocation(locationInfoAsJsonObject);
+        } catch (NullAddressException e) {
+            ((Error) error).setDetail("Address is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (NullNameException e) {
+            ((Error) error).setDetail("Name is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (NullPhoneException e) {
+            ((Error) error).setDetail("Phone number is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (NullWebException e) {
+            ((Error) error).setDetail("Website is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (NullGeoException e) {
+            ((Error) error).setDetail("Geo information is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
+
+        JsonObject chargeInfoAsJsonObject = jsonObject.get("payment_info").getAsJsonObject();
+        ChargeInfoObj charge_info = null;
+        try {
+            charge_info = localJsonParser.JsonToChargeInfo(chargeInfoAsJsonObject);
+        } catch (InvalidPriceException e) {
+            ((Error) error).setDetail("All payment data must be a number greater than or equal to zero");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
+
+        ParkObj newPark = new Park(location_info, charge_info);
+        newPark.setPid(oldPark.getPIDAsString());
+
+        MemoryManager.parks.remove(oldPark);
+        MemoryManager.parks.add(newPark);
+
+        return Response.status(Response.Status.NO_CONTENT).build();
+    }
+
+
 
 }
