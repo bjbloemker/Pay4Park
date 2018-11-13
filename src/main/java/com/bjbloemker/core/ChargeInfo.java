@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class ChargeInfo extends ChargeInfoObj{
 
-    public ChargeInfo(double motorcyclePrice[], double carPrice[], double rvPrice[]) {
+    public ChargeInfo(int motorcyclePrice[], int carPrice[], int rvPrice[]) {
         super(motorcyclePrice, carPrice, rvPrice);
     }
 
@@ -24,9 +24,9 @@ public class ChargeInfo extends ChargeInfoObj{
     @Override
     public String toString() {
         return "ChargeInfo{" +
-                "motorcyclePrice=" + Arrays.toString(motorcyclePrice) +
-                ", carPrice=" + Arrays.toString(carPrice) +
-                ", rvPrice=" + Arrays.toString(rvPrice) +
+                "motorcycle=" + Arrays.toString(motorcycle) +
+                ", car=" + Arrays.toString(car) +
+                ", rv=" + Arrays.toString(rv) +
                 '}';
     }
 }

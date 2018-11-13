@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.UUID;
 
 public abstract class ParkObj {
-    protected UUID pid;
+    protected String pid;
 
     @SerializedName("location_info")
     protected LocationInfoObj locationInfo;
@@ -13,20 +13,14 @@ public abstract class ParkObj {
     @SerializedName("payment_info")
     protected ChargeInfoObj paymentInfo;
 
-    public ParkObj(UUID PID, LocationInfoObj location_info, ChargeInfoObj payment_info) {
-        this.pid = PID;
-        this.locationInfo = location_info;
-        this.paymentInfo = payment_info;
-    }
-
     public ParkObj(LocationInfoObj location_info, ChargeInfoObj payment_info) {
-        this.pid = UUID.randomUUID();
+        this.pid = UUID.randomUUID().toString();
         this.locationInfo = location_info;
         this.paymentInfo = payment_info;
     }
 
-    public void setLocationInfo(LocationInfoObj locationInfo) {
-        this.locationInfo = locationInfo;
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 
     public LocationInfoObj getLocationInfo() {

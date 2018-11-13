@@ -1,31 +1,31 @@
 package com.bjbloemker.api;
 
 public abstract class ChargeInfoObj {
-    protected double motorcyclePrice[];
-    protected double carPrice[];
-    protected double rvPrice[];
+    protected int motorcycle[];
+    protected int car[];
+    protected int rv[];
 
-    public ChargeInfoObj(double motorcyclePrice[], double carPrice[], double rvPrice[]) {
-        this.motorcyclePrice = motorcyclePrice;
-        this.carPrice = carPrice;
-        this.rvPrice = rvPrice;
+    public ChargeInfoObj(int motorcycle[], int car[], int rv[]) {
+        this.motorcycle = motorcycle;
+        this.car = car;
+        this.rv = rv;
     }
 
     public ChargeInfoObj() {
-        this.motorcyclePrice = null;
-        this.carPrice = null;
-        this.rvPrice = null;
+        this.motorcycle = null;
+        this.car = null;
+        this.rv = null;
     }
 
-    public void setMotorcyclePrice(double[] motorcyclePrice) {
-        this.motorcyclePrice = motorcyclePrice;
+    public void setMotorcycle(int[] motorcycle) {
+        this.motorcycle = motorcycle;
     }
 
-    public void setCarPrice(double[] carPrice) {
-        this.carPrice = carPrice;
+    public void setCar(int[] car) {
+        this.car = car;
     }
 
-    public void setRvPrice(double[] rvPrice) {
-        this.rvPrice = rvPrice;
+    public void setRv(int[] rv) {
+        this.rv = rv;
     }
 }

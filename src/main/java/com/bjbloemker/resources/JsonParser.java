@@ -2,53 +2,103 @@ package com.bjbloemker.resources;
 
 import com.bjbloemker.api.*;
 import com.bjbloemker.core.*;
+import com.bjbloemker.exceptions.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 public class JsonParser {
 
-    public static LocationInfo JsonToLocation(JsonObject locationJson){
+    public static LocationInfo JsonToLocation(JsonObject locationJson) throws NullAddressException, NullNameException, NullPhoneException, NullWebException, NullGeoException {
         LocationInfoObj location = new LocationInfo();
-        location.setAddress(locationJson.get("address").getAsString());
-        location.setName(locationJson.get("name").getAsString());
-        location.setRegion(locationJson.get("region").getAsString());
-        location.setPhone(locationJson.get("phone").getAsString());
-        location.setWeb(locationJson.get("web").getAsString());
-        JsonObject geoJson = locationJson.get("geo").getAsJsonObject();
+
+        try {
+            location.setAddress(locationJson.get("address").getAsString());
+        }catch (NullPointerException e){
+            throw new NullAddressException("Address cannot be null");
+        }
+        try {
+            location.setName(locationJson.get("name").getAsString());
+        }catch (NullPointerException e){
+            throw new NullNameException("Name cannot be null");
+        }
+
+        try{
+            location.setRegion(locationJson.get("region").getAsString());
+        }catch (NullPointerException e){
+            location.setRegion("");
+        }
+
+        try{
+            location.setPhone(locationJson.get("phone").getAsString());
+        }catch (NullPointerException e){
+            throw new NullPhoneException("Name cannot be null");
+        }
+
+        try {
+            location.setWeb(locationJson.get("web").getAsString());
+        }catch(NullPointerException e){
+            throw new NullWebException("Web cannot be null");
+        }
+
+        JsonObject geoJson = null;
+        try {
+            geoJson = locationJson.get("geo").getAsJsonObject();
+        }catch (NullPointerException e){
+            throw new NullGeoException("Geo cords cannot be null");
+        }
         GeoCordsObj geoCords = JsonToGeoCords(geoJson);
         location.setGeo(geoCords);
+
         return (LocationInfo) location;
     }
 
-    public static GeoCords JsonToGeoCords(JsonObject geoJson){
+    public static GeoCords JsonToGeoCords(JsonObject geoJson) throws NullGeoException {
         GeoCordsObj geoCords = new GeoCords();
-        geoCords.setLat(geoJson.get("lat").getAsFloat());
-        geoCords.setLng(geoJson.get("lng").getAsFloat());
+        try {
+            geoCords.setLat(geoJson.get("lat").getAsFloat());
+            geoCords.setLng(geoJson.get("lng").getAsFloat());
+        }catch (NullPointerException e){
+            throw new NullGeoException("Geo cords cannot be null");
+        }
         return (GeoCords) geoCords;
     }
 
 
-    public static ChargeInfo JsonToChargeInfo(JsonObject locationJson){
+    public static ChargeInfo JsonToChargeInfo(JsonObject locationJson) throws InvalidPriceException{
         ChargeInfoObj chargeInfo = new ChargeInfo();
 
-        double [] motorcyclePrices = new double[2];
+        int [] motorcyclePrices = new int[2];
         JsonArray motorcyclePricesAsJsonArray = locationJson.get("motorcycle").getAsJsonArray();
         for(int i = 0; i < motorcyclePrices.length; i++)
-            motorcyclePrices[i] = motorcyclePricesAsJsonArray.get(i).getAsDouble();
+            motorcyclePrices[i] = motorcyclePricesAsJsonArray.get(i).getAsInt();
 
-        double [] carPrices = new double[2];
+        int [] carPrices = new int[2];
         JsonArray carPricesAsJsonArray = locationJson.get("car").getAsJsonArray();
         for(int i = 0; i < carPrices.length; i++)
-            carPrices[i] = carPricesAsJsonArray.get(i).getAsDouble();
+            carPrices[i] = carPricesAsJsonArray.get(i).getAsInt();
 
-        double [] rvPrices = new double[2];
+        int [] rvPrices = new int[2];
         JsonArray rvPricesAsJsonArray = locationJson.get("rv").getAsJsonArray();
         for(int i = 0; i < rvPrices.length; i++)
-            rvPrices[i] = rvPricesAsJsonArray.get(i).getAsDouble();
+            rvPrices[i] = rvPricesAsJsonArray.get(i).getAsInt();
 
-        chargeInfo.setMotorcyclePrice(motorcyclePrices);
-        chargeInfo.setCarPrice(carPrices);
-        chargeInfo.setRvPrice(rvPrices);
+        //validate prices
+        for(int i = 0; i < motorcyclePrices.length; i++)
+            if(motorcyclePrices[i] < 0)
+                throw new InvalidPriceException("Motorcycle prices must not be negative");
+
+        for(int i = 0; i < carPrices.length; i++)
+            if(carPrices[i] < 0)
+                throw new InvalidPriceException("Car prices must not be negative");
+
+        for(int i = 0; i < rvPrices.length; i++)
+            if(rvPrices[i] < 0)
+                throw new InvalidPriceException("RV prices must not be negative");
+
+
+        chargeInfo.setMotorcycle(motorcyclePrices);
+        chargeInfo.setCar(carPrices);
+        chargeInfo.setRv(rvPrices);
 
         return (ChargeInfo) chargeInfo;
     }
