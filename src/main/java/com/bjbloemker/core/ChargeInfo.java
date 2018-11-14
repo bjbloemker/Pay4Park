@@ -1,9 +1,4 @@
 package com.bjbloemker.core;
-/*
-motorcycle (required): first element of the array is for in-state license plates and the second is for out of state
-car (required): first element of the array is for in-state license plates and the second is for out of state
-rv (required): first element of the array is for in-state license plates and the second is for out of state
- */
 
 import com.bjbloemker.api.ChargeInfoObj;
 
@@ -19,14 +14,4 @@ public class ChargeInfo extends ChargeInfoObj{
         super(null, null, null);
     }
 
-
-
-    @Override
-    public String toString() {
-        return "ChargeInfo{" +
-                "motorcycle=" + Arrays.toString(motorcycle) +
-                ", car=" + Arrays.toString(car) +
-                ", rv=" + Arrays.toString(rv) +
-                '}';
-    }
 }

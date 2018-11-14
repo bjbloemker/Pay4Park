@@ -7,13 +7,4 @@ public class Visitor extends VisitorObj{
         super(name, email, paymentInfo);
     }
 
-    @Override
-    public String toString() {
-        return "Visitor{" +
-                "vid='" + vid + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", paymentInfo=" + paymentInfo +
-                '}';
-    }
 }

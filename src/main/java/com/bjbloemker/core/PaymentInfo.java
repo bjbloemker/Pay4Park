@@ -15,13 +15,4 @@ public class PaymentInfo extends PaymentInfoObj{
 
     }
 
-    @Override
-    public String toString() {
-        return "PaymentInfo{" +
-                "card=" + card +
-                ", nameOnCard='" + nameOnCard + '\'' +
-                ", expirationDate='" + expirationDate + '\'' +
-                ", zip=" + zip +
-                '}';
-    }
 }

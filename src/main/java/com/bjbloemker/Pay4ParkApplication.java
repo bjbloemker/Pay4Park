@@ -19,10 +19,7 @@ public class Pay4ParkApplication extends Application<Pay4ParkConfiguration> {
         return "Pay4Park";
     }
 
-    @Override
-    public void initialize(final Bootstrap<Pay4ParkConfiguration> bootstrap) {
-        // TODO: application initialization
-    }
+
 
     @Override
     public void run(final Pay4ParkConfiguration configuration,

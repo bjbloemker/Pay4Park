@@ -222,6 +222,7 @@ public class GeneralResources {
 
             output.add(outputVisitorAsJson);
         }
+
         return output;
     }
 
@@ -265,7 +266,7 @@ public class GeneralResources {
         }
 
         try {
-            throw new InvalidVehicleTypeException("Vehcile type must by motorcycle, RV, or Car");
+            throw new InvalidVehicleTypeException("Vehicle type must by motorcycle, RV, or Car");
         } catch (InvalidVehicleTypeException e) {
             e.printStackTrace();
         }

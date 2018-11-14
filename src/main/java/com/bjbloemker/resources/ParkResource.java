@@ -97,7 +97,6 @@ public class ParkResource {
             return Response.status(Response.Status.OK).entity(outputAsString).build();
         }
 
-
         key = key.toUpperCase();
         ArrayList<ParkObj> results = new ArrayList<ParkObj>();
 
@@ -262,7 +261,4 @@ public class ParkResource {
 
         return Response.status(Response.Status.NO_CONTENT).build();
     }
-
-
-
 }
