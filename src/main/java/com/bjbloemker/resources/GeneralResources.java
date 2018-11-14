@@ -85,6 +85,7 @@ public class GeneralResources {
             parkAsJsonObject.remove(property);
             output.add(parkAsJsonObject);
         }
+
         return output;
     }
 
@@ -118,7 +119,6 @@ public class GeneralResources {
 
     public static ArrayList<NoteObj> getAllNotesFromVisitor(String vid){
         ArrayList<NoteObj> notes = new ArrayList<>();
-
 
         for(int i = 0; i < MemoryManager.notes.size(); i++){
             NoteObj currentNote = MemoryManager.notes.get(i);
@@ -238,6 +238,7 @@ public class GeneralResources {
 
             output.add(visitorAsJsonObject);
         }
+
         return output;
     }
 

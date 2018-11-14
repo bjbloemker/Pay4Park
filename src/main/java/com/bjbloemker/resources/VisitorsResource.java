@@ -2,13 +2,9 @@ package com.bjbloemker.resources;
 
 import com.bjbloemker.api.*;
 import com.bjbloemker.core.MemoryManager;
-import com.bjbloemker.core.Order;
-import com.bjbloemker.core.Visitor;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.sun.tools.javah.Gen;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;

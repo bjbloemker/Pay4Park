@@ -2,7 +2,6 @@ package com.bjbloemker.api;
 
 import com.bjbloemker.core.PaymentInfo;
 import com.google.gson.annotations.SerializedName;
-import com.sun.xml.internal.ws.developer.Serialization;
 
 import java.util.UUID;
 

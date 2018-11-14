@@ -10,7 +10,7 @@ public class JsonParser {
 
     public static LocationInfo JsonToLocation(JsonObject locationJson) throws NullAddressException, NullNameException, NullPhoneException, NullWebException, NullGeoException {
         LocationInfoObj location = new LocationInfo();
-
+        System.out.println("===========DEBUG========\n" + locationJson.toString() + "\n================");
         try {
             location.setAddress(locationJson.get("address").getAsString());
         }catch (NullPointerException e){

@@ -2,6 +2,7 @@ package com.bjbloemker.resources;
 
 import com.bjbloemker.api.*;
 import com.bjbloemker.core.*;
+import com.google.gson.JsonElement;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,16 +35,17 @@ class GeneralResourcesTest {
         double [] mPrice = {1,2};
         double [] cPrice = {3,4};
         double [] rPrice = {5,6};
-        ChargeInfoObj chargeInfo = new ChargeInfo(mPrice, cPrice, rPrice);
-        ParkObj park1 = new Park(locationInfo, chargeInfo);
+        ChargeInfoObj chargeInfo1 = new ChargeInfo(mPrice, cPrice, rPrice);
+        ParkObj park1 = new Park(locationInfo, chargeInfo1);
 
         GeoCordsObj geoCords2 = new GeoCords((float) 98.88, (float) -4.55);
         LocationInfoObj locationInfo2 = new LocationInfo("Park2" , "Region2", "2222 Lane St Cincinnati, OH", "(666) 321-7654", "www.park2.com", geoCords2);
         double [] mPrice2 = {1.5,2.5};
         double [] cPrice2 = {3.5,4.5};
         double [] rPrice2 = {5.5,6.5};
+        ChargeInfoObj chargeInfo2 = new ChargeInfo(mPrice2, cPrice2, rPrice2);
 
-        ParkObj park2 = new Park(locationInfo, chargeInfo);
+        ParkObj park2 = new Park(locationInfo2, chargeInfo2);
 
         parks.add(park1);
         parks.add(park2);
@@ -172,7 +174,13 @@ class GeneralResourcesTest {
     }
 
     @Test
-    void parksWithoutProperty() {//TODO
+    void parksWithoutProperty() {
+        ParkObj park1 = parks.get(0);
+        ParkObj park2 = parks.get(1);
+        JsonElement element = GeneralResources.parksWithoutProperty(parks, "payment_info");
+        String goal = "[{\"pid\":\""+park1.getPIDAsString()+"\",\"location_info\":{\"name\":\"Park1\",\"region\":\"Region1\",\"address\":\"1111 Street Ln Chicago, IL\",\"phone\":\"(555) 123-4567\",\"web\":\"www.park1.gov\",\"geo\":{\"lat\":22.25,\"lng\":-90.55}}}," +
+                       "{\"pid\":\""+park2.getPIDAsString()+"\",\"location_info\":{\"name\":\"Park2\",\"region\":\"Region2\",\"address\":\"2222 Lane St Cincinnati, OH\",\"phone\":\"(666) 321-7654\",\"web\":\"www.park2.com\",\"geo\":{\"lat\":98.88,\"lng\":-4.55}}}]";
+        assertEquals(goal, element.toString());
     }
 
     @Test
@@ -197,20 +205,55 @@ class GeneralResourcesTest {
 
     @Test
     void getAllNotesFromVisitor() {
+        VisitorObj visitor1 = visitors.get(0);
+        String vid1 = visitor1.getVIDAsString();
 
+        ArrayList<NoteObj> localNotes = new ArrayList<>();
+
+        for(int i = 0; i < notes.size(); i++){
+            NoteObj currentNote = notes.get(i);
+            if(currentNote.getVIDAsString().equals(vid1)){
+                localNotes.add(currentNote);
+            }
+        }
+
+        assertEquals(localNotes, GeneralResources.getAllNotesFromVisitor(vid1));
     }
 
     @Test
     void simplifyOrders() {
+        OrderObj order1 = orders.get(0);
+        VehicleObj vehicleOrder1 = order1.getVehicle();
+        OrderObj order2 = orders.get(1);
+        VehicleObj vehicleOrder2 = order2.getVehicle();
+
+        String goal = "[{\"oid\":\""+order1.getOIDAsString()+"\",\"pid\":\""+order1.getPIDAsString()+"\",\"date\":\""+order1.getDate()+"\",\"type\":\""+vehicleOrder1.getType()+"\",\"amount\":4.5}," +
+                       "{\"oid\":\""+order2.getOIDAsString()+"\",\"pid\":\""+order2.getPIDAsString()+"\",\"date\":\""+order2.getDate()+"\",\"type\":\""+vehicleOrder2.getType()+"\",\"amount\":6.5}]";
+
+        assertEquals(goal, GeneralResources.simplifyOrders(orders).toString());
     }
 
     @Test
     void superSimplifyOrders() {
+        OrderObj order1 = orders.get(0);
+        OrderObj order2 = orders.get(1);
+
+        String goal = "[{\"oid\":\""+order1.getOIDAsString()+"\",\"pid\":\""+order1.getPIDAsString()+"\",\"date\":\""+order1.getDate()+"\"}," +
+                       "{\"oid\":\""+order2.getOIDAsString()+"\",\"pid\":\""+order2.getPIDAsString()+"\",\"date\":\""+order2.getDate()+"\"}]";
+
+        assertEquals(goal, GeneralResources.superSimplifyOrders(orders).toString());
     }
 
     @Test
     void superSimplifyNotes() {
+        NoteObj note1 = notes.get(0);
+        NoteObj note2 = notes.get(1);
+        NoteObj note3 = notes.get(2);
 
+        String goal =  "[{\"nid\":\""+note1.getNIDAsString()+"\",\"pid\":\""+note1.getPIDAsString()+"\",\"date\":\""+note1.getDate()+"\",\"title\":\""+note1.getTitle()+"\"}," +
+                        "{\"nid\":\""+note2.getNIDAsString()+"\",\"pid\":\""+note2.getPIDAsString()+"\",\"date\":\""+note2.getDate()+"\",\"title\":\""+note2.getTitle()+"\"}," +
+                        "{\"nid\":\""+note3.getNIDAsString()+"\",\"pid\":\""+note3.getPIDAsString()+"\",\"date\":\""+note3.getDate()+"\",\"title\":\""+note3.getTitle()+"\"}]";
+        assertEquals(goal, GeneralResources.superSimplifyNotes(notes).toString());
     }
 
     @Test
@@ -225,6 +268,14 @@ class GeneralResourcesTest {
 
     @Test
     void visitorsWithoutProperty() {
+        VisitorObj visitor1 = visitors.get(0);
+        VisitorObj visitor2 = visitors.get(1);
+
+        String goal = "[{\"vid\":\""+visitor1.getVIDAsString()+"\",\"name\":\""+visitor1.getName()+"\",\"email\":\""+visitor1.getEmail()+"\"}," +
+                       "{\"vid\":\""+visitor2.getVIDAsString()+"\",\"name\":\""+visitor2.getName()+"\",\"email\":\""+visitor2.getEmail()+"\"}]";
+
+        assertEquals(goal, GeneralResources.visitorsWithoutProperty(visitors, "payment_info").toString());
+
     }
 
     @Test
