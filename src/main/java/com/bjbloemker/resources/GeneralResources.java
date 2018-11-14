@@ -2,7 +2,9 @@ package com.bjbloemker.resources;
 
 import com.bjbloemker.api.*;
 import com.bjbloemker.core.*;
+import com.bjbloemker.exceptions.InvalidPriceException;
 import com.bjbloemker.exceptions.InvalidVehicleTypeException;
+import com.bjbloemker.exceptions.NullVehicleException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -144,7 +146,14 @@ public class GeneralResources {
             String date = currentOrder.getDate();
 
             JsonObject vehicleAsJsonObject = orderAsJsonObject.get("vehicle").getAsJsonObject();
-            VehicleObj vehicle = localJsonParser.JsonToVehicle(vehicleAsJsonObject);
+            VehicleObj vehicle = null;
+            try {
+                vehicle = localJsonParser.JsonToVehicle(vehicleAsJsonObject);
+            } catch (NullVehicleException e) {
+                e.printStackTrace();
+            } catch (InvalidVehicleTypeException e) {
+                e.printStackTrace();
+            }
 
             ParkObj park = findParkById(currentOrder.getPIDAsString());
             String vehicleType = vehicle.getType();

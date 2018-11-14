@@ -2,6 +2,8 @@ package com.bjbloemker.resources;
 
 import com.bjbloemker.api.*;
 import com.bjbloemker.core.*;
+import com.bjbloemker.core.Error;
+import com.bjbloemker.exceptions.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -80,14 +82,39 @@ public class OrderResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createOrder(String data){
         JsonObject jsonObject = parser.parse(data).getAsJsonObject();
+        ErrorObj error = new Error("http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation", "Your request data didn't pass validation", Response.Status.BAD_REQUEST.getStatusCode(), "/orders");
 
         String pid = jsonObject.get("pid").getAsString();
 
         JsonObject vehicleAsJsonObject = jsonObject.get("vehicle").getAsJsonObject();
-        VehicleObj vehicle = localJsonParser.JsonToVehicle(vehicleAsJsonObject);
+        VehicleObj vehicle = null;
+        try {
+            vehicle = localJsonParser.JsonToVehicle(vehicleAsJsonObject);
+        } catch (NullVehicleException e) {
+            ((Error) error).setDetail("Vehicle must include state, plate, and type");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (InvalidVehicleTypeException e) {
+            ((Error) error).setDetail("Vehicle must be of type MOTORCYCLE, CAR, or RV");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
 
         JsonObject visitorAsJsonObject = jsonObject.get("visitor").getAsJsonObject();
-        VisitorObj visitor = localJsonParser.JsonToVisitor(visitorAsJsonObject);
+        VisitorObj visitor = null;
+        try {
+            visitor = localJsonParser.JsonToVisitor(visitorAsJsonObject);
+        } catch (NullCardException e) {
+            ((Error) error).setDetail("Visitor must have valid card data that includes card number, name on card, expiration, and zip");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (InvalidCardException e) {
+            ((Error) error).setDetail("Visitor card number must be 15 or 16 DIGITS to be valid");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (InvalidEmailException e) {
+            ((Error) error).setDetail("Email provided did not come in a valid format");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        } catch (NullEmailException e) {
+            ((Error) error).setDetail("Email was not provided");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
 
         OrderObj order;
         if(MemoryManager.requestAddToVisitor(visitor) == null){

@@ -3,13 +3,16 @@ package com.bjbloemker.resources;
 import com.bjbloemker.api.*;
 import com.bjbloemker.core.*;
 import com.google.gson.JsonElement;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import sun.java2d.loops.FillRect;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -283,6 +286,15 @@ class GeneralResourcesTest {
         ParkObj park1 = parks.get(0);
         VehicleObj vehicle1 = vehicles.get(0);
         assertEquals(3, GeneralResources.calculateCost(vehicle1, park1));
+    }
+
+    @AfterAll
+    static void cleanUp(){
+        try {
+            for (Iterator<ParkObj> iterator = MemoryManager.parks.iterator(); iterator.hasNext(); ) {
+                iterator.remove();
+            }
+        }catch(IllegalStateException e){}
     }
 
 }
