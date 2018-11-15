@@ -32,7 +32,6 @@ public class VisitorsResource {
 
         output.add("visitor", innerVisitor);
 
-
         ArrayList<OrderObj> ordersByVisitor = GeneralResources.getAllOrdersFromVisitor(visitor.getVIDAsString());
         JsonElement toPutOrders  = GeneralResources.superSimplifyOrders(ordersByVisitor);
         output.add("orders", toPutOrders);

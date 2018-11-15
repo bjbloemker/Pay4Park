@@ -262,7 +262,8 @@ public class ParkResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
         }
 
-        ChargeInfoObj charge_info = null;
+        System.out.println("DEBUG::::" + chargeInfoAsJsonObject.toString());
+        ChargeInfoObj charge_info;
         try {
             charge_info = localJsonParser.JsonToChargeInfo(chargeInfoAsJsonObject);
         } catch (InvalidPriceException e) {

@@ -31,9 +31,7 @@ public class NotesResource {
         ArrayList<NoteObj> results = new ArrayList<>();
 
         if(keyPresent) {
-
             key = key.toUpperCase();
-
             for (int i = 0; i < MemoryManager.notes.size(); i++) {
                 NoteObj note = MemoryManager.notes.get(i);
                 String title = note.getTitle();
@@ -76,7 +74,6 @@ public class NotesResource {
                 primaryArray.add(outputObject);
             }
         }
-
         return Response.status(Response.Status.OK).entity(gson.toJson(primaryArray)).build();
     }
 
