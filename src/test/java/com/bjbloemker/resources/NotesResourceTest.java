@@ -1,5 +1,6 @@
 package com.bjbloemker.resources;
 
+import com.bjbloemker.api.NoteObj;
 import com.bjbloemker.api.OrderObj;
 import com.bjbloemker.api.VisitorObj;
 import com.bjbloemker.core.MemoryManager;
@@ -11,12 +12,13 @@ import javax.ws.rs.core.Response;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class VisitorsResourceTest {
+class NotesResourceTest {
 
     private static com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
     private static ParkResource ParkResource = new ParkResource();
     private static OrderResource OrderResource = new OrderResource();
     private static VisitorsResource VisitorsResource = new VisitorsResource();
+    private static NotesResource NotesResource = new NotesResource();
 
     private  String parkName = "Park Name";
     private static String region = "Northern Region";
@@ -53,79 +55,72 @@ class VisitorsResourceTest {
     }
 
     @Test
-    void getVisitorDetail() {
+    void searchNoteNoResults() {
         String pid = buildPark();
         String toSendToOrder = "{\"pid\": \""+pid+"\", \"vehicle\": {\"state\": \""+state+"\", \"plate\": \""+plate+"\", \"type\": \""+type+"\"}, \"visitor\": {\"name\": \""+name+"\", \"email\": \""+email+"\", \"payment_info\": {\"card\": \""+cardNumber+"\", \"name_on_card\": \""+name+"\", \"expiration_date\": \""+expiration+"\", \"zip\": "+zipCode+"}}}";
 
         OrderResource.createOrder(toSendToOrder);
         OrderObj order = MemoryManager.orders.get(0);
-        VisitorObj visitor = order.getVisitor();
 
-        Response result = VisitorsResource.getVisitorDetail(visitor.getVIDAsString());
+        String title = "This is a possible title";
+        String text = "This is some text";
+        String toSend = "{\"vid\": \""+order.getVisitor().getVIDAsString()+"\", \"title\": \""+title+"\", \"text\": \""+text+"\"}";
+        ParkResource.createNoteWithPark(toSend, pid);
 
-        String expected = "{\"vid\":\""+visitor.getVIDAsString()+"\",\"visitor\":{\"name\":\""+visitor.getName()+"\",\"email\":\""+visitor.getEmail()+"\"},\"orders\":[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getOIDAsString()+"\",\"date\":\""+order.getDate()+"\"}],\"notes\":[]}";
+        Response result = NotesResource.searchNote("thiswillneverbefound");
+        String expected = "[]";
         assertEquals(expected, result.getEntity());
     }
 
     @Test
-    void getVisitorDetailNotFound() {
+    void searchNoteNullKey(){
         String pid = buildPark();
         String toSendToOrder = "{\"pid\": \""+pid+"\", \"vehicle\": {\"state\": \""+state+"\", \"plate\": \""+plate+"\", \"type\": \""+type+"\"}, \"visitor\": {\"name\": \""+name+"\", \"email\": \""+email+"\", \"payment_info\": {\"card\": \""+cardNumber+"\", \"name_on_card\": \""+name+"\", \"expiration_date\": \""+expiration+"\", \"zip\": "+zipCode+"}}}";
 
         OrderResource.createOrder(toSendToOrder);
         OrderObj order = MemoryManager.orders.get(0);
-        VisitorObj visitor = order.getVisitor();
 
-        Response result = VisitorsResource.getVisitorDetail("fake_identifier");
+        String title = "This is a possible title";
+        String text = "This is some text";
+        String toSend = "{\"vid\": \""+order.getVisitor().getVIDAsString()+"\", \"title\": \""+title+"\", \"text\": \""+text+"\"}";
+        ParkResource.createNoteWithPark(toSend, pid);
 
+        NoteObj note = MemoryManager.notes.get(0);
 
-        assertEquals(404, result.getStatus());
-    }
-
-
-    @Test
-    void searchVisitorsNoResults() {
-        String pid = buildPark();
-        String toSendToOrder = "{\"pid\": \""+pid+"\", \"vehicle\": {\"state\": \""+state+"\", \"plate\": \""+plate+"\", \"type\": \""+type+"\"}, \"visitor\": {\"name\": \""+name+"\", \"email\": \""+email+"\", \"payment_info\": {\"card\": \""+cardNumber+"\", \"name_on_card\": \""+name+"\", \"expiration_date\": \""+expiration+"\", \"zip\": "+zipCode+"}}}";
-
-        OrderResource.createOrder(toSendToOrder);
-        Response result = VisitorsResource.searchVisitors("nobodywillfindthis");
-
-        assertEquals("[]", result.getEntity());
-
-    }
-
-    @Test
-    void searchVisitorsWithKey() {
-        String pid = buildPark();
-        String toSendToOrder = "{\"pid\": \""+pid+"\", \"vehicle\": {\"state\": \""+state+"\", \"plate\": \""+plate+"\", \"type\": \""+type+"\"}, \"visitor\": {\"name\": \""+name+"\", \"email\": \""+email+"\", \"payment_info\": {\"card\": \""+cardNumber+"\", \"name_on_card\": \""+name+"\", \"expiration_date\": \""+expiration+"\", \"zip\": "+zipCode+"}}}";
-
-        OrderResource.createOrder(toSendToOrder);
-        OrderObj order = MemoryManager.orders.get(0);
-        Response result = VisitorsResource.searchVisitors("Jane");
-
-        VisitorObj visitor = order.getVisitor();
-        String expected = "[{\"vid\":\""+visitor.getVIDAsString()+"\",\"name\":\""+visitor.getName()+"\",\"email\":\""+visitor.getEmail()+"\"}]";
+        Response result = NotesResource.searchNote(null);
+        String expected = "[{\"pid\":\""+pid+"\",\"notes\":[{\"nid\":\""+note.getNIDAsString()+"\",\"date\":\""+note.getDate()+"\",\"title\":\""+note.getTitle()+"\"}]}]";
         assertEquals(expected, result.getEntity());
-
     }
 
-
     @Test
-    void searchVisitorsWithNullKey() {
+    void searchNoteOK() {
         String pid = buildPark();
         String toSendToOrder = "{\"pid\": \""+pid+"\", \"vehicle\": {\"state\": \""+state+"\", \"plate\": \""+plate+"\", \"type\": \""+type+"\"}, \"visitor\": {\"name\": \""+name+"\", \"email\": \""+email+"\", \"payment_info\": {\"card\": \""+cardNumber+"\", \"name_on_card\": \""+name+"\", \"expiration_date\": \""+expiration+"\", \"zip\": "+zipCode+"}}}";
 
         OrderResource.createOrder(toSendToOrder);
         OrderObj order = MemoryManager.orders.get(0);
-        Response result = VisitorsResource.searchVisitors(null);
 
-        VisitorObj visitor = order.getVisitor();
-        String expected = "[{\"vid\":\""+visitor.getVIDAsString()+"\",\"name\":\""+visitor.getName()+"\",\"email\":\""+visitor.getEmail()+"\"}]";
+        String title = "This is a possible title";
+        String text = "This is some text";
+        String toSend = "{\"vid\": \""+order.getVisitor().getVIDAsString()+"\", \"title\": \""+title+"\", \"text\": \""+text+"\"}";
+        ParkResource.createNoteWithPark(toSend, pid);
+
+        NoteObj note = MemoryManager.notes.get(0);
+
+        Response result = NotesResource.searchNote("text");
+        String expected = "[{\"pid\":\""+pid+"\",\"notes\":[{\"nid\":\""+note.getNIDAsString()+"\",\"date\":\""+note.getDate()+"\",\"title\":\""+note.getTitle()+"\"}]}]";
         assertEquals(expected, result.getEntity());
-
     }
 
+
+    @Test
+    void getNoteDetail() {
+    }
+
+    @Test
+    void getNoteDetailNotFound() {
+        //I AM RIGHT HERE
+    }
 
 
     private String buildPark(){

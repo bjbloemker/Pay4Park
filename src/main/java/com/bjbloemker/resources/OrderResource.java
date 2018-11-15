@@ -99,7 +99,7 @@ public class OrderResource {
         }
 
         JsonObject visitorAsJsonObject = jsonObject.get("visitor").getAsJsonObject();
-        VisitorObj visitor = null;
+        VisitorObj visitor;
         try {
             visitor = localJsonParser.JsonToVisitor(visitorAsJsonObject);
         } catch (NullCardException e) {

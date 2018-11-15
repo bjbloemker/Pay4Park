@@ -319,7 +319,7 @@ class ParkResourceTest {
         String toSend = "{\"location_info\": {\"name\": \""+parkName+"\", \"region\": \""+region+"\", \"address\": \""+address+"\", \"phone\": \""+phone+"\", \"web\": \""+web+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}, \"payment_info\": {\"motorcycle\": "+cleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
         ParkResource.createPark(toSend);
         int lastPos = MemoryManager.parks.size()-1;
-        assertTrue(true);
+
         return MemoryManager.parks.get(lastPos).getPIDAsString();
 
     }

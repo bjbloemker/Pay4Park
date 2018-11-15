@@ -2,16 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f123a0f-b4a4-4aef-92ed-84452a4864e6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/VisitorsResourceTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/bjbloemker/resources/OrderResource.class" afterPath="$PROJECT_DIR$/target/classes/com/bjbloemker/resources/OrderResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/bjbloemker/resources/ParkResource.class" afterPath="$PROJECT_DIR$/target/classes/com/bjbloemker/resources/ParkResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/bjbloemker/resources/VisitorsResource.class" afterPath="$PROJECT_DIR$/target/classes/com/bjbloemker/resources/VisitorsResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/bjbloemker/resources/ParkResourceTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/bjbloemker/resources/ParkResourceTest.class" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pay4park (1).iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pay4park (2).iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/pay4park (3).iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/NotesResourceTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Pay4Park.iml" afterPath="$PROJECT_DIR$/Pay4Park.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/NotesResource.java" afterPath="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/NotesResource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/ParkResource.java" afterPath="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/ParkResource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/VisitorsResource.java" afterPath="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/VisitorsResource.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/OrderResource.java" afterPath="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/OrderResource.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/ParkResourceTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/ParkResourceTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/VisitorsResourceTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/VisitorsResourceTest.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -23,6 +25,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/Pay4Park$NotesResourceTest_searchNoteOK.coverage" NAME="NotesResourceTest.searchNoteOK Coverage Results" MODIFIED="1542245745738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.bjbloemker.resources.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/Pay4Park$NotesResourceTest.coverage" NAME="NotesResourceTest Coverage Results" MODIFIED="1542245754329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.bjbloemker.resources.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/Pay4Park$Pay4Park.coverage" NAME="Pay4Park Coverage Results" MODIFIED="1542120853913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Pay4Park$GeneralResourcesTest.coverage" NAME="GeneralResourcesTest Coverage Results" MODIFIED="1542166009379" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.bjbloemker.resources.*</FILTER>
@@ -33,93 +41,43 @@
     <SUITE FILE_PATH="coverage/Pay4Park$GeneralResourcesTest_parksWithoutProperty.coverage" NAME="GeneralResourcesTest.parksWithoutProperty Coverage Results" MODIFIED="1542165565415" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.bjbloemker.resources.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/Pay4Park$VisitorsResourceTest.coverage" NAME="VisitorsResourceTest Coverage Results" MODIFIED="1542244762714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.bjbloemker.resources.*</FILTER>
+    </SUITE>
     <SUITE FILE_PATH="coverage/Pay4Park$com_bjbloemker_in_Pay4Park.coverage" NAME="com.bjbloemker in Pay4Park Coverage Results" MODIFIED="1542242302377" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.bjbloemker.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/Pay4Park$com_bjbloemker_resources_in_Pay4Park.coverage" NAME="com.bjbloemker.resources in Pay4Park Coverage Results" MODIFIED="1542242033199" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/Pay4Park$com_bjbloemker_resources_in_Pay4Park.coverage" NAME="com.bjbloemker.resources in Pay4Park Coverage Results" MODIFIED="1542244783283" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.bjbloemker.resources.*</FILTER>
     </SUITE>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ParkResourceTest.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/ParkResourceTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OrderResource.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/OrderResource.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="82" column="45" lean-forward="false" selection-start-line="82" selection-start-column="45" selection-end-line="82" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="NotesResource.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/NotesResource.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="35" column="12" lean-forward="false" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
+            <state relative-caret-position="450">
+              <caret line="84" column="70" lean-forward="false" selection-start-line="84" selection-start-column="70" selection-end-line="84" selection-end-column="70" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NoteObj.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/api/NoteObj.java">
+      <file leaf-file-name="NotesResourceTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/NotesResourceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="29" column="32" lean-forward="false" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
-              <folding>
-                <element signature="e#708#709#0" expanded="true" />
-                <element signature="e#734#735#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChargeInfo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/core/ChargeInfo.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="9" column="50" lean-forward="true" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
+            <state relative-caret-position="490">
+              <caret line="121" column="25" lean-forward="false" selection-start-line="121" selection-start-column="25" selection-end-line="121" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="VisitorsResource.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/VisitorsResource.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VisitorsResourceTest.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="VisitorsResourceTest.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/VisitorsResourceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="16" column="28" lean-forward="false" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ParkResource.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/ParkResource.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="104" column="7" lean-forward="false" selection-start-line="104" selection-start-column="7" selection-end-line="104" selection-end-column="7" />
+            <state relative-caret-position="-333">
+              <caret line="42" column="27" lean-forward="false" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -139,12 +97,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>xxxx</find>
-      <find>memor</find>
-      <find>getAllNotes</find>
-      <find>parkswi</find>
-      <find>visitorswith</find>
-      <find>parkswith</find>
       <find>visitorsWithoutProperty</find>
       <find>withoutpr</find>
       <find>supersim</find>
@@ -169,6 +121,12 @@
       <find>//de</find>
       <find>======</find>
       <find>key</find>
+      <find>sear</find>
+      <find>orderR</find>
+      <find>setname</find>
+      <find>orderRes</find>
+      <find>note</find>
+      <find>noteWit</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -182,7 +140,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/com/bjbloemker/adapters/BasicVisitor.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjbloemker/core/GeoCords.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjbloemker/api/GeoCordsObj.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjbloemker/api/LocationInfoObj.java" />
@@ -231,8 +188,9 @@
         <option value="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/ParkResource.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/ParkResourceTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/OrderResource.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/NotesResource.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/VisitorsResourceTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/NotesResource.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/NotesResourceTest.java" />
       </list>
     </option>
   </component>
@@ -398,7 +356,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Pay4Park">
+  <component name="RunManager" selected="JUnit.NotesResourceTest">
     <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -418,7 +376,7 @@
       <module name="Pay4Park" />
       <envs />
     </configuration>
-    <configuration name="ParkResourceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="NotesResourceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="com.bjbloemker.resources.*" />
@@ -429,7 +387,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.bjbloemker.resources" />
-      <option name="MAIN_CLASS_NAME" value="com.bjbloemker.resources.ParkResourceTest" />
+      <option name="MAIN_CLASS_NAME" value="com.bjbloemker.resources.NotesResourceTest" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="-ea" />
@@ -443,7 +401,7 @@
       <envs />
       <patterns />
     </configuration>
-    <configuration name="ParkResourceTest.updateParkInvalidChargeData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="NotesResourceTest.searchNoteNoResults" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="com.bjbloemker.resources.*" />
@@ -454,8 +412,8 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.bjbloemker.resources" />
-      <option name="MAIN_CLASS_NAME" value="com.bjbloemker.resources.ParkResourceTest" />
-      <option name="METHOD_NAME" value="updateParkInvalidChargeData" />
+      <option name="MAIN_CLASS_NAME" value="com.bjbloemker.resources.NotesResourceTest" />
+      <option name="METHOD_NAME" value="searchNoteNoResults" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -468,7 +426,7 @@
       <envs />
       <patterns />
     </configuration>
-    <configuration name="ParkResourceTest.updateParkNoPaymentInfo" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="NotesResourceTest.searchNoteNullKey" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
           <option name="PATTERN" value="com.bjbloemker.resources.*" />
@@ -479,8 +437,33 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="com.bjbloemker.resources" />
-      <option name="MAIN_CLASS_NAME" value="com.bjbloemker.resources.ParkResourceTest" />
-      <option name="METHOD_NAME" value="updateParkNoPaymentInfo" />
+      <option name="MAIN_CLASS_NAME" value="com.bjbloemker.resources.NotesResourceTest" />
+      <option name="METHOD_NAME" value="searchNoteNullKey" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration name="NotesResourceTest.searchNoteOK" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.bjbloemker.resources.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="Pay4Park" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.bjbloemker.resources" />
+      <option name="MAIN_CLASS_NAME" value="com.bjbloemker.resources.NotesResourceTest" />
+      <option name="METHOD_NAME" value="searchNoteOK" />
       <option name="TEST_OBJECT" value="method" />
       <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
@@ -587,31 +570,6 @@
       <properties />
       <listeners />
     </configuration>
-    <configuration name="com.bjbloemker in Pay4Park" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.bjbloemker.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="Pay4Park" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.bjbloemker" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-    </configuration>
     <configuration name="com.bjbloemker.resources in Pay4Park" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -640,19 +598,19 @@
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Application.Pay4Park" />
       <item index="1" class="java.lang.String" itemvalue="Application.Main" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.ParkResourceTest" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.com.bjbloemker.resources in Pay4Park" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.ParkResourceTest.updateParkNoPaymentInfo" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.ParkResourceTest.updateParkInvalidChargeData" />
-      <item index="6" class="java.lang.String" itemvalue="JUnit.com.bjbloemker in Pay4Park" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.com.bjbloemker.resources in Pay4Park" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.NotesResourceTest.searchNoteNoResults" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.NotesResourceTest.searchNoteNullKey" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.NotesResourceTest" />
+      <item index="6" class="java.lang.String" itemvalue="JUnit.NotesResourceTest.searchNoteOK" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.com.bjbloemker in Pay4Park" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.com.bjbloemker.resources in Pay4Park" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.ParkResourceTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.ParkResourceTest.updateParkInvalidChargeData" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.ParkResourceTest.updateParkNoPaymentInfo" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.NotesResourceTest" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.NotesResourceTest.searchNoteOK" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.NotesResourceTest.searchNoteNoResults" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.NotesResourceTest.searchNoteNullKey" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.com.bjbloemker.resources in Pay4Park" />
       </list>
     </recent_temporary>
   </component>
@@ -676,44 +634,44 @@
       <workItem from="1542065931440" duration="87000" />
       <workItem from="1542066338878" duration="55000" />
       <workItem from="1542066614746" duration="5374000" />
-      <workItem from="1542119340136" duration="68018000" />
+      <workItem from="1542119340136" duration="71205000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ParkResourceTest - 2018.11.14 at 18h 26m 31s.xml">
-      <configuration name="ParkResourceTest" configurationId="JUnit" />
+    <history-entry file="NotesResourceTest - 2018.11.14 at 19h 33m 37s.xml">
+      <configuration name="NotesResourceTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ParkResourceTest - 2018.11.14 at 18h 29m 29s.xml">
-      <configuration name="ParkResourceTest" configurationId="JUnit" />
+    <history-entry file="NotesResourceTest - 2018.11.14 at 19h 35m 56s.xml">
+      <configuration name="NotesResourceTest" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ParkResourceTest - 2018.11.14 at 18h 30m 21s.xml">
-      <configuration name="ParkResourceTest" configurationId="JUnit" />
+    <history-entry file="NotesResourceTest_searchNoteNoResults - 2018.11.14 at 19h 29m 12s.xml">
+      <configuration name="NotesResourceTest.searchNoteNoResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ParkResourceTest - 2018.11.14 at 18h 32m 17s.xml">
-      <configuration name="ParkResourceTest" configurationId="JUnit" />
+    <history-entry file="NotesResourceTest_searchNoteNoResults - 2018.11.14 at 19h 32m 28s.xml">
+      <configuration name="NotesResourceTest.searchNoteNoResults" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ParkResourceTest - 2018.11.14 at 18h 33m 46s.xml">
-      <configuration name="ParkResourceTest" configurationId="JUnit" />
+    <history-entry file="NotesResourceTest_searchNoteNullKey - 2018.11.14 at 19h 31m 07s.xml">
+      <configuration name="NotesResourceTest.searchNoteNullKey" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ParkResourceTest_updateParkInvalidChargeData - 2018.11.14 at 18h 26m 49s.xml">
-      <configuration name="ParkResourceTest.updateParkInvalidChargeData" configurationId="JUnit" />
+    <history-entry file="NotesResourceTest_searchNoteOK - 2018.11.14 at 19h 34m 08s.xml">
+      <configuration name="NotesResourceTest.searchNoteOK" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ParkResourceTest_updateParkInvalidChargeData - 2018.11.14 at 18h 27m 29s.xml">
-      <configuration name="ParkResourceTest.updateParkInvalidChargeData" configurationId="JUnit" />
+    <history-entry file="NotesResourceTest_searchNoteOK - 2018.11.14 at 19h 35m 17s.xml">
+      <configuration name="NotesResourceTest.searchNoteOK" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ParkResourceTest_updateParkInvalidChargeData - 2018.11.14 at 18h 27m 59s.xml">
-      <configuration name="ParkResourceTest.updateParkInvalidChargeData" configurationId="JUnit" />
+    <history-entry file="NotesResourceTest_searchNoteOK - 2018.11.14 at 19h 35m 35s.xml">
+      <configuration name="NotesResourceTest.searchNoteOK" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="com_bjbloemker_in_Pay4Park - 2018.11.14 at 18h 38m 26s.xml">
-      <configuration name="com.bjbloemker in Pay4Park" configurationId="JUnit" />
+    <history-entry file="NotesResourceTest_searchNoteOK - 2018.11.14 at 19h 35m 48s.xml">
+      <configuration name="NotesResourceTest.searchNoteOK" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="com_bjbloemker_resources_in_Pay4Park - 2018.11.14 at 18h 33m 57s.xml">
+    <history-entry file="com_bjbloemker_resources_in_Pay4Park - 2018.11.14 at 19h 19m 47s.xml">
       <configuration name="com.bjbloemker.resources in Pay4Park" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="147821000" />
+    <option name="totallyTimeSpent" value="151008000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="6" />
@@ -740,7 +698,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.276" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32916668" sideWeight="0.50530505" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23690476" sideWeight="0.50530505" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3125" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -770,56 +728,11 @@
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="30" />
+      <option name="time" value="33" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/containers/jersey-container-servlet-core/2.25.1/jersey-container-servlet-core-2.25.1.jar!/org/glassfish/jersey/servlet/ServletContainer.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="78" column="0" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/io/dropwizard/dropwizard-jetty/1.3.2/dropwizard-jetty-1.3.2.jar!/io/dropwizard/jetty/NonblockingServletHolder.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="36" column="132" lean-forward="false" selection-start-line="36" selection-start-column="132" selection-end-line="36" selection-end-column="132" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/eclipse/jetty/jetty-servlet/9.4.10.v20180503/jetty-servlet-9.4.10.v20180503.jar!/org/eclipse/jetty/servlet/ServletHandler.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="1343" column="0" lean-forward="false" selection-start-line="1343" selection-start-column="0" selection-end-line="1343" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/core/jersey-common/2.25.1/jersey-common-2.25.1.jar!/org/glassfish/jersey/internal/Errors.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
-          <folding>
-            <element signature="e#4357#4493#0" expanded="true" />
-            <element signature="e#4492#4493#0" expanded="true" />
-            <element signature="e#8436#8437#0" expanded="true" />
-            <element signature="e#8479#8480#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/core/jersey-common/2.25.1/jersey-common-2.25.1.jar!/org/glassfish/jersey/process/internal/RequestScope.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="119" column="80" lean-forward="false" selection-start-line="119" selection-start-column="80" selection-end-line="119" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/glassfish/jersey/core/jersey-common/2.25.1/jersey-common-2.25.1.jar!/org/glassfish/jersey/process/internal/Stages.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="234">
@@ -1086,26 +999,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/JsonParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
-          <caret line="113" column="0" lean-forward="false" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/JsonParserTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="31" column="2" lean-forward="false" selection-start-line="31" selection-start-column="2" selection-end-line="33" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/GeneralResources.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="111" column="0" lean-forward="false" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1126,30 +1023,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/ParkResourceTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/OrderResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="82" column="45" lean-forward="false" selection-start-line="82" selection-start-column="45" selection-end-line="82" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/api/NoteObj.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="29" column="32" lean-forward="false" selection-start-line="29" selection-start-column="32" selection-end-line="29" selection-end-column="32" />
-          <folding>
-            <element signature="e#708#709#0" expanded="true" />
-            <element signature="e#734#735#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1157,22 +1035,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="9" column="50" lean-forward="true" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/NotesResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="35" column="12" lean-forward="false" selection-start-line="35" selection-start-column="12" selection-end-line="35" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/VisitorsResource.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1185,10 +1047,98 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Pay4Park.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay4park (3).iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay4park (2).iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pay4park (1).iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/GeneralResources.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="208" column="58" lean-forward="true" selection-start-line="208" selection-start-column="58" selection-end-line="208" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/VisitorsResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="47" column="20" lean-forward="false" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/OrderResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1591">
+          <caret line="132" column="0" lean-forward="false" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/JsonParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="153" column="0" lean-forward="false" selection-start-line="153" selection-start-column="0" selection-end-line="153" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/NotesResource.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="84" column="70" lean-forward="false" selection-start-line="84" selection-start-column="70" selection-end-line="84" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/ParkResourceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="231" column="50" lean-forward="true" selection-start-line="220" selection-start-column="8" selection-end-line="231" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/VisitorsResourceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="16" column="28" lean-forward="false" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
+        <state relative-caret-position="-333">
+          <caret line="42" column="27" lean-forward="false" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/NotesResourceTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="121" column="25" lean-forward="false" selection-start-line="121" selection-start-column="25" selection-end-line="121" selection-end-column="25" />
           <folding />
         </state>
       </provider>

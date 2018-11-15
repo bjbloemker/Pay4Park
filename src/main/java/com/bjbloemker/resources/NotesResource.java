@@ -34,9 +34,9 @@ public class NotesResource {
             key = key.toUpperCase();
             for (int i = 0; i < MemoryManager.notes.size(); i++) {
                 NoteObj note = MemoryManager.notes.get(i);
-                String title = note.getTitle();
-                String content = note.getText();
-                String date = note.getDate();
+                String title = note.getTitle().toUpperCase();
+                String content = note.getText().toUpperCase();
+                String date = note.getDate().toUpperCase();
 
                 if (title.contains(key) ||
                         content.contains(key) ||
@@ -83,7 +83,6 @@ public class NotesResource {
         NoteObj note = GeneralResources.findNoteByNoteId(id);
         if (note == null)
             return Response.status(Response.Status.NOT_FOUND).build();
-
         return Response.status(Response.Status.OK).entity(gson.toJson((Note) note)).build();
     }
 
