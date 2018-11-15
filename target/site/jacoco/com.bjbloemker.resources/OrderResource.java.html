@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker.resources</a> &gt; <span class="el_source">OrderResource.java</span></div><h1>OrderResource.java</h1><pre class="source lang-java linenums">package com.bjbloemker.resources;
+
+import com.bjbloemker.api.*;
+import com.bjbloemker.core.*;
+import com.bjbloemker.core.Error;
+import com.bjbloemker.exceptions.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+
+@Path(&quot;/parkpay/orders&quot;)
+@Produces(&quot;application/json&quot;)
+<span class="fc" id="L18">public class OrderResource {</span>
+<span class="fc" id="L19">    private static Gson gson = new Gson();</span>
+<span class="fc" id="L20">    private static com.google.gson.JsonParser parser = new com.google.gson.JsonParser();  //gson parser</span>
+    private static com.bjbloemker.resources.JsonParser localJsonParser;
+
+    @GET
+    @Path(&quot;/{oid}&quot;)
+    public Response getOrderDetail(@PathParam(&quot;oid&quot;) String id) {
+<span class="fc" id="L26">        OrderObj order = GeneralResources.findOrderById(id);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if(order == null)</span>
+<span class="fc" id="L28">            return Response.status(Response.Status.NOT_FOUND).build();</span>
+
+<span class="fc" id="L30">        JsonObject output = new JsonObject();</span>
+
+<span class="fc" id="L32">        String oid = order.getOIDAsString();</span>
+<span class="fc" id="L33">        String pid = order.getPIDAsString();</span>
+
+<span class="fc" id="L35">        VehicleObj vehicle = order.getVehicle();</span>
+<span class="fc" id="L36">        VisitorObj visitor = order.getVisitor();</span>
+<span class="fc" id="L37">        PaymentInfoObj paymentInfo = visitor.getPaymentInfo();</span>
+<span class="fc" id="L38">        PaymentProcessingObj paymentProcessing = order.getPaymentProcessing();</span>
+<span class="fc" id="L39">        ParkObj park = GeneralResources.findParkById(pid);</span>
+
+<span class="fc" id="L41">        double amount = GeneralResources.calculateCost(vehicle, park);</span>
+<span class="fc" id="L42">        String vid = visitor.getVIDAsString();</span>
+<span class="fc" id="L43">        String date = order.getDate();</span>
+
+<span class="fc" id="L45">        JsonObject orderVehicle = new JsonObject();</span>
+
+<span class="fc" id="L47">        orderVehicle.addProperty(&quot;state&quot;, vehicle.getState());</span>
+<span class="fc" id="L48">        orderVehicle.addProperty(&quot;plate&quot;, vehicle.getPlate());</span>
+<span class="fc" id="L49">        orderVehicle.addProperty(&quot;type&quot;, vehicle.getType());</span>
+
+<span class="fc" id="L51">        JsonObject orderVisitor = new JsonObject();</span>
+
+<span class="fc" id="L53">        orderVisitor.addProperty(&quot;name&quot;, visitor.getName());</span>
+<span class="fc" id="L54">        orderVisitor.addProperty(&quot;email&quot;, visitor.getEmail());</span>
+<span class="fc" id="L55">        JsonObject orderVisitorPaymentInfo = new JsonObject();</span>
+<span class="fc" id="L56">        orderVisitorPaymentInfo.addProperty(&quot;card&quot;, ((PaymentInfo) paymentInfo).getHiddenCard());</span>
+<span class="fc" id="L57">        orderVisitorPaymentInfo.addProperty(&quot;name_on_card&quot;, paymentInfo.getNameOnCard());</span>
+<span class="fc" id="L58">        orderVisitorPaymentInfo.addProperty(&quot;expiration_date&quot;, paymentInfo.getExpirationDate());</span>
+<span class="fc" id="L59">        orderVisitorPaymentInfo.addProperty(&quot;zip&quot;, paymentInfo.getZip());</span>
+<span class="fc" id="L60">        orderVisitor.add(&quot;payment_info&quot;,orderVisitorPaymentInfo);</span>
+
+<span class="fc" id="L62">        JsonObject orderPaymentProcessing = new JsonObject();</span>
+
+<span class="fc" id="L64">        orderPaymentProcessing.addProperty(&quot;card_transaction_id&quot;, paymentProcessing.getCardTransactionID());</span>
+<span class="fc" id="L65">        orderPaymentProcessing.addProperty(&quot;date_and_time&quot;, paymentProcessing.getDateAndTime());</span>
+
+        //put it all together
+
+<span class="fc" id="L69">        output.addProperty(&quot;oid&quot;, oid);</span>
+<span class="fc" id="L70">        output.addProperty(&quot;pid&quot;, pid);</span>
+<span class="fc" id="L71">        output.addProperty(&quot;amount&quot;, amount);</span>
+<span class="fc" id="L72">        output.addProperty(&quot;vid&quot;, vid);</span>
+<span class="fc" id="L73">        output.addProperty(&quot;date&quot;, date);</span>
+<span class="fc" id="L74">        output.add(&quot;vehicle&quot;, orderVehicle);</span>
+<span class="fc" id="L75">        output.add(&quot;visitor&quot;, orderVisitor);</span>
+<span class="fc" id="L76">        output.add(&quot;payment_processing&quot;, orderPaymentProcessing);</span>
+
+<span class="fc" id="L78">        return Response.status(Response.Status.OK).entity(gson.toJson(output)).build();</span>
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createOrder(String data){
+<span class="fc" id="L84">        JsonObject jsonObject = parser.parse(data).getAsJsonObject();</span>
+<span class="fc" id="L85">        ErrorObj error = new Error(&quot;http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation&quot;, &quot;Your request data didn't pass validation&quot;, Response.Status.BAD_REQUEST.getStatusCode(), &quot;/orders&quot;);</span>
+
+        String pid;
+        try {
+<span class="fc" id="L89">            pid = jsonObject.get(&quot;pid&quot;).getAsString();</span>
+<span class="fc" id="L90">        }catch (NullPointerException e){</span>
+<span class="fc" id="L91">            ((Error) error).setDetail(&quot;Valid pid must be present&quot;);</span>
+<span class="fc" id="L92">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L93">        }</span>
+
+        JsonObject vehicleAsJsonObject;
+        try{
+<span class="fc" id="L97">            vehicleAsJsonObject = jsonObject.get(&quot;vehicle&quot;).getAsJsonObject();</span>
+<span class="fc" id="L98">        }catch (NullPointerException e){</span>
+<span class="fc" id="L99">            ((Error) error).setDetail(&quot;Vehicle information must be present&quot;);</span>
+<span class="fc" id="L100">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L101">        }</span>
+
+        VehicleObj vehicle;
+        try {
+<span class="fc" id="L105">            vehicle = localJsonParser.JsonToVehicle(vehicleAsJsonObject);</span>
+<span class="fc" id="L106">        } catch (NullVehicleException e) {</span>
+<span class="fc" id="L107">            ((Error) error).setDetail(&quot;Vehicle must include state, plate, and type&quot;);</span>
+<span class="fc" id="L108">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L109">        } catch (InvalidVehicleTypeException e) {</span>
+<span class="fc" id="L110">            ((Error) error).setDetail(&quot;Vehicle must be of type MOTORCYCLE, CAR, or RV&quot;);</span>
+<span class="fc" id="L111">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L112">        }</span>
+
+        JsonObject visitorAsJsonObject;
+        try {
+<span class="fc" id="L116">            visitorAsJsonObject = jsonObject.get(&quot;visitor&quot;).getAsJsonObject();</span>
+<span class="fc" id="L117">        }catch (NullPointerException e){</span>
+<span class="fc" id="L118">            ((Error) error).setDetail(&quot;Visitor information must be present&quot;);</span>
+<span class="fc" id="L119">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L120">        }</span>
+
+
+        VisitorObj visitor;
+        try {
+<span class="fc" id="L125">            visitor = localJsonParser.JsonToVisitor(visitorAsJsonObject);</span>
+<span class="fc" id="L126">        } catch (NullCardException e) {</span>
+<span class="fc" id="L127">            ((Error) error).setDetail(&quot;Visitor must have valid card data that includes card number, name on card, expiration, and zip&quot;);</span>
+<span class="fc" id="L128">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L129">        } catch (InvalidCardException e) {</span>
+<span class="fc" id="L130">            ((Error) error).setDetail(&quot;Visitor card number must be 15 or 16 DIGITS to be valid&quot;);</span>
+<span class="fc" id="L131">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L132">        } catch (InvalidEmailException e) {</span>
+<span class="fc" id="L133">            ((Error) error).setDetail(&quot;Email provided did not come in a valid format&quot;);</span>
+<span class="fc" id="L134">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L135">        } catch (NullEmailException e) {</span>
+<span class="fc" id="L136">            ((Error) error).setDetail(&quot;Email was not provided&quot;);</span>
+<span class="fc" id="L137">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L138">        }</span>
+
+        OrderObj order;
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        if(MemoryManager.requestAddToVisitor(visitor) == null){</span>
+            //find the existing visitor
+<span class="nc" id="L143">            VisitorObj existingVisitor = GeneralResources.findVisitorByEmail(visitor.getEmail());</span>
+<span class="nc" id="L144">            order = new Order(pid, vehicle, existingVisitor);</span>
+<span class="nc" id="L145">        }else{</span>
+<span class="fc" id="L146">            order = new Order(pid, vehicle, visitor);</span>
+        }
+
+<span class="fc" id="L149">        MemoryManager.orders.add(order);</span>
+
+
+<span class="fc" id="L152">        JsonObject output = new JsonObject();</span>
+<span class="fc" id="L153">        output.addProperty(&quot;oid&quot;, order.getPIDAsString());</span>
+<span class="fc" id="L154">        String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L155">        return Response.status(Response.Status.CREATED).entity(outputAsString).header(&quot;Location&quot;, &quot;parkpay/orders/&quot; + order.getOIDAsString()).build();</span>
+    }
+
+    @GET
+    public Response searchOrder(@QueryParam(&quot;key&quot;) String key) {
+<span class="pc bpc" id="L160" title="1 of 4 branches missed.">        if(key == null || key.length() == 0){</span>
+<span class="fc" id="L161">            JsonElement output = GeneralResources.simplifyOrders(MemoryManager.orders);</span>
+<span class="fc" id="L162">            String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L163">            return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
+        }
+
+<span class="fc" id="L166">        key = key.toUpperCase();</span>
+<span class="fc" id="L167">        ArrayList&lt;OrderObj&gt; results = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        for(int i =0; i&lt; MemoryManager.orders.size(); i++){</span>
+<span class="fc" id="L170">            OrderObj order = (Order) MemoryManager.orders.get(i);</span>
+
+<span class="fc" id="L172">            String OIDAsString = order.getOIDAsString().toUpperCase();</span>
+<span class="fc" id="L173">            String PIDAsString = order.getPIDAsString().toUpperCase();</span>
+
+<span class="fc" id="L175">            VehicleObj vehicleOfOrder = order.getVehicle();</span>
+<span class="fc" id="L176">            String state = vehicleOfOrder.getState().toUpperCase();</span>
+<span class="fc" id="L177">            String plate = vehicleOfOrder.getPlate().toUpperCase();</span>
+<span class="fc" id="L178">            String type = vehicleOfOrder.getType().toUpperCase();</span>
+
+<span class="fc" id="L180">            VisitorObj visitor = order.getVisitor();</span>
+<span class="fc" id="L181">            String VIDAsString = visitor.getVIDAsString().toUpperCase();</span>
+<span class="fc" id="L182">            String visitorName = visitor.getName().toUpperCase();</span>
+<span class="fc" id="L183">            String visitorEmail = visitor.getEmail().toUpperCase();</span>
+
+<span class="fc" id="L185">            PaymentInfoObj paymentInfoOfVisitorOfOrder = visitor.getPaymentInfo();</span>
+<span class="fc" id="L186">            String card = paymentInfoOfVisitorOfOrder.getCard().toUpperCase();</span>
+<span class="fc" id="L187">            String nameOnCard = paymentInfoOfVisitorOfOrder.getNameOnCard().toUpperCase();</span>
+<span class="fc" id="L188">            String expirationDate = paymentInfoOfVisitorOfOrder.getExpirationDate().toUpperCase();</span>
+<span class="fc" id="L189">            String zipCode = (paymentInfoOfVisitorOfOrder.getZip() + &quot;&quot;).toUpperCase();</span>
+
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">            if(OIDAsString.contains(key) ||</span>
+<span class="pc bpc" id="L192" title="1 of 2 branches missed.">                    PIDAsString.contains(key) ||</span>
+<span class="pc bpc" id="L193" title="1 of 2 branches missed.">                    state.contains(key) ||</span>
+<span class="pc bpc" id="L194" title="1 of 2 branches missed.">                    plate.contains(key) ||</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">                    type.contains(key) ||</span>
+<span class="pc bpc" id="L196" title="1 of 2 branches missed.">                    VIDAsString.contains(key) ||</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">                    visitorName.contains(key) ||</span>
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">                    visitorEmail.contains(key) ||</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">                    card.contains(key) ||</span>
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">                    nameOnCard.contains(key) ||</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">                    expirationDate.contains(key) ||</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">                    zipCode.contains(key))</span>
+<span class="fc" id="L203">                results.add(order);</span>
+        }
+
+<span class="fc" id="L206">        JsonElement output = GeneralResources.simplifyOrders(results);</span>
+<span class="fc" id="L207">        String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L208">        return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

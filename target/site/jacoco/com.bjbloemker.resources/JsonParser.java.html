@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JsonParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker.resources</a> &gt; <span class="el_source">JsonParser.java</span></div><h1>JsonParser.java</h1><pre class="source lang-java linenums">package com.bjbloemker.resources;
+
+import com.bjbloemker.api.*;
+import com.bjbloemker.core.*;
+import com.bjbloemker.exceptions.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
+<span class="nc" id="L9">public class JsonParser {</span>
+
+    public static LocationInfo JsonToLocation(JsonObject locationJson) throws NullAddressException, NullNameException, NullPhoneException, NullWebException, NullGeoException {
+<span class="fc" id="L12">        LocationInfoObj location = new LocationInfo();</span>
+        try {
+<span class="fc" id="L14">            location.setAddress(locationJson.get(&quot;address&quot;).getAsString());</span>
+<span class="fc" id="L15">        }catch (NullPointerException e){</span>
+<span class="fc" id="L16">            throw new NullAddressException(&quot;Address cannot be null&quot;);</span>
+<span class="fc" id="L17">        }</span>
+        try {
+<span class="fc" id="L19">            location.setName(locationJson.get(&quot;name&quot;).getAsString());</span>
+<span class="fc" id="L20">        }catch (NullPointerException e){</span>
+<span class="fc" id="L21">            throw new NullNameException(&quot;Name cannot be null&quot;);</span>
+<span class="fc" id="L22">        }</span>
+
+        try{
+<span class="fc" id="L25">            location.setRegion(locationJson.get(&quot;region&quot;).getAsString());</span>
+<span class="fc" id="L26">        }catch (NullPointerException e){</span>
+<span class="fc" id="L27">            location.setRegion(&quot;&quot;);</span>
+<span class="fc" id="L28">        }</span>
+
+        try{
+<span class="fc" id="L31">            location.setPhone(locationJson.get(&quot;phone&quot;).getAsString());</span>
+<span class="fc" id="L32">        }catch (NullPointerException e){</span>
+<span class="fc" id="L33">            throw new NullPhoneException(&quot;Name cannot be null&quot;);</span>
+<span class="fc" id="L34">        }</span>
+
+        try {
+<span class="fc" id="L37">            location.setWeb(locationJson.get(&quot;web&quot;).getAsString());</span>
+<span class="fc" id="L38">        }catch(NullPointerException e){</span>
+<span class="fc" id="L39">            throw new NullWebException(&quot;Web cannot be null&quot;);</span>
+<span class="fc" id="L40">        }</span>
+
+<span class="fc" id="L42">        JsonObject geoJson = null;</span>
+        try {
+<span class="fc" id="L44">            geoJson = locationJson.get(&quot;geo&quot;).getAsJsonObject();</span>
+<span class="fc" id="L45">        }catch (NullPointerException e){</span>
+<span class="fc" id="L46">            throw new NullGeoException(&quot;Geo cords cannot be null&quot;);</span>
+<span class="fc" id="L47">        }</span>
+<span class="fc" id="L48">        GeoCordsObj geoCords = JsonToGeoCords(geoJson);</span>
+<span class="fc" id="L49">        location.setGeo(geoCords);</span>
+
+<span class="fc" id="L51">        return (LocationInfo) location;</span>
+    }
+
+    public static GeoCords JsonToGeoCords(JsonObject geoJson) throws NullGeoException {
+<span class="fc" id="L55">        GeoCordsObj geoCords = new GeoCords();</span>
+
+        try {
+<span class="fc" id="L58">            geoCords.setLat(geoJson.get(&quot;lat&quot;).getAsFloat());</span>
+<span class="fc" id="L59">            geoCords.setLng(geoJson.get(&quot;lng&quot;).getAsFloat());</span>
+<span class="fc" id="L60">        }catch (NullPointerException e){</span>
+<span class="fc" id="L61">            throw new NullGeoException(&quot;Geo cords cannot be null&quot;);</span>
+<span class="fc" id="L62">        }</span>
+<span class="fc" id="L63">        return (GeoCords) geoCords;</span>
+    }
+
+
+    public static ChargeInfo JsonToChargeInfo(JsonObject locationJson) throws InvalidPriceException, NullChargeInfoException {
+<span class="fc" id="L68">        ChargeInfoObj chargeInfo = new ChargeInfo();</span>
+
+<span class="fc" id="L70">        double [] motorcyclePrices = new double[2];</span>
+
+        JsonArray motorcyclePricesAsJsonArray;
+
+        try{
+<span class="fc" id="L75">            motorcyclePricesAsJsonArray = locationJson.get(&quot;motorcycle&quot;).getAsJsonArray();</span>
+<span class="nc" id="L76">        }catch (NullPointerException e){</span>
+<span class="nc" id="L77">            throw new NullChargeInfoException(&quot;Motorcycle charge info must be present&quot;);</span>
+<span class="fc" id="L78">        }</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        for(int i = 0; i &lt; motorcyclePrices.length; i++)</span>
+<span class="fc" id="L80">            motorcyclePrices[i] = motorcyclePricesAsJsonArray.get(i).getAsDouble();</span>
+
+
+
+<span class="fc" id="L84">        double [] carPrices = new double[2];</span>
+        JsonArray carPricesAsJsonArray;
+        try{
+<span class="fc" id="L87">            carPricesAsJsonArray = locationJson.get(&quot;car&quot;).getAsJsonArray();</span>
+<span class="nc" id="L88">        }catch (NullPointerException e){</span>
+<span class="nc" id="L89">            throw new NullChargeInfoException(&quot;Car charge info must be present&quot;);</span>
+<span class="fc" id="L90">        }</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for(int i = 0; i &lt; carPrices.length; i++)</span>
+<span class="fc" id="L92">            carPrices[i] = carPricesAsJsonArray.get(i).getAsDouble();</span>
+
+
+<span class="fc" id="L95">        double [] rvPrices = new double[2];</span>
+        JsonArray rvPricesAsJsonArray;
+        try{
+<span class="fc" id="L98">            rvPricesAsJsonArray = locationJson.get(&quot;rv&quot;).getAsJsonArray();</span>
+<span class="nc" id="L99">        }catch (NullPointerException e){</span>
+<span class="nc" id="L100">            throw new NullChargeInfoException(&quot;RV charge info must be present&quot;);</span>
+<span class="fc" id="L101">        }</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for(int i = 0; i &lt; rvPrices.length; i++)</span>
+<span class="fc" id="L103">            rvPrices[i] = rvPricesAsJsonArray.get(i).getAsDouble();</span>
+
+        //validate prices
+<span class="fc bfc" id="L106" title="All 2 branches covered.">        for(int i = 0; i &lt; motorcyclePrices.length; i++)</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">            if(motorcyclePrices[i] &lt; 0)</span>
+<span class="fc" id="L108">                throw new InvalidPriceException(&quot;Motorcycle prices must not be negative&quot;);</span>
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        for(int i = 0; i &lt; carPrices.length; i++)</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">            if(carPrices[i] &lt; 0)</span>
+<span class="fc" id="L112">                throw new InvalidPriceException(&quot;Car prices must not be negative&quot;);</span>
+
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        for(int i = 0; i &lt; rvPrices.length; i++)</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">            if(rvPrices[i] &lt; 0)</span>
+<span class="fc" id="L116">                throw new InvalidPriceException(&quot;RV prices must not be negative&quot;);</span>
+
+
+<span class="fc" id="L119">        chargeInfo.setMotorcycle(motorcyclePrices);</span>
+<span class="fc" id="L120">        chargeInfo.setCar(carPrices);</span>
+<span class="fc" id="L121">        chargeInfo.setRv(rvPrices);</span>
+
+<span class="fc" id="L123">        return (ChargeInfo) chargeInfo;</span>
+    }
+
+
+    public static Vehicle JsonToVehicle(JsonObject vehicleJson) throws NullVehicleException, InvalidVehicleTypeException {
+        String state;
+        String plate;
+        String type;
+
+        try{
+<span class="fc" id="L133">            state = vehicleJson.get(&quot;state&quot;).getAsString();</span>
+<span class="fc" id="L134">            plate = vehicleJson.get(&quot;plate&quot;).getAsString();</span>
+<span class="fc" id="L135">            type = vehicleJson.get(&quot;type&quot;).getAsString();</span>
+
+<span class="fc" id="L137">        }catch (NullPointerException e){</span>
+<span class="fc" id="L138">            throw new NullVehicleException(&quot;Vehcile must contain state, plate, and type&quot;);</span>
+<span class="fc" id="L139">        }</span>
+
+<span class="pc bpc" id="L141" title="1 of 6 branches missed.">        if(!type.equalsIgnoreCase(&quot;motorcycle&quot;) &amp;&amp; !type.equalsIgnoreCase(&quot;car&quot;) &amp;&amp; !type.equalsIgnoreCase(&quot;rv&quot;)){</span>
+<span class="fc" id="L142">            throw new InvalidVehicleTypeException(&quot;Vehicle type must be MOTORCYCLE, CAR, or RV&quot;);</span>
+        }
+
+<span class="fc" id="L145">        VehicleObj vehicle = new Vehicle(state, plate, type);</span>
+<span class="fc" id="L146">        return (Vehicle) vehicle;</span>
+    }
+
+    public static Visitor JsonToVisitor(JsonObject visitorJson) throws NullCardException, InvalidCardException, NullEmailException, InvalidEmailException {
+        String email;
+        String name;
+
+        try{
+<span class="fc" id="L154">            name = visitorJson.get(&quot;name&quot;).getAsString();</span>
+<span class="nc" id="L155">        }catch(NullPointerException e){</span>
+<span class="nc" id="L156">            name = &quot;&quot;;</span>
+<span class="fc" id="L157">        }</span>
+
+        try {
+<span class="fc" id="L160">            email = visitorJson.get(&quot;email&quot;).getAsString();</span>
+<span class="fc" id="L161">        }catch (NullPointerException e){</span>
+<span class="fc" id="L162">            throw new NullEmailException(&quot;Email was not provided&quot;);</span>
+<span class="fc" id="L163">        }</span>
+
+
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if(email.length() == 0)</span>
+<span class="fc" id="L167">            throw new NullEmailException(&quot;Email was not provided&quot;);</span>
+
+<span class="pc bpc" id="L169" title="1 of 10 branches missed.">        if(!email.contains(&quot;@&quot;) || email.startsWith(&quot;@&quot;) || !email.contains(&quot;.&quot;) || email.length() &lt; 5 || email.contains(&quot; &quot;))</span>
+<span class="fc" id="L170">            throw new InvalidEmailException(&quot;Email provided is not valid&quot;);</span>
+
+<span class="fc" id="L172">        JsonObject paymentInfoAsJsonObject = visitorJson.get(&quot;payment_info&quot;).getAsJsonObject();</span>
+<span class="fc" id="L173">        PaymentInfoObj paymentInfo = null;</span>
+<span class="fc" id="L174">        paymentInfo = JsonToPaymentInfo(paymentInfoAsJsonObject);</span>
+
+<span class="fc" id="L176">        VisitorObj visitor = new Visitor(name, email, (PaymentInfo) paymentInfo);</span>
+<span class="fc" id="L177">        return (Visitor) visitor;</span>
+    }
+
+    public static PaymentInfo JsonToPaymentInfo(JsonObject paymentInfoJson) throws NullCardException, InvalidCardException {
+
+        String card;
+        String nameOnCard;
+        String expiration;
+        int zip;
+        try{
+<span class="fc" id="L187">            card = paymentInfoJson.get(&quot;card&quot;).getAsString();</span>
+<span class="fc" id="L188">            nameOnCard = paymentInfoJson.get(&quot;name_on_card&quot;).getAsString();</span>
+<span class="fc" id="L189">            expiration = paymentInfoJson.get(&quot;expiration_date&quot;).getAsString();</span>
+<span class="fc" id="L190">            zip = paymentInfoJson.get(&quot;zip&quot;).getAsInt();</span>
+<span class="fc" id="L191">        }catch (NullPointerException e){</span>
+<span class="fc" id="L192">            throw new NullCardException(&quot;Card must have card number, name on card, expiration, and zip&quot;);</span>
+<span class="fc" id="L193">        }</span>
+
+<span class="pc bpc" id="L195" title="2 of 6 branches missed.">        if((card.length() != 16 &amp;&amp; card.length() != 15) || !card.matches(&quot;[0-9]+&quot;))</span>
+<span class="fc" id="L196">            throw new InvalidCardException(&quot;Card must be 15 or 16 DIGITS to pass validation&quot;);</span>
+
+
+<span class="fc" id="L199">        PaymentInfoObj paymentInfo = new PaymentInfo(card, nameOnCard, expiration, zip);</span>
+<span class="fc" id="L200">        return (PaymentInfo) paymentInfo;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

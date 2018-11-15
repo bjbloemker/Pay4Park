@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentInfoObj.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker.api</a> &gt; <span class="el_source">PaymentInfoObj.java</span></div><h1>PaymentInfoObj.java</h1><pre class="source lang-java linenums">package com.bjbloemker.api;
+
+import com.google.gson.annotations.SerializedName;
+
+public abstract class PaymentInfoObj {
+    protected String card;
+    @SerializedName(&quot;name_on_card&quot;)
+    protected String nameOnCard;
+    @SerializedName(&quot;expiration_date&quot;)
+    protected String expirationDate;
+    protected int zip;
+
+<span class="fc" id="L13">    public PaymentInfoObj(String card, String nameOnCard, String expirationDate, int zip) {</span>
+<span class="fc" id="L14">        this.card = card;</span>
+<span class="fc" id="L15">        this.nameOnCard = nameOnCard;</span>
+<span class="fc" id="L16">        this.expirationDate = expirationDate;</span>
+<span class="fc" id="L17">        this.zip = zip;</span>
+<span class="fc" id="L18">    }</span>
+
+    public String getCard() {
+<span class="fc" id="L21">        return card;</span>
+    }
+
+    public String getNameOnCard() {
+<span class="fc" id="L25">        return nameOnCard;</span>
+    }
+
+    public String getExpirationDate() {
+<span class="fc" id="L29">        return expirationDate;</span>
+    }
+
+    public int getZip() {
+<span class="fc" id="L33">        return zip;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisitorsResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker.resources</a> &gt; <span class="el_source">VisitorsResource.java</span></div><h1>VisitorsResource.java</h1><pre class="source lang-java linenums">package com.bjbloemker.resources;
+
+import com.bjbloemker.api.*;
+import com.bjbloemker.core.MemoryManager;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+
+@Path(&quot;/parkpay/visitors&quot;)
+@Produces(&quot;application/json&quot;)
+<span class="fc" id="L15">public class VisitorsResource {</span>
+<span class="fc" id="L16">    private static Gson gson = new Gson();</span>
+
+    @GET
+    @Path(&quot;/{vid}&quot;)
+    public Response getVisitorDetail(@PathParam(&quot;vid&quot;) String id) {
+<span class="fc" id="L21">        VisitorObj visitor = GeneralResources.findVisitorById(id);</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        if(visitor == null)</span>
+<span class="fc" id="L23">            return Response.status(Response.Status.NOT_FOUND).build();</span>
+
+<span class="fc" id="L25">        JsonObject output = new JsonObject();</span>
+
+<span class="fc" id="L27">        output.addProperty(&quot;vid&quot;, visitor.getVIDAsString());</span>
+
+<span class="fc" id="L29">        JsonObject innerVisitor = new JsonObject();</span>
+<span class="fc" id="L30">        innerVisitor.addProperty(&quot;name&quot;, visitor.getName());</span>
+<span class="fc" id="L31">        innerVisitor.addProperty(&quot;email&quot;, visitor.getEmail());</span>
+
+<span class="fc" id="L33">        output.add(&quot;visitor&quot;, innerVisitor);</span>
+
+<span class="fc" id="L35">        ArrayList&lt;OrderObj&gt; ordersByVisitor = GeneralResources.getAllOrdersFromVisitor(visitor.getVIDAsString());</span>
+<span class="fc" id="L36">        JsonElement toPutOrders  = GeneralResources.superSimplifyOrders(ordersByVisitor);</span>
+<span class="fc" id="L37">        output.add(&quot;orders&quot;, toPutOrders);</span>
+
+
+<span class="fc" id="L40">        ArrayList&lt;NoteObj&gt; notesByVisitor = GeneralResources.getAllNotesFromVisitor(visitor.getVIDAsString());</span>
+<span class="fc" id="L41">        JsonElement toPutNotes  = GeneralResources.superSimplifyNotes(notesByVisitor);</span>
+<span class="fc" id="L42">        output.add(&quot;notes&quot;, toPutNotes);</span>
+
+<span class="fc" id="L44">        return Response.status(Response.Status.OK).entity(gson.toJson(output)).build();</span>
+    }
+
+    @GET
+    public Response searchVisitors(@QueryParam(&quot;key&quot;) String key) {
+
+<span class="pc bpc" id="L50" title="1 of 4 branches missed.">        if(key == null || key.length() == 0){</span>
+<span class="fc" id="L51">            JsonElement output = GeneralResources.visitorsWithoutProperty(MemoryManager.visitors, &quot;payment_info&quot;);</span>
+<span class="fc" id="L52">            String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L53">            return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
+        }
+
+<span class="fc" id="L56">        key = key.toUpperCase();</span>
+<span class="fc" id="L57">        ArrayList&lt;VisitorObj&gt; results = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for(int i =0; i &lt; MemoryManager.visitors.size(); i++){</span>
+<span class="fc" id="L60">            VisitorObj visitor = MemoryManager.visitors.get(i);</span>
+
+
+<span class="fc" id="L63">            String VIDAsString = visitor.getVIDAsString().toUpperCase();</span>
+<span class="fc" id="L64">            String visitorName = visitor.getName().toUpperCase();</span>
+<span class="fc" id="L65">            String visitorEmail = visitor.getEmail().toUpperCase();</span>
+
+
+<span class="fc" id="L68">            PaymentInfoObj paymentInfoOfVisitorOfOrder = visitor.getPaymentInfo();</span>
+<span class="fc" id="L69">            String card = paymentInfoOfVisitorOfOrder.getCard().toUpperCase();</span>
+<span class="fc" id="L70">            String nameOnCard = paymentInfoOfVisitorOfOrder.getNameOnCard().toUpperCase();</span>
+<span class="fc" id="L71">            String expirationDate = paymentInfoOfVisitorOfOrder.getExpirationDate().toUpperCase();</span>
+<span class="fc" id="L72">            String zipCode = (paymentInfoOfVisitorOfOrder.getZip() + &quot;&quot;).toUpperCase();</span>
+
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">            if(VIDAsString.contains(key) ||</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">                    visitorName.contains(key) ||</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">                    visitorEmail.contains(key) ||</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">                    card.contains(key) ||</span>
+<span class="pc bpc" id="L78" title="1 of 2 branches missed.">                    nameOnCard.contains(key) ||</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">                    expirationDate.contains(key) ||</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">                    zipCode.contains(key))</span>
+<span class="fc" id="L81">                results.add(visitor);</span>
+        }
+
+<span class="fc" id="L84">        JsonElement output = GeneralResources.simplifyVisitors(results);</span>
+<span class="fc" id="L85">        String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L86">        return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
