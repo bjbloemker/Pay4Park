@@ -85,6 +85,36 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.19.1</version>
+        <configuration>
+          <systemPropertyVariables>
+            <propertyName>firefox</propertyName>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.18.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+            <configuration>
+              <forkCount>3</forkCount>
+              <reuseForks>true</reuseForks>
+              <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>
+              <testFailureIgnore>true</testFailureIgnore>
+              <includes>
+                <includesFile>**/*Test.java</includesFile>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
