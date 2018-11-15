@@ -13,5 +13,4 @@ public class Park extends ParkObj{
         super(location_info, payment_info);
     }
 
-
 }

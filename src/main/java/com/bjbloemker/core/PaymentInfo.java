@@ -2,14 +2,6 @@ package com.bjbloemker.core;
 
 import com.bjbloemker.api.PaymentInfoObj;
 
-/*
-"payment_info": {
-          "card": "4388567890987654",
-          "name_on_card": "John Doe",
-          "expiration_date": "12/19",
-          "zip": 60616
-        }
- */
 public class PaymentInfo extends PaymentInfoObj{
 
 
@@ -17,13 +9,10 @@ public class PaymentInfo extends PaymentInfoObj{
         super(card, nameOnCard, expirationDate, zip);
     }
 
-    @Override
-    public String toString() {
-        return "PaymentInfo{" +
-                "card=" + card +
-                ", nameOnCard='" + nameOnCard + '\'' +
-                ", expirationDate='" + expirationDate + '\'' +
-                ", zip=" + zip +
-                '}';
+    public String getHiddenCard(){
+        String lastFour = card.substring(card.length()-4);
+        return "xxxxxxxxxxx" + lastFour;
+
     }
+
 }

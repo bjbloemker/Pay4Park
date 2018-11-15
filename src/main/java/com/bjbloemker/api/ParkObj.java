@@ -27,6 +27,10 @@ public abstract class ParkObj {
         return this.locationInfo;
     }
 
+    public ChargeInfoObj getPaymentInfo() {
+        return paymentInfo;
+    }
+
     public String getPIDAsString(){
         return pid.toString();
     }

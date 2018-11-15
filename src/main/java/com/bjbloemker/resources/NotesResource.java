@@ -10,6 +10,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
@@ -27,20 +28,15 @@ public class NotesResource {
         if(key == null || key.length() == 0)
             keyPresent = false;
 
-
         ArrayList<NoteObj> results = new ArrayList<>();
 
         if(keyPresent) {
-
-
-
             key = key.toUpperCase();
-
             for (int i = 0; i < MemoryManager.notes.size(); i++) {
                 NoteObj note = MemoryManager.notes.get(i);
-                String title = note.getTitle();
-                String content = note.getText();
-                String date = note.getDate();
+                String title = note.getTitle().toUpperCase();
+                String content = note.getText().toUpperCase();
+                String date = note.getDate().toUpperCase();
 
                 if (title.contains(key) ||
                         content.contains(key) ||
@@ -78,7 +74,6 @@ public class NotesResource {
                 primaryArray.add(outputObject);
             }
         }
-
         return Response.status(Response.Status.OK).entity(gson.toJson(primaryArray)).build();
     }
 
@@ -88,9 +83,10 @@ public class NotesResource {
         NoteObj note = GeneralResources.findNoteByNoteId(id);
         if (note == null)
             return Response.status(Response.Status.NOT_FOUND).build();
-
         return Response.status(Response.Status.OK).entity(gson.toJson((Note) note)).build();
     }
 
+
+    //TODO: UPDATE NOTE
 
 }

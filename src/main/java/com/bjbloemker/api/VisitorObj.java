@@ -1,6 +1,7 @@
 package com.bjbloemker.api;
 
 import com.bjbloemker.core.PaymentInfo;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.UUID;
 
@@ -9,9 +10,10 @@ public abstract class VisitorObj {
     protected UUID vid;
     protected String name;
     protected String email;
-    protected PaymentInfo paymentInfo;
+    @SerializedName("payment_info")
+    protected PaymentInfoObj paymentInfo;
 
-    public VisitorObj(String name, String email, PaymentInfo paymentInfo) {
+    public VisitorObj(String name, String email, PaymentInfoObj paymentInfo) {
         this.vid = UUID.randomUUID();
         this.name = name;
         this.email = email;
@@ -30,7 +32,7 @@ public abstract class VisitorObj {
         return email;
     }
 
-    public PaymentInfo getPaymentInfo() {
+    public PaymentInfoObj getPaymentInfo() {
         return paymentInfo;
     }
 }

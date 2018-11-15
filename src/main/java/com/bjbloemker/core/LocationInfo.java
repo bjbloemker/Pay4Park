@@ -1,16 +1,5 @@
 package com.bjbloemker.core;
 
-/*
-"location_info": {
-        "name": "Castle Rock",
-        "region": "Northwestern Illinois",
-        "address": "1365 W. Castle Rd, Oregon IL 61061",
-        "phone": "815-732-7329",
-        "web": "https://www.dnr.illinois.gov/Parks/Pages/CastleRock.aspx",
-        "geo": { "lat": 41.978, "lng": -89.364 }
- },
- */
-
 import com.bjbloemker.api.GeoCordsObj;
 import com.bjbloemker.api.LocationInfoObj;
 

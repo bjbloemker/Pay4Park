@@ -16,7 +16,7 @@ public abstract class NoteObj {
 
     public NoteObj(String title, String text, String pid, String vid) {
         this.nid = UUID.randomUUID();
-        this.date = new SimpleDateFormat("yyyy.MM.dd").format(new Date());
+        this.date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         this.title = title;
         this.text = text;
         this.pid = pid;
@@ -25,6 +25,10 @@ public abstract class NoteObj {
 
     public String getNIDAsString() {
         return nid.toString();
+    }
+
+    public String getVIDAsString() {
+        return vid;
     }
 
     public String getDate() {
