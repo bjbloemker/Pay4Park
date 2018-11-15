@@ -145,6 +145,75 @@ class OrderResourceTest extends DataForTesting{
 
         String expected = "[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getPIDAsString()+"\",\"date\":\""+order.getDate()+"\",\"type\":\""+order.getVehicle().getType()+"\",\"amount\":"+GeneralResources.calculateCost(vehicle, park)+"}]";
         assertEquals(expected, result.getEntity());
+
+
+
+        //bellow is for the purposes of branch testing
+
+        //oid
+        result = OrderResource.searchOrder(order.getOIDAsString());
+        park = MemoryManager.parks.get(0);
+        vehicle  = order.getVehicle();
+        expected = "[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getPIDAsString()+"\",\"date\":\""+order.getDate()+"\",\"type\":\""+order.getVehicle().getType()+"\",\"amount\":"+GeneralResources.calculateCost(vehicle, park)+"}]";
+        assertEquals(expected, result.getEntity());
+
+        //state
+        result = OrderResource.searchOrder("IL");
+        park = MemoryManager.parks.get(0);
+        vehicle  = order.getVehicle();
+        expected = "[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getPIDAsString()+"\",\"date\":\""+order.getDate()+"\",\"type\":\""+order.getVehicle().getType()+"\",\"amount\":"+GeneralResources.calculateCost(vehicle, park)+"}]";
+        assertEquals(expected, result.getEntity());
+
+        //Plate
+        result = OrderResource.searchOrder("ME8");
+        park = MemoryManager.parks.get(0);
+        vehicle  = order.getVehicle();
+        expected = "[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getPIDAsString()+"\",\"date\":\""+order.getDate()+"\",\"type\":\""+order.getVehicle().getType()+"\",\"amount\":"+GeneralResources.calculateCost(vehicle, park)+"}]";
+        assertEquals(expected, result.getEntity());
+
+        //Plate
+        result = OrderResource.searchOrder(order.getVisitor().getVIDAsString());
+        park = MemoryManager.parks.get(0);
+        vehicle  = order.getVehicle();
+        expected = "[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getPIDAsString()+"\",\"date\":\""+order.getDate()+"\",\"type\":\""+order.getVehicle().getType()+"\",\"amount\":"+GeneralResources.calculateCost(vehicle, park)+"}]";
+        assertEquals(expected, result.getEntity());
+
+        //visitor name
+        result = OrderResource.searchOrder("jANe");
+        park = MemoryManager.parks.get(0);
+        vehicle  = order.getVehicle();
+        expected = "[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getPIDAsString()+"\",\"date\":\""+order.getDate()+"\",\"type\":\""+order.getVehicle().getType()+"\",\"amount\":"+GeneralResources.calculateCost(vehicle, park)+"}]";
+        assertEquals(expected, result.getEntity());
+
+        //visitor email
+        result = OrderResource.searchOrder("@");
+        park = MemoryManager.parks.get(0);
+        vehicle  = order.getVehicle();
+        expected = "[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getPIDAsString()+"\",\"date\":\""+order.getDate()+"\",\"type\":\""+order.getVehicle().getType()+"\",\"amount\":"+GeneralResources.calculateCost(vehicle, park)+"}]";
+        assertEquals(expected, result.getEntity());
+
+        //zip
+        result = OrderResource.searchOrder("60616");
+        park = MemoryManager.parks.get(0);
+        vehicle  = order.getVehicle();
+        expected = "[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getPIDAsString()+"\",\"date\":\""+order.getDate()+"\",\"type\":\""+order.getVehicle().getType()+"\",\"amount\":"+GeneralResources.calculateCost(vehicle, park)+"}]";
+        assertEquals(expected, result.getEntity());
+
+        //expiration
+        result = OrderResource.searchOrder("3/22");
+        park = MemoryManager.parks.get(0);
+        vehicle  = order.getVehicle();
+        expected = "[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getPIDAsString()+"\",\"date\":\""+order.getDate()+"\",\"type\":\""+order.getVehicle().getType()+"\",\"amount\":"+GeneralResources.calculateCost(vehicle, park)+"}]";
+        assertEquals(expected, result.getEntity());
+
+        //card number
+        result = OrderResource.searchOrder("22233");
+        park = MemoryManager.parks.get(0);
+        vehicle  = order.getVehicle();
+        expected = "[{\"oid\":\""+order.getOIDAsString()+"\",\"pid\":\""+order.getPIDAsString()+"\",\"date\":\""+order.getDate()+"\",\"type\":\""+order.getVehicle().getType()+"\",\"amount\":"+GeneralResources.calculateCost(vehicle, park)+"}]";
+        assertEquals(expected, result.getEntity());
+
+
     }
 
     private void buildParkAndSetupOrder(){

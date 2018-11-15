@@ -112,6 +112,39 @@ class ParkResourceTest extends DataForTesting{
         Response result = ParkResource.searchPark("Grant");
         String expected = "[{\"pid\":\""+pid+"\",\"location_info\":{\"name\":\""+parkName+"\",\"region\":\""+region+"\",\"address\":\""+address+"\",\"phone\":\""+phone+"\",\"web\":\""+web+"\",\"geo\":{\"lat\":"+geoLat+",\"lng\":"+geoLng+"}}}]";
         assertEquals(expected, result.getEntity());
+
+        //the following is for branch testing
+
+        //name
+        result = ParkResource.searchPark("park");
+        expected = "[{\"pid\":\""+pid+"\",\"location_info\":{\"name\":\""+parkName+"\",\"region\":\""+region+"\",\"address\":\""+address+"\",\"phone\":\""+phone+"\",\"web\":\""+web+"\",\"geo\":{\"lat\":"+geoLat+",\"lng\":"+geoLng+"}}}]";
+        assertEquals(expected, result.getEntity());
+
+        //phone
+        result = ParkResource.searchPark("(513)");
+        expected = "[{\"pid\":\""+pid+"\",\"location_info\":{\"name\":\""+parkName+"\",\"region\":\""+region+"\",\"address\":\""+address+"\",\"phone\":\""+phone+"\",\"web\":\""+web+"\",\"geo\":{\"lat\":"+geoLat+",\"lng\":"+geoLng+"}}}]";
+        assertEquals(expected, result.getEntity());
+
+        //phone
+        result = ParkResource.searchPark(".gov");
+        expected = "[{\"pid\":\""+pid+"\",\"location_info\":{\"name\":\""+parkName+"\",\"region\":\""+region+"\",\"address\":\""+address+"\",\"phone\":\""+phone+"\",\"web\":\""+web+"\",\"geo\":{\"lat\":"+geoLat+",\"lng\":"+geoLng+"}}}]";
+        assertEquals(expected, result.getEntity());
+
+        //region
+        result = ParkResource.searchPark("north");
+        expected = "[{\"pid\":\""+pid+"\",\"location_info\":{\"name\":\""+parkName+"\",\"region\":\""+region+"\",\"address\":\""+address+"\",\"phone\":\""+phone+"\",\"web\":\""+web+"\",\"geo\":{\"lat\":"+geoLat+",\"lng\":"+geoLng+"}}}]";
+        assertEquals(expected, result.getEntity());
+
+        //lat
+        result = ParkResource.searchPark("23.2");
+        expected = "[{\"pid\":\""+pid+"\",\"location_info\":{\"name\":\""+parkName+"\",\"region\":\""+region+"\",\"address\":\""+address+"\",\"phone\":\""+phone+"\",\"web\":\""+web+"\",\"geo\":{\"lat\":"+geoLat+",\"lng\":"+geoLng+"}}}]";
+        assertEquals(expected, result.getEntity());
+
+        //lng
+        result = ParkResource.searchPark("9.43");
+        expected = "[{\"pid\":\""+pid+"\",\"location_info\":{\"name\":\""+parkName+"\",\"region\":\""+region+"\",\"address\":\""+address+"\",\"phone\":\""+phone+"\",\"web\":\""+web+"\",\"geo\":{\"lat\":"+geoLat+",\"lng\":"+geoLng+"}}}]";
+        assertEquals(expected, result.getEntity());
+
     }
 
 

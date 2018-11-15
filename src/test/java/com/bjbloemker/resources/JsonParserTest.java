@@ -283,6 +283,22 @@ class JsonParserTest {
     }
 
     @Test
+    void jsonToVisitorMissingName() throws NullEmailException, InvalidEmailException, InvalidCardException, NullCardException {
+        JsonObject json = (JsonObject) parser.parse("{\"email\":\""+email+"\",\"payment_info\":{\"card\":\""+cardNumber+"\",\"name_on_card\":\""+name+"\",\"expiration_date\":\""+expiration+"\",\"zip\":"+zipCode+"}}");
+        VisitorObj result = JsonParser.JsonToVisitor(json);
+        PaymentInfoObj resultPaymentInfo = result.getPaymentInfo();
+
+        assertEquals("", result.getName());
+        assertEquals(email, result.getEmail());
+        assertEquals(cardNumber, resultPaymentInfo.getCard());
+        assertEquals(name, resultPaymentInfo.getNameOnCard());
+        assertEquals(expiration, resultPaymentInfo.getExpirationDate());
+        assertEquals(zipCode, resultPaymentInfo.getZip());
+    }
+
+
+
+    @Test
     void jsonToVisitorMissingEmail() {
         assertThrows(NullEmailException.class, ()->{
             JsonObject json = (JsonObject) parser.parse("{\"name\":\""+name+"\",\"payment_info\":{\"card\":\""+cardNumber+"\",\"name_on_card\":\""+name+"\",\"expiration_date\":\""+expiration+"\",\"zip\":"+zipCode+"}}");

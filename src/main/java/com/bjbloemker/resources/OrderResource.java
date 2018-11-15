@@ -189,7 +189,6 @@ public class OrderResource {
             String zipCode = (paymentInfoOfVisitorOfOrder.getZip() + "").toUpperCase();
 
             if(OIDAsString.contains(key) ||
-                    PIDAsString.contains(key) ||
                     state.contains(key) ||
                     plate.contains(key) ||
                     type.contains(key) ||

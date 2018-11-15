@@ -188,24 +188,23 @@ import java.util.ArrayList;
 <span class="fc" id="L188">            String expirationDate = paymentInfoOfVisitorOfOrder.getExpirationDate().toUpperCase();</span>
 <span class="fc" id="L189">            String zipCode = (paymentInfoOfVisitorOfOrder.getZip() + &quot;&quot;).toUpperCase();</span>
 
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">            if(OIDAsString.contains(key) ||</span>
-<span class="pc bpc" id="L192" title="1 of 2 branches missed.">                    PIDAsString.contains(key) ||</span>
-<span class="pc bpc" id="L193" title="1 of 2 branches missed.">                    state.contains(key) ||</span>
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">                    plate.contains(key) ||</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">                    type.contains(key) ||</span>
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">                    VIDAsString.contains(key) ||</span>
-<span class="pc bpc" id="L197" title="1 of 2 branches missed.">                    visitorName.contains(key) ||</span>
-<span class="pc bpc" id="L198" title="1 of 2 branches missed.">                    visitorEmail.contains(key) ||</span>
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">                    card.contains(key) ||</span>
-<span class="pc bpc" id="L200" title="1 of 2 branches missed.">                    nameOnCard.contains(key) ||</span>
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">                    expirationDate.contains(key) ||</span>
-<span class="pc bpc" id="L202" title="1 of 2 branches missed.">                    zipCode.contains(key))</span>
-<span class="fc" id="L203">                results.add(order);</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">            if(OIDAsString.contains(key) ||</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">                    state.contains(key) ||</span>
+<span class="fc bfc" id="L193" title="All 2 branches covered.">                    plate.contains(key) ||</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">                    type.contains(key) ||</span>
+<span class="fc bfc" id="L195" title="All 2 branches covered.">                    VIDAsString.contains(key) ||</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">                    visitorName.contains(key) ||</span>
+<span class="fc bfc" id="L197" title="All 2 branches covered.">                    visitorEmail.contains(key) ||</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                    card.contains(key) ||</span>
+<span class="pc bpc" id="L199" title="1 of 2 branches missed.">                    nameOnCard.contains(key) ||</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">                    expirationDate.contains(key) ||</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                    zipCode.contains(key))</span>
+<span class="fc" id="L202">                results.add(order);</span>
         }
 
-<span class="fc" id="L206">        JsonElement output = GeneralResources.simplifyOrders(results);</span>
-<span class="fc" id="L207">        String outputAsString = gson.toJson(output);</span>
-<span class="fc" id="L208">        return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
+<span class="fc" id="L205">        JsonElement output = GeneralResources.simplifyOrders(results);</span>
+<span class="fc" id="L206">        String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L207">        return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
     }
 
 
