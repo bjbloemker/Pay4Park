@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OrderResourceTest extends DataForTesting{
 
-
-    //System.out.println("============DEBUG==========\n" + data.toString() + "\n=============================");
     @BeforeEach
     void init(){
         MemoryManager.parks.clear();
@@ -24,7 +22,7 @@ class OrderResourceTest extends DataForTesting{
     }
 
     @Test
-    void createOrder() {//pid,
+    void createOrder() {
         pid = buildPark();
         String toSendToOrder = "{\"pid\": \""+pid+"\", \"vehicle\": {\"state\": \""+state+"\", \"plate\": \""+plate+"\", \"type\": \""+type+"\"}, \"visitor\": {\"name\": \""+name+"\", \"email\": \""+email+"\", \"payment_info\": {\"card\": \""+cardNumber+"\", \"name_on_card\": \""+name+"\", \"expiration_date\": \""+expiration+"\", \"zip\": "+zipCode+"}}}";
         Response result = OrderResource.createOrder(toSendToOrder);

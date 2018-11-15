@@ -1,13 +1,23 @@
-# Pay4Park
 
-How to start the Pay4Park application
----
+sudo apt install vim
 
-1. Run `mvn clean install` to build your application
-1. Start application with `java -jar target/pay4park-1.0-SNAPSHOT.jar server config.yml`
-1. To check that your application is running enter url `http://localhost:8080`
+sudo add-apt-repository ppa:openjdk-r/ppa
+sudo apt-get update
+sudo apt-get install openjdk-8-jdk
 
-Health Check
----
+java -version
 
-To see your applications health enter url `http://localhost:8081/healthcheck`
+
+
+
+
+sudo apt-get update
+sudo apt-get install default-jre -> YES
+sudo apt-get install default-jdk -> YES
+sudo add-apt-repository ppa:webupd8team/java -> YES
+sudo apt-get update
+sudo apt-get install oracle-java8-installer -> YES YES
+java -version
+
+
+http://apache.spinellicreations.com/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
