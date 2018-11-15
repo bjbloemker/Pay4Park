@@ -84,10 +84,23 @@ public class OrderResource {
         JsonObject jsonObject = parser.parse(data).getAsJsonObject();
         ErrorObj error = new Error("http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation", "Your request data didn't pass validation", Response.Status.BAD_REQUEST.getStatusCode(), "/orders");
 
-        String pid = jsonObject.get("pid").getAsString();
+        String pid;
+        try {
+            pid = jsonObject.get("pid").getAsString();
+        }catch (NullPointerException e){
+            ((Error) error).setDetail("Valid pid must be present");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
 
-        JsonObject vehicleAsJsonObject = jsonObject.get("vehicle").getAsJsonObject();
-        VehicleObj vehicle = null;
+        JsonObject vehicleAsJsonObject;
+        try{
+            vehicleAsJsonObject = jsonObject.get("vehicle").getAsJsonObject();
+        }catch (NullPointerException e){
+            ((Error) error).setDetail("Vehicle information must be present");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
+
+        VehicleObj vehicle;
         try {
             vehicle = localJsonParser.JsonToVehicle(vehicleAsJsonObject);
         } catch (NullVehicleException e) {
@@ -98,7 +111,15 @@ public class OrderResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
         }
 
-        JsonObject visitorAsJsonObject = jsonObject.get("visitor").getAsJsonObject();
+        JsonObject visitorAsJsonObject;
+        try {
+            visitorAsJsonObject = jsonObject.get("visitor").getAsJsonObject();
+        }catch (NullPointerException e){
+            ((Error) error).setDetail("Visitor information must be present");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
+
+
         VisitorObj visitor;
         try {
             visitor = localJsonParser.JsonToVisitor(visitorAsJsonObject);
@@ -142,7 +163,6 @@ public class OrderResource {
             return Response.status(Response.Status.OK).entity(outputAsString).build();
         }
 
-        //TODO:Fix all of it
         key = key.toUpperCase();
         ArrayList<OrderObj> results = new ArrayList<>();
 

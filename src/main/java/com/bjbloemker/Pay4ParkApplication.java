@@ -18,8 +18,6 @@ public class Pay4ParkApplication extends Application<Pay4ParkConfiguration> {
         return "Pay4Park";
     }
 
-
-
     @Override
     public void run(final Pay4ParkConfiguration configuration,
                     final Environment environment) {

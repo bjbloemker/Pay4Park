@@ -39,7 +39,15 @@ public class ParkResource {
         JsonObject jsonObject = parser.parse(data).getAsJsonObject();
         ErrorObj error = new Error("http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation", "Your request data didn't pass validation", Response.Status.BAD_REQUEST.getStatusCode(), "/parks");
 
-        JsonObject locationInfoAsJsonObject = jsonObject.get("location_info").getAsJsonObject();
+        JsonObject locationInfoAsJsonObject;
+        try {
+            locationInfoAsJsonObject = jsonObject.get("location_info").getAsJsonObject();
+        }catch (NullPointerException e){
+            ((Error) error).setDetail("Location information is required but missing in your request");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
+
+
         LocationInfoObj location_info = null;
         try {
             location_info = localJsonParser.JsonToLocation(locationInfoAsJsonObject);
@@ -143,7 +151,6 @@ public class ParkResource {
     @Path("/{pid}/notes")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createNoteWithPark(String data, @PathParam("pid") String pid){
-        System.out.println("============DEBUG==========\n" + data.toString() + "\n=============================");
         JsonObject jsonObject = parser.parse(data).getAsJsonObject();
 
         String vid = jsonObject.get("vid").getAsString();
@@ -262,7 +269,6 @@ public class ParkResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
         }
 
-        System.out.println("DEBUG::::" + chargeInfoAsJsonObject.toString());
         ChargeInfoObj charge_info;
         try {
             charge_info = localJsonParser.JsonToChargeInfo(chargeInfoAsJsonObject);

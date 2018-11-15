@@ -15,36 +15,8 @@ import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ParkResourceTest {
-    private static com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
-    private static ParkResource ParkResource = new ParkResource();
-    private static OrderResource OrderResource = new OrderResource();
+class ParkResourceTest extends DataForTesting{
 
-    private static String parkName = "PARK nAmE";
-    private static String newParkName = "PARK nEw NaMe";
-    private static String region = "region 4";
-    private static String address = "7654 Planed Vally Rd Chicago, IL";
-    private static String phone = "(513) 555-9966";
-    private static String web = "https://www.dnr.illinois.gov/Parks/Pages/MermetLake.aspx";
-    private static float geoLat = 99.53f;
-    private static float geoLng = -84.43f;
-
-    private static double [] mPrices = {1,2};
-    private static double [] cPrices = {3,4};
-    private static double [] rPrices = {5,6};
-    private static String cleanMArray = "[" + mPrices[0] + "," + mPrices[1] + "]";
-    private static String cleanCArray = "[" + cPrices[0] + "," + cPrices[1] + "]";
-    private static String cleanRArray = "[" + rPrices[0] + "," + rPrices[1] + "]";
-
-    private static String cardNumber = "1111222233334444";
-    private static String name = "Jane A. Doe";
-    private static String expiration = "06/23";
-    private static int zipCode = 60616;
-    private static String email = "email@gmail.com";
-
-    private static String state = "IL";
-    private static String plate = "PL84ME";
-    private static String type = "car";
 
     @BeforeEach
     void init(){
@@ -58,8 +30,9 @@ class ParkResourceTest {
     void createPark() {
         String toSend = "{\"location_info\": {\"name\": \""+parkName+"\", \"region\": \""+region+"\", \"address\": \""+address+"\", \"phone\": \""+phone+"\", \"web\": \""+web+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}, \"payment_info\": {\"motorcycle\": "+cleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
         Response result = ParkResource.createPark(toSend);
-        System.out.println("MAJOR DEBUG: " + result.getEntity().toString());
         assertEquals(201, result.getStatus());
+        String expected = "{\"pid\":\""+MemoryManager.parks.get(0).getPIDAsString()+"\"}";
+        assertEquals(expected, result.getEntity().toString());
     }
 
     @Test
@@ -107,7 +80,7 @@ class ParkResourceTest {
 
     @Test
     void getParkDetail() {
-        String pid = putParkInSystem();
+        String pid = buildPark();
         Response result = ParkResource.getParkDetail(pid);
         assertEquals(200, result.getStatus());
         String expected = "{\"pid\":\""+pid+"\",\"location_info\":{\"name\":\""+parkName+"\",\"region\":\""+region+"\",\"address\":\""+address+"\",\"phone\":\""+phone+"\",\"web\":\""+web+"\",\"geo\":{\"lat\":"+geoLat+",\"lng\":"+geoLng+"}},\"payment_info\":{\"motorcycle\":"+cleanMArray+",\"car\":"+cleanCArray+",\"rv\":"+cleanRArray+"}}";
@@ -122,7 +95,7 @@ class ParkResourceTest {
 
     @Test
     void deletePark() {
-        String pid = putParkInSystem();
+        String pid = buildPark();
         assertEquals(204, ParkResource.deletePark(pid).getStatus());
     }
 
@@ -135,8 +108,8 @@ class ParkResourceTest {
 
     @Test
     void searchPark() {
-        String pid = putParkInSystem();
-        Response result = ParkResource.searchPark("Planed");
+        String pid = buildPark();
+        Response result = ParkResource.searchPark("Grant");
         String expected = "[{\"pid\":\""+pid+"\",\"location_info\":{\"name\":\""+parkName+"\",\"region\":\""+region+"\",\"address\":\""+address+"\",\"phone\":\""+phone+"\",\"web\":\""+web+"\",\"geo\":{\"lat\":"+geoLat+",\"lng\":"+geoLng+"}}}]";
         assertEquals(expected, result.getEntity());
     }
@@ -144,7 +117,7 @@ class ParkResourceTest {
 
     @Test
     void searchParkNoResults() {
-        putParkInSystem();
+        buildPark();
         Response result = ParkResource.searchPark("not_found_in_park_info");
         String expected = "[]";
         assertEquals(expected, result.getEntity());
@@ -152,7 +125,7 @@ class ParkResourceTest {
 
     @Test
     void createNoteWithParkInvalid() {
-        String pid = putParkInSystem();
+        String pid = buildPark();
         PaymentInfoObj paymentInfo = new PaymentInfo(cardNumber, name, expiration, zipCode);
         VisitorObj visitor = new Visitor("John Doe", "john@com.org", (PaymentInfo) paymentInfo);
         String title = "This is my title";
@@ -163,7 +136,7 @@ class ParkResourceTest {
 
     @Test
     void createNoteWithParkValid() {
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSendToOrder = "{\"pid\": \""+pid+"\", \"vehicle\": {\"state\": \""+state+"\", \"plate\": \""+plate+"\", \"type\": \""+type+"\"}, \"visitor\": {\"name\": \""+name+"\", \"email\": \""+email+"\", \"payment_info\": {\"card\": \""+cardNumber+"\", \"name_on_card\": \""+name+"\", \"expiration_date\": \""+expiration+"\", \"zip\": "+zipCode+"}}}";
 
         OrderResource.createOrder(toSendToOrder);
@@ -177,7 +150,7 @@ class ParkResourceTest {
 
     @Test
     void notesByPark() {
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSendToOrder = "{\"pid\": \""+pid+"\", \"vehicle\": {\"state\": \""+state+"\", \"plate\": \""+plate+"\", \"type\": \""+type+"\"}, \"visitor\": {\"name\": \""+name+"\", \"email\": \""+email+"\", \"payment_info\": {\"card\": \""+cardNumber+"\", \"name_on_card\": \""+name+"\", \"expiration_date\": \""+expiration+"\", \"zip\": "+zipCode+"}}}";
 
         OrderResource.createOrder(toSendToOrder);
@@ -198,7 +171,7 @@ class ParkResourceTest {
 
     @Test
     void notesByParkEmpty() {
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String expected = "[{\"pid\":\""+pid+"\",\"notes\":[]}]";
         assertEquals(expected, ParkResource.notesByPark(pid).getEntity().toString());
     }
@@ -210,7 +183,7 @@ class ParkResourceTest {
 
     @Test
     void getNoteWithParkNotFound() {
-        String pid = putParkInSystem();
+        String pid = buildPark();
         assertEquals(400, ParkResource.getNoteWithPark(pid, "non_real_nid").getStatus());
     }
 
@@ -218,7 +191,7 @@ class ParkResourceTest {
 
     @Test
     void getNoteWithParkOK() {
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSendToOrder = "{\"pid\": \""+pid+"\", \"vehicle\": {\"state\": \""+state+"\", \"plate\": \""+plate+"\", \"type\": \""+type+"\"}, \"visitor\": {\"name\": \""+name+"\", \"email\": \""+email+"\", \"payment_info\": {\"card\": \""+cardNumber+"\", \"name_on_card\": \""+name+"\", \"expiration_date\": \""+expiration+"\", \"zip\": "+zipCode+"}}}";
 
         OrderResource.createOrder(toSendToOrder);
@@ -237,7 +210,7 @@ class ParkResourceTest {
 
     @Test
     void updatePark() {
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSend = "{\"location_info\": {\"name\": \""+newParkName+"\", \"region\": \""+region+"\", \"address\": \""+address+"\", \"phone\": \""+phone+"\", \"web\": \""+web+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}, \"payment_info\": {\"motorcycle\": "+cleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
         Response result = ParkResource.updatePark(toSend, pid);
         assertEquals(204, result.getStatus());
@@ -254,49 +227,49 @@ class ParkResourceTest {
 
     @Test
     void updateParkNoName(){
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSend = "{\"location_info\": {\"region\": \""+region+"\", \"address\": \""+address+"\", \"phone\": \""+phone+"\", \"web\": \""+web+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}, \"payment_info\": {\"motorcycle\": "+cleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
         assertEquals(400, ParkResource.updatePark(toSend, pid).getStatus());
     }
 
     @Test
     void updateParkNoRegion(){
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSend = "{\"location_info\": {\"name\": \""+parkName+"\", \"address\": \""+address+"\", \"phone\": \""+phone+"\", \"web\": \""+web+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}, \"payment_info\": {\"motorcycle\": "+cleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
         assertEquals(204, ParkResource.updatePark(toSend, pid).getStatus());
     }
 
     @Test
     void updateParkNoAddr(){
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSend = "{\"location_info\": {\"name\": \""+parkName+"\", \"region\": \""+region+"\", \"phone\": \""+phone+"\", \"web\": \""+web+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}, \"payment_info\": {\"motorcycle\": "+cleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
         assertEquals(400, ParkResource.updatePark(toSend, pid).getStatus());
     }
 
     @Test
     void updateParkNoPhone(){
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSend = "{\"location_info\": {\"name\": \""+parkName+"\", \"region\": \""+region+"\", \"address\": \""+address+"\", \"web\": \""+web+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}, \"payment_info\": {\"motorcycle\": "+cleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
         assertEquals(400, ParkResource.updatePark(toSend, pid).getStatus());
     }
 
     @Test
     void updateParkNoWeb(){
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSend = "{\"location_info\": {\"name\": \""+parkName+"\", \"region\": \""+region+"\", \"address\": \""+address+"\", \"phone\": \""+phone+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}, \"payment_info\": {\"motorcycle\": "+cleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
         assertEquals(400, ParkResource.updatePark(toSend, pid).getStatus());
     }
 
     @Test
     void updateParkNoGeo(){
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSend = "{\"location_info\": {\"name\": \""+parkName+"\", \"region\": \""+region+"\", \"address\": \""+address+"\", \"phone\": \""+phone+"\", \"web\": \""+web+"\"}, \"payment_info\": {\"motorcycle\": "+cleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
         assertEquals(400, ParkResource.updatePark(toSend, pid).getStatus());
     }
 
     @Test
     void updateParkNoPaymentInfo(){
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSend = "{\"location_info\": {\"name\": \""+parkName+"\", \"region\": \""+region+"\", \"address\": \""+address+"\", \"phone\": \""+phone+"\", \"web\": \""+web+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}}";
         assertEquals(400, ParkResource.updatePark(toSend, pid).getStatus());
     }
@@ -308,21 +281,14 @@ class ParkResourceTest {
         for(int i = 0; i < localMPrices.length; i++)
             localMPrices[i] = localMPrices[1]*-1;
         String localCleanMArray = "[" + localMPrices[0] + "," + localMPrices[1] + "]";
-        String pid = putParkInSystem();
+        String pid = buildPark();
         String toSend = "{\"location_info\": {\"name\": \""+newParkName+"\", \"region\": \""+region+"\", \"address\": \""+address+"\", \"phone\": \""+phone+"\", \"web\": \""+web+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}, \"payment_info\": {\"motorcycle\": "+localCleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
         Response result = ParkResource.updatePark(toSend, pid);
         assertEquals(400, result.getStatus());
     }
 
 
-    private String putParkInSystem(){
-        String toSend = "{\"location_info\": {\"name\": \""+parkName+"\", \"region\": \""+region+"\", \"address\": \""+address+"\", \"phone\": \""+phone+"\", \"web\": \""+web+"\", \"geo\": {\"lat\": "+geoLat+", \"lng\": "+geoLng+"}}, \"payment_info\": {\"motorcycle\": "+cleanMArray+", \"car\": "+cleanCArray+", \"rv\": "+cleanRArray+"}}";
-        ParkResource.createPark(toSend);
-        int lastPos = MemoryManager.parks.size()-1;
-
-        return MemoryManager.parks.get(lastPos).getPIDAsString();
-
-    }
+    
 
 
     @AfterAll

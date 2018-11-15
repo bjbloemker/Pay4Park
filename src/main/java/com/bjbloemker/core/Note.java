@@ -8,15 +8,4 @@ public class Note extends NoteObj{
         super(title, content, PID, VID);
     }
 
-    @Override
-    public String toString() {
-        return "Note{" +
-                "nid=" + nid +
-                ", date='" + date + '\'' +
-                ", title='" + title + '\'' +
-                ", text='" + text + '\'' +
-                ", pid='" + pid + '\'' +
-                ", vid='" + vid + '\'' +
-                '}';
-    }
 }
