@@ -1,7 +1,5 @@
 package com.bjbloemker.api;
 
-import com.bjbloemker.core.GeoCords;
-
 public abstract class GeoCordsObj {
 
     protected float lat;

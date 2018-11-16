@@ -5,6 +5,7 @@ import com.bjbloemker.core.Error;
 import com.bjbloemker.exceptions.*;
 import com.google.gson.*;
 import com.google.gson.JsonParser;
+import sun.java2d.loops.GeneralRenderer;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 
 @Path("/parkpay/parks")
 @Produces("application/json")
-public class ParkResource {
+public class ParkResource extends ParkServices {
     private static Gson gson = new Gson();
     private static JsonParser parser = new JsonParser();  //gson parser
     private static com.bjbloemker.resources.JsonParser localJsonParser;
@@ -46,7 +47,7 @@ public class ParkResource {
         }
 
 
-        LocationInfoObj location_info = null;
+        LocationInfoObj location_info;
         try {
             location_info = localJsonParser.JsonToLocation(locationInfoAsJsonObject);
         } catch (NullAddressException e) {
@@ -109,38 +110,15 @@ public class ParkResource {
     public Response searchPark(@QueryParam("key") String key) {
 
         if(key == null || key.length() == 0){
-            JsonElement output = GeneralServices.parksWithoutProperty(MemoryManager.parks, "payment_info");
+            JsonElement output = parksWithoutProperty(MemoryManager.parks, "payment_info");
             String outputAsString = gson.toJson(output);
             return Response.status(Response.Status.OK).entity(outputAsString).build();
         }
 
         key = key.toUpperCase();
-        ArrayList<ParkObj> results = new ArrayList<ParkObj>();
+        ArrayList<ParkObj> results = GeneralServices.searchParks(key);
 
-        for(int i =0; i< MemoryManager.parks.size(); i++){
-            ParkObj park = (Park) MemoryManager.parks.get(i);
-            LocationInfo locationInfo = (LocationInfo) park.getLocationInfo();
-            String parkName = locationInfo.getName().toUpperCase();
-            String parkAddr = locationInfo.getAddress().toUpperCase();
-            String parkPhone = locationInfo.getPhone().toUpperCase();
-            String parkWeb = locationInfo.getWeb().toUpperCase();
-            String parkReg = locationInfo.getRegion().toUpperCase();
-
-            GeoCordsObj geoCords = locationInfo.getGeo();
-            String parkLat = (geoCords.getLat() + "").toUpperCase();
-            String parkLng = (geoCords.getLng() + "").toUpperCase();
-
-            if(parkName.contains(key) ||
-                    parkAddr.contains(key) ||
-                    parkPhone.contains(key) ||
-                    parkWeb.contains(key) ||
-                    parkReg.contains(key) ||
-                    parkLat.contains(key) ||
-                    parkLng.contains(key))
-                results.add(park);
-        }
-
-        JsonElement output = GeneralServices.parksWithoutProperty(results,"payment_info");
+        JsonElement output = parksWithoutProperty(results,"payment_info");
         String outputAsString = gson.toJson(output);
         return Response.status(Response.Status.OK).entity(outputAsString).build();
     }
@@ -150,24 +128,33 @@ public class ParkResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createNoteWithPark(String data, @PathParam("pid") String pid){
         JsonObject jsonObject = parser.parse(data).getAsJsonObject();
+        ErrorObj error = new Error("http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation", "Your request data didn't pass validation", 400, "/parks/"+pid);
 
-        String vid = jsonObject.get("vid").getAsString();
-        String title = jsonObject.get("title").getAsString();
-        String content = jsonObject.get("text").getAsString();
+        String vid;
+        String title;
+        String content;
+
+        try {
+            vid = jsonObject.get("vid").getAsString();
+            title = jsonObject.get("title").getAsString();
+            content = jsonObject.get("text").getAsString();
+        }catch (NullPointerException e){
+            ((Error) error).setDetail("A note must have a vid, title, and text");
+            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
+        }
+
 
         ArrayList<OrderObj> orders = GeneralServices.getAllOrdersFromVisitor(vid);
 
         boolean beenToPark = false;
-        for(int i = 0; i < orders.size(); i++){
-            OrderObj currentOrder = orders.get(i);
+        for (OrderObj currentOrder : orders) {
             String currentOrderPID = currentOrder.getPIDAsString();
-            if(currentOrderPID.equals(pid))
+            if (currentOrderPID.equals(pid))
                 beenToPark = true;
         }
 
         if(!beenToPark){
-            ErrorObj error = new Error("http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation", "Your request data didn't pass validation", 400, "/parks/"+pid);
-            ((Error) error).setDetail("You may not post a note to a park unless you paid for admission at that park");
+           ((Error) error).setDetail("You may not post a note to a park unless you paid for admission at that park");
             return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
         }
 

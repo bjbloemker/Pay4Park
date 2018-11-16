@@ -12,4 +12,9 @@ public class Error extends ErrorObj {
         super.detail = detail;
     }
 
+    public void setStatus(int status){
+        super.status = status;
+    }
+
+
 }

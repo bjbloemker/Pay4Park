@@ -16,31 +16,16 @@ public class GeneralServices {
     private static Gson gson = new Gson();
     private static com.bjbloemker.resources.JsonParser localJsonParser;
 
+    private static final String BEGINING_OF_TIME = "10000101";
+    private static final String END_OF_TIME = "99991231";
+
+    //logic in this class is used by 2 or more resources
+
     public static Park findParkById(String id){
         for(int i = 0; i < MemoryManager.parks.size(); i++){
             ParkObj park = MemoryManager.parks.get(i);
             if(park.getPIDAsString().equals(id)){
                 return (Park) park;
-            }
-        }
-        return null;
-    }
-
-    public static Note findNoteByParkId(String id){
-        for(int i = 0; i < MemoryManager.notes.size(); i++){
-            NoteObj note = MemoryManager.notes.get(i);
-                if(note.getPIDAsString().equals(id)){
-                return (Note) note;
-            }
-        }
-        return null;
-    }
-
-    public static OrderObj findOrderById(String id) {
-        for(int i = 0; i < MemoryManager.orders.size(); i++){
-            OrderObj order = MemoryManager.orders.get(i);
-            if(order.getOIDAsString().equals(id)){
-                return order;
             }
         }
         return null;
@@ -56,16 +41,6 @@ public class GeneralServices {
         return null;
     }
 
-    public static VisitorObj findVisitorById(String id){
-        for(int i = 0; i < MemoryManager.visitors.size(); i++){
-            VisitorObj visitor = MemoryManager.visitors.get(i);
-            if(visitor.getVIDAsString().equals(id)){
-                return visitor;
-            }
-        }
-        return null;
-    }
-
     public static VisitorObj findVisitorByEmail(String email){
         for(int i = 0; i < MemoryManager.visitors.size(); i++){
             VisitorObj visitor = MemoryManager.visitors.get(i);
@@ -74,37 +49,6 @@ public class GeneralServices {
             }
         }
         return null;
-    }
-
-
-
-
-
-
-    public static JsonElement parksWithoutProperty(List<ParkObj> parks,String property){
-        JsonArray output = new JsonArray();
-
-        for(ParkObj currentPark : parks){
-            JsonObject parkAsJsonObject = (JsonObject) gson.toJsonTree(currentPark);
-            parkAsJsonObject.remove(property);
-            output.add(parkAsJsonObject);
-        }
-
-        return output;
-    }
-
-
-    public static ArrayList<NoteObj> getAllNotesFromPark(String pid){
-        ArrayList<NoteObj> notes = new ArrayList<>();
-
-        for(int i = 0; i < MemoryManager.notes.size(); i++){
-            NoteObj currentNote = MemoryManager.notes.get(i);
-            if(currentNote.getPIDAsString().equals(pid)){
-                notes.add(currentNote);
-            }
-        }
-
-        return notes;
     }
 
     public static ArrayList<OrderObj> getAllOrdersFromVisitor(String vid){
@@ -120,136 +64,6 @@ public class GeneralServices {
 
         return orders;
     }
-
-    public static ArrayList<NoteObj> getAllNotesFromVisitor(String vid){
-        ArrayList<NoteObj> notes = new ArrayList<>();
-
-        for(int i = 0; i < MemoryManager.notes.size(); i++){
-            NoteObj currentNote = MemoryManager.notes.get(i);
-            if(currentNote.getVIDAsString().equals(vid)){
-                notes.add(currentNote);
-            }
-        }
-        return notes;
-    }
-
-
-
-    public static JsonElement simplifyOrders(List<OrderObj> orders){
-        JsonArray output = new JsonArray();
-
-        for(int i = 0; i < orders.size(); i++){
-            OrderObj currentOrder = orders.get(i);
-            JsonObject orderAsJsonObject = (JsonObject) gson.toJsonTree(currentOrder);
-            JsonObject outputOrderAsJson = new JsonObject();
-
-            String oid = orderAsJsonObject.get("oid").getAsString();
-            String pid = orderAsJsonObject.get("pid").getAsString();
-            String date = currentOrder.getDate();
-
-            JsonObject vehicleAsJsonObject = orderAsJsonObject.get("vehicle").getAsJsonObject();
-            VehicleObj vehicle = null;
-            try {
-                vehicle = localJsonParser.JsonToVehicle(vehicleAsJsonObject);
-            } catch (NullVehicleException e) {
-                e.printStackTrace();
-            } catch (InvalidVehicleTypeException e) {
-                e.printStackTrace();
-            }
-
-            ParkObj park = findParkById(currentOrder.getPIDAsString());
-            String vehicleType = vehicle.getType();
-
-            outputOrderAsJson.addProperty("oid", oid);
-            outputOrderAsJson.addProperty("pid", pid);
-            outputOrderAsJson.addProperty("date", date);
-            outputOrderAsJson.addProperty("type", vehicleType);
-            outputOrderAsJson.addProperty("amount", calculateCost(vehicle, park));
-
-            output.add(outputOrderAsJson);
-        }
-
-        return output;
-    }
-
-    public static JsonElement superSimplifyOrders(List<OrderObj> orders){
-        JsonArray output = new JsonArray();
-
-        for (OrderObj currentOrder : orders) {
-            JsonObject outputOrderAsJson = new JsonObject();
-
-            String oid = currentOrder.getOIDAsString();
-            String pid = currentOrder.getPIDAsString();
-            String date = currentOrder.getDate();
-
-            outputOrderAsJson.addProperty("oid", oid);
-            outputOrderAsJson.addProperty("pid", pid);
-            outputOrderAsJson.addProperty("date", date);
-
-            output.add(outputOrderAsJson);
-        }
-
-        return output;
-    }
-
-    public static JsonElement superSimplifyNotes(List<NoteObj> notes){
-        JsonArray output = new JsonArray();
-
-        for(NoteObj currentNote : notes){
-            JsonObject outputOrderAsJson = new JsonObject();
-
-            String nid = currentNote.getNIDAsString();
-            String pid = currentNote.getPIDAsString();
-            String date = currentNote.getDate();
-            String title = currentNote.getTitle();
-
-            outputOrderAsJson.addProperty("nid", nid);
-            outputOrderAsJson.addProperty("pid", pid);
-            outputOrderAsJson.addProperty("date", date);
-            outputOrderAsJson.addProperty("title", title);
-
-            output.add(outputOrderAsJson);
-        }
-
-        return output;
-    }
-
-    public static JsonElement simplifyVisitors(List<VisitorObj> visitors){
-        JsonArray output = new JsonArray();
-
-        for (VisitorObj currentVisitor : visitors) {
-            JsonObject outputVisitorAsJson = new JsonObject();
-
-            String vid = currentVisitor.getVIDAsString();
-            String name = currentVisitor.getName();
-            String email = currentVisitor.getEmail();
-
-            outputVisitorAsJson.addProperty("vid", vid);
-            outputVisitorAsJson.addProperty("name", name);
-            outputVisitorAsJson.addProperty("email", email);
-
-            output.add(outputVisitorAsJson);
-        }
-
-        return output;
-    }
-
-
-
-    public static JsonElement visitorsWithoutProperty(List<VisitorObj> visitors, String property){
-        JsonArray output = new JsonArray();
-
-        for (VisitorObj currentVisitor : visitors) {
-            JsonObject visitorAsJsonObject = (JsonObject) gson.toJsonTree(currentVisitor);
-            visitorAsJsonObject.remove(property);
-
-            output.add(visitorAsJsonObject);
-        }
-
-        return output;
-    }
-
-
 
 
     public static double calculateCost(VehicleObj vehicle, ParkObj park){
@@ -279,6 +93,179 @@ public class GeneralServices {
             e.printStackTrace();
         }
         return -1;
+    }
+
+
+    public static ArrayList<ParkObj> searchParks(String key){
+        ArrayList<ParkObj> results = new ArrayList<>();
+
+        for(int i =0; i< MemoryManager.parks.size(); i++){
+            ParkObj park = MemoryManager.parks.get(i);
+            LocationInfo locationInfo = (LocationInfo) park.getLocationInfo();
+            String parkName = locationInfo.getName().toUpperCase();
+            String parkAddr = locationInfo.getAddress().toUpperCase();
+            String parkPhone = locationInfo.getPhone().toUpperCase();
+            String parkWeb = locationInfo.getWeb().toUpperCase();
+            String parkReg = locationInfo.getRegion().toUpperCase();
+
+            GeoCordsObj geoCords = locationInfo.getGeo();
+            String parkLat = (geoCords.getLat() + "").toUpperCase();
+            String parkLng = (geoCords.getLng() + "").toUpperCase();
+
+            if(parkName.contains(key) ||
+                    parkAddr.contains(key) ||
+                    parkPhone.contains(key) ||
+                    parkWeb.contains(key) ||
+                    parkReg.contains(key) ||
+                    parkLat.contains(key) ||
+                    parkLng.contains(key))
+                results.add(park);
+        }
+        return results;
+    }
+
+    public static ArrayList<NoteObj> searchNotes(String key, String startDate, String endDate){
+        ArrayList<NoteObj> results = new ArrayList<>();
+
+
+        key = key.toUpperCase();
+        for (int i = 0; i < MemoryManager.notes.size(); i++) {
+            NoteObj note = MemoryManager.notes.get(i);
+            String title = note.getTitle().toUpperCase();
+            String content = note.getText().toUpperCase();
+            String date = note.getDate().toUpperCase();
+
+            if ((title.contains(key) || content.contains(key) || date.contains(key))){
+                if(startDate == null && endDate == null)
+                    results.add(note);
+                else{
+                    String cleanDate = date.replace("-", "");
+                    if(startDate==null)
+                        startDate = BEGINING_OF_TIME;
+                    if(endDate == null)
+                        endDate = END_OF_TIME;
+
+                    if(startDate.compareTo(cleanDate) <= 0 && endDate.compareTo(cleanDate) > 0){
+                        results.add(note);
+                    }
+                }
+            }
+        }
+        return results;
+
+    }
+
+    public static ArrayList<OrderObj> searchOrder(String key, String startDate, String endDate){
+        ArrayList<OrderObj> results = new ArrayList<>();
+
+        for(int i =0; i< MemoryManager.orders.size(); i++){
+            OrderObj order = MemoryManager.orders.get(i);
+
+            String OIDAsString = order.getOIDAsString().toUpperCase();
+            String date = order.getDate();
+
+            VehicleObj vehicleOfOrder = order.getVehicle();
+            String state = vehicleOfOrder.getState().toUpperCase();
+            String plate = vehicleOfOrder.getPlate().toUpperCase();
+            String type = vehicleOfOrder.getType().toUpperCase();
+
+            VisitorObj visitor = order.getVisitor();
+            String VIDAsString = visitor.getVIDAsString().toUpperCase();
+            String visitorName = visitor.getName().toUpperCase();
+            String visitorEmail = visitor.getEmail().toUpperCase();
+
+            PaymentInfoObj paymentInfoOfVisitorOfOrder = visitor.getPaymentInfo();
+            String card = paymentInfoOfVisitorOfOrder.getCard().toUpperCase();
+            String nameOnCard = paymentInfoOfVisitorOfOrder.getNameOnCard().toUpperCase();
+            String expirationDate = paymentInfoOfVisitorOfOrder.getExpirationDate().toUpperCase();
+            String zipCode = (paymentInfoOfVisitorOfOrder.getZip() + "").toUpperCase();
+
+            if(OIDAsString.contains(key) ||
+                    date.contains(key) ||
+                    state.contains(key) ||
+                    plate.contains(key) ||
+                    type.contains(key) ||
+                    VIDAsString.contains(key) ||
+                    visitorName.contains(key) ||
+                    visitorEmail.contains(key) ||
+                    card.contains(key) ||
+                    nameOnCard.contains(key) ||
+                    expirationDate.contains(key) ||
+                    zipCode.contains(key)){
+                if(startDate == null && endDate == null)
+                    results.add(order);
+                else{
+                    String cleanDate = date.replace("-", "") + "";
+                    if(startDate==null)
+                        startDate = BEGINING_OF_TIME;
+                    if(endDate == null)
+                        endDate = END_OF_TIME;
+                    if(startDate.compareTo(cleanDate) <= 0 && endDate.compareTo(cleanDate) > 0){
+                        results.add(order);
+                    }
+                }
+            }
+
+        }
+
+        return results;
+    }
+
+    public static ArrayList<VisitorObj> searchVisitors(String key){
+        ArrayList<VisitorObj> results = new ArrayList<>();
+
+        for(int i =0; i < MemoryManager.visitors.size(); i++){
+            VisitorObj visitor = MemoryManager.visitors.get(i);
+
+
+            String VIDAsString = visitor.getVIDAsString().toUpperCase();
+            String visitorName = visitor.getName().toUpperCase();
+            String visitorEmail = visitor.getEmail().toUpperCase();
+
+
+            PaymentInfoObj paymentInfoOfVisitorOfOrder = visitor.getPaymentInfo();
+            String card = paymentInfoOfVisitorOfOrder.getCard().toUpperCase();
+            String nameOnCard = paymentInfoOfVisitorOfOrder.getNameOnCard().toUpperCase();
+            String expirationDate = paymentInfoOfVisitorOfOrder.getExpirationDate().toUpperCase();
+            String zipCode = (paymentInfoOfVisitorOfOrder.getZip() + "").toUpperCase();
+
+            if(VIDAsString.contains(key) ||
+                    visitorName.contains(key) ||
+                    visitorEmail.contains(key) ||
+                    card.contains(key) ||
+                    nameOnCard.contains(key) ||
+                    expirationDate.contains(key) ||
+                    zipCode.contains(key)){
+                results.add(visitor);
+            }
+
+        }
+
+        return results;
+    }
+
+    public static  boolean validateDate(String simpleDate){
+        final String MAX_MONTH = "12";
+        String max_day = "31";
+        String mm = simpleDate.substring(4,6);
+        String dd = simpleDate.substring(6,8);
+        if(mm.compareTo(MAX_MONTH) > 0)
+            return false;
+
+        if((mm.equals("01") || mm.equals("02") || mm.equals("03") || mm.equals("05") || mm.equals("07")
+                || mm.equals("08") || mm.equals("10") || mm.equals("12")) && dd.compareTo(max_day) <= 0) {
+            return true;
+        }
+        max_day = "30";
+        if ((mm.equals("04") || mm.equals("06") || mm.equals("09") || mm.equals("11")) && dd.compareTo(max_day) <= 0 ){
+            return true;
+        }
+        max_day = "29";
+        if(dd.compareTo(max_day) <= 0){
+            return true;
+        }
+        return false;
+
     }
 
 

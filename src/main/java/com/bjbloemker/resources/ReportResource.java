@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @Path("/parkpay/reports")
 @Produces("application/json")
-public class ReportResource {
+public class ReportResource extends ReportServices {
     private static Gson gson = new Gson();
     private static final String BEGINING_OF_TIME = "10000101";
     private static final String END_OF_TIME = "99991231";
@@ -60,7 +60,7 @@ public class ReportResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
         }
 
-        if(!validateDate(startDate) || !validateDate(endDate)){
+        if(!GeneralServices.validateDate(startDate) || !GeneralServices.validateDate(endDate)){
             ((Error) error).setDetail("Wrong date format");
             return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
         }
@@ -148,66 +148,5 @@ public class ReportResource {
         return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();
     }
 
-
-    private String convertSimpleDateToPrettyDate(String simpleDate){
-        String yyyy = simpleDate.substring(0,4);
-        String mm = simpleDate.substring(4,6);
-        String dd = simpleDate.substring(6,8);
-
-        return yyyy + "-" + mm + "-" + dd;
-    }
-
-    private boolean validateDate(String simpleDate){
-        final String MAX_MONTH = "12";
-        String max_day = "31";
-        String mm = simpleDate.substring(4,6);
-        String dd = simpleDate.substring(6,8);
-        if(mm.compareTo(MAX_MONTH) > 0)
-            return false;
-
-        if((mm.equals("01") || mm.equals("02") || mm.equals("03") || mm.equals("05") || mm.equals("07")
-                || mm.equals("08") || mm.equals("10") || mm.equals("12")) && dd.compareTo(max_day) <= 0) {
-            return true;
-        }
-        max_day = "30";
-        if ((mm.equals("04") || mm.equals("06") || mm.equals("09") || mm.equals("11")) && dd.compareTo(max_day) <= 0 ){
-            return true;
-        }
-        max_day = "29";
-        if(dd.compareTo(max_day) <= 0){
-            return true;
-        }
-        return false;
-
-    }
-
-
-    private static int getOrderCountByParkId(String pid, String startDate, String endDate){
-        ParkObj park = GeneralServices.findParkById(pid);
-        if(park == null)
-            return -1;
-        int count = 0;
-        for(OrderObj order : MemoryManager.orders){
-            String orderDate = order.getDate().replace("-","");//formating the same
-            if(startDate.compareTo(orderDate) <= 0 && endDate.compareTo(orderDate) > 0 && order.getPIDAsString().equals(pid)){
-                count++;
-            }
-        }
-        return count;
-    }
-
-    private static double getRevenueByParkId(String pid, String startDate, String endDate){
-        ParkObj park = GeneralServices.findParkById(pid);
-        if(park == null)
-            return -1;
-        double sum = 0;
-        for(OrderObj order : MemoryManager.orders){
-            String orderDate = order.getDate().replace("-","");//formating the same
-            if(startDate.compareTo(orderDate) <= 0 && endDate.compareTo(orderDate) > 0 && order.getPIDAsString().equals(pid)){
-                sum += GeneralServices.calculateCost(order.getVehicle(), park);
-            }
-        }
-        return sum;
-    }
 
 }

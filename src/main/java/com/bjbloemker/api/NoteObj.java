@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public abstract class NoteObj {
-    protected UUID nid;
+    protected String nid;
     protected String pid;
     protected String vid;
     protected String date;
@@ -15,7 +15,7 @@ public abstract class NoteObj {
 
 
     public NoteObj(String title, String text, String pid, String vid) {
-        this.nid = UUID.randomUUID();
+        this.nid = UUID.randomUUID().toString();
         this.date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         this.title = title;
         this.text = text;
@@ -49,5 +49,9 @@ public abstract class NoteObj {
 
     public String getPIDAsString() {
         return pid;
+    }
+
+    public void setNid(String nid) {
+        this.nid = nid;
     }
 }

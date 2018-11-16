@@ -1,7 +1,5 @@
 package com.bjbloemker.api;
 
-import java.util.UUID;
-
 public abstract class VehicleObj {
 
     protected String state;

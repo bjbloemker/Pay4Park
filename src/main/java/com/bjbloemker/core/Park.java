@@ -4,9 +4,6 @@ import com.bjbloemker.api.ChargeInfoObj;
 import com.bjbloemker.api.LocationInfoObj;
 import com.bjbloemker.api.ParkObj;
 
-import java.util.UUID;
-
-
 public class Park extends ParkObj{
 
     public Park(LocationInfoObj location_info, ChargeInfoObj payment_info) {

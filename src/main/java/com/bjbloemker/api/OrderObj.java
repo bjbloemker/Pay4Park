@@ -1,12 +1,9 @@
 package com.bjbloemker.api;
 
 import com.bjbloemker.core.PaymentProcessing;
-import com.bjbloemker.core.Vehicle;
-import com.bjbloemker.core.Visitor;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
 
 public abstract class OrderObj {
 
@@ -49,5 +46,17 @@ public abstract class OrderObj {
 
     public PaymentProcessingObj getPaymentProcessing() {
         return paymentProcessing;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderObj{" +
+                "oid='" + oid + '\'' +
+                ", pid='" + pid + '\'' +
+                ", date='" + date + '\'' +
+                ", vehicle=" + vehicle +
+                ", visitor=" + visitor +
+                ", paymentProcessing=" + paymentProcessing +
+                '}';
     }
 }
