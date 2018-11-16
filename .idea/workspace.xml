@@ -2,35 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f123a0f-b4a4-4aef-92ed-84452a4864e6" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/SearchResourceTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/com/bjbloemker/resources/SearchResource.class" afterPath="$PROJECT_DIR$/target/classes/com/bjbloemker/resources/SearchResource.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/jacoco.exec" afterPath="$PROJECT_DIR$/target/jacoco.exec" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/test-classes/com/bjbloemker/resources/NotesResourceTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/bjbloemker/resources/NotesResourceTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/SearchResource.java" afterPath="$PROJECT_DIR$/src/main/java/com/bjbloemker/resources/SearchResource.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/NotesResourceTest.java" afterPath="$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/NotesResourceTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/site/jacoco/com.bjbloemker.resources/index.html" afterPath="$PROJECT_DIR$/target/site/jacoco/com.bjbloemker.resources/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/site/jacoco/com.bjbloemker.resources/index.source.html" afterPath="$PROJECT_DIR$/target/site/jacoco/com.bjbloemker.resources/index.source.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/site/jacoco/index.html" afterPath="$PROJECT_DIR$/target/site/jacoco/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco-sessions.html" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco-sessions.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco.csv" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/site/jacoco/jacoco.xml" afterPath="$PROJECT_DIR$/target/site/jacoco/jacoco.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.GeneralServicesTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.GeneralServicesTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.JsonParserTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.JsonParserTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.NotesResourceTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.NotesResourceTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.OrderResourceTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.OrderResourceTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.ParkResourceTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.ParkResourceTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.ReportResourceTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.ReportResourceTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.VisitorsResourceTest.xml" afterPath="$PROJECT_DIR$/target/surefire-reports/TEST-com.bjbloemker.resources.VisitorsResourceTest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.GeneralServicesTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.GeneralServicesTest.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.JsonParserTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.JsonParserTest.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.NotesResourceTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.NotesResourceTest.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.OrderResourceTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.OrderResourceTest.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.ParkResourceTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.ParkResourceTest.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.ReportResourceTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.ReportResourceTest.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.VisitorsResourceTest.txt" afterPath="$PROJECT_DIR$/target/surefire-reports/com.bjbloemker.resources.VisitorsResourceTest.txt" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -49,7 +21,7 @@
       <FILTER>com.bjbloemker.resources.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/Pay4Park$Pay4Park.coverage" NAME="Pay4Park Coverage Results" MODIFIED="1542120853913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
-    <SUITE FILE_PATH="coverage/Pay4Park$All_in_pay4park__1_.coverage" NAME="All in pay4park (1) Coverage Results" MODIFIED="1542334624358" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Pay4Park$All_in_pay4park__1_.coverage" NAME="All in pay4park (1) Coverage Results" MODIFIED="1542343620830" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Pay4Park$All_in_pay4park.coverage" NAME="All in pay4park Coverage Results" MODIFIED="1542342697717" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/Pay4Park$VisitorsResourceTest.coverage" NAME="VisitorsResourceTest Coverage Results" MODIFIED="1542244762714" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.bjbloemker.resources.*</FILTER>
@@ -93,8 +65,8 @@
       <file leaf-file-name="NotesResourceTest.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/NotesResourceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="753">
-              <caret line="61" column="0" lean-forward="true" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+            <state relative-caret-position="243">
+              <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -358,7 +330,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="MavenSettings" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.statistic.project.settings" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -399,7 +371,27 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="JUnit.SearchResourceTest">
+  <component name="RunManager" selected="JUnit.All in pay4park (1)">
+    <configuration name="All in pay4park (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="pay4park" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
     <configuration name="All in pay4park" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="pay4park" />
@@ -438,31 +430,6 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="Pay4Park" />
       <envs />
-    </configuration>
-    <configuration name="NotesResourceTest.searchNoteNoResults" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="com.bjbloemker.resources.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="pay4park" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="com.bjbloemker.resources" />
-      <option name="MAIN_CLASS_NAME" value="com.bjbloemker.resources.NotesResourceTest" />
-      <option name="METHOD_NAME" value="searchNoteNoResults" />
-      <option name="TEST_OBJECT" value="method" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
     </configuration>
     <configuration name="Pay4Park" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -636,19 +603,19 @@
     <list size="7">
       <item index="0" class="java.lang.String" itemvalue="Application.Pay4Park" />
       <item index="1" class="java.lang.String" itemvalue="Application.Main" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.NotesResourceTest.searchNoteNoResults" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.All in pay4park" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.SearchResourceTest.searchNullKey" />
-      <item index="5" class="java.lang.String" itemvalue="JUnit.SearchResourceTest.searchSomeStuff" />
-      <item index="6" class="java.lang.String" itemvalue="JUnit.SearchResourceTest" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.All in pay4park" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.SearchResourceTest.searchNullKey" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.SearchResourceTest.searchSomeStuff" />
+      <item index="5" class="java.lang.String" itemvalue="JUnit.SearchResourceTest" />
+      <item index="6" class="java.lang.String" itemvalue="JUnit.All in pay4park (1)" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.SearchResourceTest" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.SearchResourceTest.searchSomeStuff" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.SearchResourceTest.searchNullKey" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.All in pay4park" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.NotesResourceTest.searchNoteNoResults" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.All in pay4park (1)" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.SearchResourceTest" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.SearchResourceTest.searchSomeStuff" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.SearchResourceTest.searchNullKey" />
+        <item index="4" class="java.lang.String" itemvalue="JUnit.All in pay4park" />
       </list>
     </recent_temporary>
   </component>
@@ -675,7 +642,7 @@
       <workItem from="1542119340136" duration="78313000" />
       <workItem from="1542293319046" duration="1240000" />
       <workItem from="1542295631151" duration="347000" />
-      <workItem from="1542320571894" duration="22530000" />
+      <workItem from="1542320571894" duration="24482000" />
     </task>
     <servers />
   </component>
@@ -683,8 +650,8 @@
     <history-entry file="All_in_pay4park - 2018.11.15 at 22h 31m 43s.xml">
       <configuration name="All in pay4park" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="NotesResourceTest_searchNoteNoResults - 2018.11.15 at 21h 53m 30s.xml">
-      <configuration name="NotesResourceTest.searchNoteNoResults" configurationId="JUnit" />
+    <history-entry file="All_in_pay4park_(1) - 2018.11.15 at 22h 47m 05s.xml">
+      <configuration name="All in pay4park (1)" configurationId="JUnit" />
     </history-entry>
     <history-entry file="NotesResourceTest_searchNoteNoResults - 2018.11.15 at 21h 54m 49s.xml">
       <configuration name="NotesResourceTest.searchNoteNoResults" configurationId="JUnit" />
@@ -712,18 +679,18 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="188553000" />
+    <option name="totallyTimeSpent" value="190505000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23802084" sideWeight="0.48296836" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23802084" sideWeight="0.4819103" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Statistic" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3291262" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Statistic" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3291262" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -736,8 +703,8 @@
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20194174" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23802084" sideWeight="0.5170316" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20194174" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23802084" sideWeight="0.5180897" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22135417" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -749,7 +716,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3291262" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="10" side_tool="false" content_ui="combo" />
-      <window_info id="Metrics" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3291262" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1196,8 +1162,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/bjbloemker/resources/NotesResourceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="753">
-          <caret line="61" column="0" lean-forward="true" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
+        <state relative-caret-position="243">
+          <caret line="27" column="0" lean-forward="true" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
           <folding />
         </state>
       </provider>
