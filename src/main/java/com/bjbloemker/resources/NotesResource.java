@@ -10,7 +10,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
@@ -55,7 +54,7 @@ public class NotesResource {
 
             //build notes array
             JsonArray noteArray = new JsonArray();
-            ArrayList<NoteObj> notesByPark = GeneralResources.getAllNotesFromPark(currentPID);
+            ArrayList<NoteObj> notesByPark = GeneralServices.getAllNotesFromPark(currentPID);
 
             for(int j = 0; j < notesByPark.size(); j++){
                 NoteObj currentNote = notesByPark.get(j);
@@ -80,7 +79,7 @@ public class NotesResource {
     @GET
     @Path("/{nid}")
     public Response getNoteDetail(@PathParam("nid") String id) {
-        NoteObj note = GeneralResources.findNoteByNoteId(id);
+        NoteObj note = GeneralServices.findNoteByNoteId(id);
         if (note == null)
             return Response.status(Response.Status.NOT_FOUND).build();
         return Response.status(Response.Status.OK).entity(gson.toJson((Note) note)).build();

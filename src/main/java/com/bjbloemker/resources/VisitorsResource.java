@@ -18,7 +18,7 @@ public class VisitorsResource {
     @GET
     @Path("/{vid}")
     public Response getVisitorDetail(@PathParam("vid") String id) {
-        VisitorObj visitor = GeneralResources.findVisitorById(id);
+        VisitorObj visitor = GeneralServices.findVisitorById(id);
         if(visitor == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
@@ -32,13 +32,13 @@ public class VisitorsResource {
 
         output.add("visitor", innerVisitor);
 
-        ArrayList<OrderObj> ordersByVisitor = GeneralResources.getAllOrdersFromVisitor(visitor.getVIDAsString());
-        JsonElement toPutOrders  = GeneralResources.superSimplifyOrders(ordersByVisitor);
+        ArrayList<OrderObj> ordersByVisitor = GeneralServices.getAllOrdersFromVisitor(visitor.getVIDAsString());
+        JsonElement toPutOrders  = GeneralServices.superSimplifyOrders(ordersByVisitor);
         output.add("orders", toPutOrders);
 
 
-        ArrayList<NoteObj> notesByVisitor = GeneralResources.getAllNotesFromVisitor(visitor.getVIDAsString());
-        JsonElement toPutNotes  = GeneralResources.superSimplifyNotes(notesByVisitor);
+        ArrayList<NoteObj> notesByVisitor = GeneralServices.getAllNotesFromVisitor(visitor.getVIDAsString());
+        JsonElement toPutNotes  = GeneralServices.superSimplifyNotes(notesByVisitor);
         output.add("notes", toPutNotes);
 
         return Response.status(Response.Status.OK).entity(gson.toJson(output)).build();
@@ -48,7 +48,7 @@ public class VisitorsResource {
     public Response searchVisitors(@QueryParam("key") String key) {
 
         if(key == null || key.length() == 0){
-            JsonElement output = GeneralResources.visitorsWithoutProperty(MemoryManager.visitors, "payment_info");
+            JsonElement output = GeneralServices.visitorsWithoutProperty(MemoryManager.visitors, "payment_info");
             String outputAsString = gson.toJson(output);
             return Response.status(Response.Status.OK).entity(outputAsString).build();
         }
@@ -81,7 +81,7 @@ public class VisitorsResource {
                 results.add(visitor);
         }
 
-        JsonElement output = GeneralResources.simplifyVisitors(results);
+        JsonElement output = GeneralServices.simplifyVisitors(results);
         String outputAsString = gson.toJson(output);
         return Response.status(Response.Status.OK).entity(outputAsString).build();
     }

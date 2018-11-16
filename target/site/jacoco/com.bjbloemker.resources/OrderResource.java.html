@@ -23,7 +23,7 @@ import java.util.ArrayList;
     @GET
     @Path(&quot;/{oid}&quot;)
     public Response getOrderDetail(@PathParam(&quot;oid&quot;) String id) {
-<span class="fc" id="L26">        OrderObj order = GeneralResources.findOrderById(id);</span>
+<span class="fc" id="L26">        OrderObj order = GeneralServices.findOrderById(id);</span>
 <span class="fc bfc" id="L27" title="All 2 branches covered.">        if(order == null)</span>
 <span class="fc" id="L28">            return Response.status(Response.Status.NOT_FOUND).build();</span>
 
@@ -36,9 +36,9 @@ import java.util.ArrayList;
 <span class="fc" id="L36">        VisitorObj visitor = order.getVisitor();</span>
 <span class="fc" id="L37">        PaymentInfoObj paymentInfo = visitor.getPaymentInfo();</span>
 <span class="fc" id="L38">        PaymentProcessingObj paymentProcessing = order.getPaymentProcessing();</span>
-<span class="fc" id="L39">        ParkObj park = GeneralResources.findParkById(pid);</span>
+<span class="fc" id="L39">        ParkObj park = GeneralServices.findParkById(pid);</span>
 
-<span class="fc" id="L41">        double amount = GeneralResources.calculateCost(vehicle, park);</span>
+<span class="fc" id="L41">        double amount = GeneralServices.calculateCost(vehicle, park);</span>
 <span class="fc" id="L42">        String vid = visitor.getVIDAsString();</span>
 <span class="fc" id="L43">        String date = order.getDate();</span>
 
@@ -138,11 +138,11 @@ import java.util.ArrayList;
 <span class="fc" id="L138">        }</span>
 
         OrderObj order;
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        if(MemoryManager.requestAddToVisitor(visitor) == null){</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        if(MemoryManager.requestAddToVisitor(visitor) == null){</span>
             //find the existing visitor
-<span class="nc" id="L143">            VisitorObj existingVisitor = GeneralResources.findVisitorByEmail(visitor.getEmail());</span>
-<span class="nc" id="L144">            order = new Order(pid, vehicle, existingVisitor);</span>
-<span class="nc" id="L145">        }else{</span>
+<span class="fc" id="L143">            VisitorObj existingVisitor = GeneralServices.findVisitorByEmail(visitor.getEmail());</span>
+<span class="fc" id="L144">            order = new Order(pid, vehicle, existingVisitor);</span>
+<span class="fc" id="L145">        }else{</span>
 <span class="fc" id="L146">            order = new Order(pid, vehicle, visitor);</span>
         }
 
@@ -158,7 +158,7 @@ import java.util.ArrayList;
     @GET
     public Response searchOrder(@QueryParam(&quot;key&quot;) String key) {
 <span class="pc bpc" id="L160" title="1 of 4 branches missed.">        if(key == null || key.length() == 0){</span>
-<span class="fc" id="L161">            JsonElement output = GeneralResources.simplifyOrders(MemoryManager.orders);</span>
+<span class="fc" id="L161">            JsonElement output = GeneralServices.simplifyOrders(MemoryManager.orders);</span>
 <span class="fc" id="L162">            String outputAsString = gson.toJson(output);</span>
 <span class="fc" id="L163">            return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
         }
@@ -202,7 +202,7 @@ import java.util.ArrayList;
 <span class="fc" id="L202">                results.add(order);</span>
         }
 
-<span class="fc" id="L205">        JsonElement output = GeneralResources.simplifyOrders(results);</span>
+<span class="fc" id="L205">        JsonElement output = GeneralServices.simplifyOrders(results);</span>
 <span class="fc" id="L206">        String outputAsString = gson.toJson(output);</span>
 <span class="fc" id="L207">        return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
     }

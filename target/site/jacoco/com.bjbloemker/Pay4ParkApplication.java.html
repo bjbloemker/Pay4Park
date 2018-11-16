@@ -1,33 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pay4ParkApplication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker</a> &gt; <span class="el_source">Pay4ParkApplication.java</span></div><h1>Pay4ParkApplication.java</h1><pre class="source lang-java linenums">package com.bjbloemker;
 
-import com.bjbloemker.resources.NotesResource;
-import com.bjbloemker.resources.OrderResource;
-import com.bjbloemker.resources.ParkResource;
-import com.bjbloemker.resources.VisitorsResource;
+import com.bjbloemker.core.MemoryManager;
+import com.bjbloemker.resources.*;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 
-<span class="nc" id="L10">public class Pay4ParkApplication extends Application&lt;Pay4ParkConfiguration&gt; {</span>
+<span class="nc" id="L8">public class Pay4ParkApplication extends Application&lt;Pay4ParkConfiguration&gt; {</span>
 
     public static void main(final String[] args) throws Exception {
-<span class="nc" id="L13">        new Pay4ParkApplication().run(args);</span>
-<span class="nc" id="L14">    }</span>
+<span class="nc" id="L11">        new Pay4ParkApplication().run(args);</span>
+<span class="nc" id="L12">    }</span>
 
     @Override
     public String getName() {
-<span class="nc" id="L18">        return &quot;Pay4Park&quot;;</span>
+<span class="nc" id="L16">        return &quot;Pay4Park&quot;;</span>
     }
 
     @Override
     public void run(final Pay4ParkConfiguration configuration,
                     final Environment environment) {
-<span class="nc" id="L24">        environment.jersey().register(new ParkResource());</span>
-<span class="nc" id="L25">        environment.jersey().register(new NotesResource());</span>
-<span class="nc" id="L26">        environment.jersey().register(new OrderResource());</span>
-<span class="nc" id="L27">        environment.jersey().register(new VisitorsResource());</span>
-
-        ///this comment is enough to force change
-<span class="nc" id="L30">    }</span>
+<span class="nc" id="L22">        environment.jersey().register(new ParkResource());</span>
+<span class="nc" id="L23">        environment.jersey().register(new NotesResource());</span>
+<span class="nc" id="L24">        environment.jersey().register(new OrderResource());</span>
+<span class="nc" id="L25">        environment.jersey().register(new VisitorsResource());</span>
+<span class="nc" id="L26">        environment.jersey().register(new ReportResource());</span>
+<span class="nc" id="L27">        MemoryManager.initReports();</span>
+<span class="nc" id="L28">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

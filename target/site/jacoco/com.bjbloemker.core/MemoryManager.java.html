@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MemoryManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker.core</a> &gt; <span class="el_source">MemoryManager.java</span></div><h1>MemoryManager.java</h1><pre class="source lang-java linenums">package com.bjbloemker.core;
 
-import com.bjbloemker.api.NoteObj;
-import com.bjbloemker.api.OrderObj;
-import com.bjbloemker.api.ParkObj;
-import com.bjbloemker.api.VisitorObj;
+import com.bjbloemker.api.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-<span class="nc" id="L12">public class MemoryManager {</span>
-<span class="fc" id="L13">    public static List&lt;ParkObj&gt; parks = Collections.synchronizedList(new ArrayList&lt;ParkObj&gt;());</span>
-<span class="fc" id="L14">    public static List&lt;NoteObj&gt; notes = Collections.synchronizedList(new ArrayList&lt;NoteObj&gt;());</span>
-<span class="fc" id="L15">    public static List&lt;OrderObj&gt; orders = Collections.synchronizedList(new ArrayList&lt;OrderObj&gt;());</span>
-<span class="fc" id="L16">    public static List&lt;VisitorObj&gt; visitors = Collections.synchronizedList(new ArrayList&lt;VisitorObj&gt;());</span>
+<span class="nc" id="L9">public final class MemoryManager {</span>
+<span class="fc" id="L10">    public static List&lt;ParkObj&gt; parks = Collections.synchronizedList(new ArrayList&lt;ParkObj&gt;());</span>
+<span class="fc" id="L11">    public static List&lt;NoteObj&gt; notes = Collections.synchronizedList(new ArrayList&lt;NoteObj&gt;());</span>
+<span class="fc" id="L12">    public static List&lt;OrderObj&gt; orders = Collections.synchronizedList(new ArrayList&lt;OrderObj&gt;());</span>
+<span class="fc" id="L13">    public static List&lt;VisitorObj&gt; visitors = Collections.synchronizedList(new ArrayList&lt;VisitorObj&gt;());</span>
 
+    //these reports can only occur once so they are statically defined
+    //no need using UUIDs, because there is only 2
+    public static final String ADMISSION_REPORT_ID = &quot;998&quot;;
+    public static final String ADMISSION_REPORT_TITLE = &quot;Admissions report&quot;;
+    public static final String REVENUE_REPORT_ID = &quot;999&quot;;
+    public static final String REVENUE_REPORT_TITLE = &quot;Revenue report&quot;;
 
+<span class="fc" id="L22">    public static List&lt;ReportObj&gt; reports = Collections.synchronizedList(new ArrayList&lt;ReportObj&gt;());</span>
 
+    private static ReportObj admissionReport;
+    private static ReportObj revenueReport;
+
+    public static void initReports(){
+<span class="fc" id="L28">        admissionReport = new Report(ADMISSION_REPORT_ID, ADMISSION_REPORT_TITLE);</span>
+<span class="fc" id="L29">        revenueReport = new Report(REVENUE_REPORT_ID, REVENUE_REPORT_TITLE);</span>
+<span class="fc" id="L30">        reports.add(admissionReport);</span>
+<span class="fc" id="L31">        reports.add(revenueReport);</span>
+<span class="fc" id="L32">    }</span>
 
     public static VisitorObj requestAddToVisitor(VisitorObj visitor){
-<span class="fc" id="L22">        boolean add = true;</span>
+<span class="fc" id="L35">        boolean add = true;</span>
 
-<span class="fc bfc" id="L24" title="All 2 branches covered.">        for(VisitorObj v : visitors)</span>
-<span class="pc bpc" id="L25" title="1 of 2 branches missed.">            if(v.getEmail().equals(visitor.getEmail()))</span>
-<span class="nc" id="L26">                add = false;</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">        for(VisitorObj v : visitors)</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">            if(v.getEmail().equals(visitor.getEmail()))</span>
+<span class="fc" id="L39">                add = false;</span>
 
-<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if(add){</span>
-<span class="fc" id="L29">            MemoryManager.visitors.add(visitor);</span>
-<span class="fc" id="L30">            return visitor;</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if(add){</span>
+<span class="fc" id="L42">            MemoryManager.visitors.add(visitor);</span>
+<span class="fc" id="L43">            return visitor;</span>
         }
-<span class="nc" id="L32">        return null;//null if visitor already exist</span>
+<span class="fc" id="L45">        return null;//null if visitor already exist</span>
 
     }
 

@@ -77,12 +77,6 @@ class VisitorsResourceTest extends DataForTesting{
 
     }
 
-    private void buildParkAndSetupOrder(){
-        pid = buildPark();
-        String toSendToOrder = "{\"pid\": \""+pid+"\", \"vehicle\": {\"state\": \""+state+"\", \"plate\": \""+plate+"\", \"type\": \""+type+"\"}, \"visitor\": {\"name\": \""+name+"\", \"email\": \""+email+"\", \"payment_info\": {\"card\": \""+cardNumber+"\", \"name_on_card\": \""+name+"\", \"expiration_date\": \""+expiration+"\", \"zip\": "+zipCode+"}}}";
-        OrderResource.createOrder(toSendToOrder);
-    }
-
     @AfterAll
     static void cleanUp(){
         MemoryManager.parks.clear();

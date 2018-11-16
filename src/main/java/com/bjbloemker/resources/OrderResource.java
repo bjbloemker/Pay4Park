@@ -23,7 +23,7 @@ public class OrderResource {
     @GET
     @Path("/{oid}")
     public Response getOrderDetail(@PathParam("oid") String id) {
-        OrderObj order = GeneralResources.findOrderById(id);
+        OrderObj order = GeneralServices.findOrderById(id);
         if(order == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
@@ -36,9 +36,9 @@ public class OrderResource {
         VisitorObj visitor = order.getVisitor();
         PaymentInfoObj paymentInfo = visitor.getPaymentInfo();
         PaymentProcessingObj paymentProcessing = order.getPaymentProcessing();
-        ParkObj park = GeneralResources.findParkById(pid);
+        ParkObj park = GeneralServices.findParkById(pid);
 
-        double amount = GeneralResources.calculateCost(vehicle, park);
+        double amount = GeneralServices.calculateCost(vehicle, park);
         String vid = visitor.getVIDAsString();
         String date = order.getDate();
 
@@ -140,7 +140,7 @@ public class OrderResource {
         OrderObj order;
         if(MemoryManager.requestAddToVisitor(visitor) == null){
             //find the existing visitor
-            VisitorObj existingVisitor = GeneralResources.findVisitorByEmail(visitor.getEmail());
+            VisitorObj existingVisitor = GeneralServices.findVisitorByEmail(visitor.getEmail());
             order = new Order(pid, vehicle, existingVisitor);
         }else{
             order = new Order(pid, vehicle, visitor);
@@ -158,7 +158,7 @@ public class OrderResource {
     @GET
     public Response searchOrder(@QueryParam("key") String key) {
         if(key == null || key.length() == 0){
-            JsonElement output = GeneralResources.simplifyOrders(MemoryManager.orders);
+            JsonElement output = GeneralServices.simplifyOrders(MemoryManager.orders);
             String outputAsString = gson.toJson(output);
             return Response.status(Response.Status.OK).entity(outputAsString).build();
         }
@@ -202,7 +202,7 @@ public class OrderResource {
                 results.add(order);
         }
 
-        JsonElement output = GeneralResources.simplifyOrders(results);
+        JsonElement output = GeneralServices.simplifyOrders(results);
         String outputAsString = gson.toJson(output);
         return Response.status(Response.Status.OK).entity(outputAsString).build();
     }

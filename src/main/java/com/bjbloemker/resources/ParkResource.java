@@ -7,10 +7,8 @@ import com.google.gson.*;
 import com.google.gson.JsonParser;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.util.ArrayList;
 
 
@@ -24,7 +22,7 @@ public class ParkResource {
     @GET
     @Path("/{pid}")
     public Response getParkDetail(@PathParam("pid") String id) {
-        ParkObj park = GeneralResources.findParkById(id);
+        ParkObj park = GeneralServices.findParkById(id);
         if(park == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
@@ -99,7 +97,7 @@ public class ParkResource {
     @DELETE
     @Path("/{pid}")
     public Response deletePark(@PathParam("pid") String id) {
-        ParkObj park = GeneralResources.findParkById(id);
+        ParkObj park = GeneralServices.findParkById(id);
         if(park != null){
             MemoryManager.parks.remove(park);
             return Response.status(Response.Status.NO_CONTENT).build();
@@ -111,7 +109,7 @@ public class ParkResource {
     public Response searchPark(@QueryParam("key") String key) {
 
         if(key == null || key.length() == 0){
-            JsonElement output = GeneralResources.parksWithoutProperty(MemoryManager.parks, "payment_info");
+            JsonElement output = GeneralServices.parksWithoutProperty(MemoryManager.parks, "payment_info");
             String outputAsString = gson.toJson(output);
             return Response.status(Response.Status.OK).entity(outputAsString).build();
         }
@@ -142,7 +140,7 @@ public class ParkResource {
                 results.add(park);
         }
 
-        JsonElement output = GeneralResources.parksWithoutProperty(results,"payment_info");
+        JsonElement output = GeneralServices.parksWithoutProperty(results,"payment_info");
         String outputAsString = gson.toJson(output);
         return Response.status(Response.Status.OK).entity(outputAsString).build();
     }
@@ -157,7 +155,7 @@ public class ParkResource {
         String title = jsonObject.get("title").getAsString();
         String content = jsonObject.get("text").getAsString();
 
-        ArrayList<OrderObj> orders = GeneralResources.getAllOrdersFromVisitor(vid);
+        ArrayList<OrderObj> orders = GeneralServices.getAllOrdersFromVisitor(vid);
 
         boolean beenToPark = false;
         for(int i = 0; i < orders.size(); i++){
@@ -216,8 +214,8 @@ public class ParkResource {
     @GET
     @Path("/{pid}/notes/{nid}")
     public Response getNoteWithPark(@PathParam("pid") String pid, @PathParam("nid") String nid){
-        NoteObj note = GeneralResources.findNoteByNoteId(nid);
-        ParkObj park = GeneralResources.findParkById(pid);
+        NoteObj note = GeneralServices.findNoteByNoteId(nid);
+        ParkObj park = GeneralServices.findParkById(pid);
 
         if(note == null || park == null)
             return Response.status(Response.Status.BAD_REQUEST).build();
@@ -233,7 +231,7 @@ public class ParkResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePark(String data, @PathParam("pid") String pid){
 
-        ParkObj oldPark = GeneralResources.findParkById(pid);
+        ParkObj oldPark = GeneralServices.findParkById(pid);
         if(oldPark == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 

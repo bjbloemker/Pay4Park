@@ -7,15 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="pay4park" />
-        <module name="Pay4Park" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Pay4Park" target="1.8" />
       <module name="pay4park" target="1.8" />
-      <module name="pay4park (1)" target="1.8" />
-      <module name="pay4park (2)" target="1.8" />
-      <module name="pay4park (3)" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

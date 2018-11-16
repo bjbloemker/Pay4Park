@@ -2,7 +2,6 @@ package com.bjbloemker.resources;
 
 import com.bjbloemker.api.*;
 import com.bjbloemker.core.*;
-import com.bjbloemker.exceptions.InvalidPriceException;
 import com.bjbloemker.exceptions.InvalidVehicleTypeException;
 import com.bjbloemker.exceptions.NullVehicleException;
 import com.google.gson.Gson;
@@ -13,7 +12,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GeneralResources {
+public class GeneralServices {
     private static Gson gson = new Gson();
     private static com.bjbloemker.resources.JsonParser localJsonParser;
 
@@ -78,11 +77,14 @@ public class GeneralResources {
     }
 
 
+
+
+
+
     public static JsonElement parksWithoutProperty(List<ParkObj> parks,String property){
         JsonArray output = new JsonArray();
 
-        for(int i = 0; i < parks.size(); i++){
-            ParkObj currentPark = parks.get(i);
+        for(ParkObj currentPark : parks){
             JsonObject parkAsJsonObject = (JsonObject) gson.toJsonTree(currentPark);
             parkAsJsonObject.remove(property);
             output.add(parkAsJsonObject);
@@ -173,8 +175,7 @@ public class GeneralResources {
     public static JsonElement superSimplifyOrders(List<OrderObj> orders){
         JsonArray output = new JsonArray();
 
-        for(int i = 0; i < orders.size(); i++){
-            OrderObj currentOrder = orders.get(i);
+        for (OrderObj currentOrder : orders) {
             JsonObject outputOrderAsJson = new JsonObject();
 
             String oid = currentOrder.getOIDAsString();
@@ -194,8 +195,7 @@ public class GeneralResources {
     public static JsonElement superSimplifyNotes(List<NoteObj> notes){
         JsonArray output = new JsonArray();
 
-        for(int i = 0; i < notes.size(); i++){
-            NoteObj currentNote = notes.get(i);
+        for(NoteObj currentNote : notes){
             JsonObject outputOrderAsJson = new JsonObject();
 
             String nid = currentNote.getNIDAsString();
@@ -217,8 +217,7 @@ public class GeneralResources {
     public static JsonElement simplifyVisitors(List<VisitorObj> visitors){
         JsonArray output = new JsonArray();
 
-        for(int i =0; i < visitors.size(); i++){
-            VisitorObj currentVisitor = visitors.get(i);
+        for (VisitorObj currentVisitor : visitors) {
             JsonObject outputVisitorAsJson = new JsonObject();
 
             String vid = currentVisitor.getVIDAsString();
@@ -240,8 +239,7 @@ public class GeneralResources {
     public static JsonElement visitorsWithoutProperty(List<VisitorObj> visitors, String property){
         JsonArray output = new JsonArray();
 
-        for(int i =0; i < visitors.size(); i++){
-            VisitorObj currentVisitor = visitors.get(i);
+        for (VisitorObj currentVisitor : visitors) {
             JsonObject visitorAsJsonObject = (JsonObject) gson.toJsonTree(currentVisitor);
             visitorAsJsonObject.remove(property);
 

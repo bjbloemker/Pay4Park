@@ -1,9 +1,7 @@
 package com.bjbloemker;
 
-import com.bjbloemker.resources.NotesResource;
-import com.bjbloemker.resources.OrderResource;
-import com.bjbloemker.resources.ParkResource;
-import com.bjbloemker.resources.VisitorsResource;
+import com.bjbloemker.core.MemoryManager;
+import com.bjbloemker.resources.*;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 
@@ -25,8 +23,8 @@ public class Pay4ParkApplication extends Application<Pay4ParkConfiguration> {
         environment.jersey().register(new NotesResource());
         environment.jersey().register(new OrderResource());
         environment.jersey().register(new VisitorsResource());
-
-        ///this comment is enough to force change
+        environment.jersey().register(new ReportResource());
+        MemoryManager.initReports();
     }
 
 }

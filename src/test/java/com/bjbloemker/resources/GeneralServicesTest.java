@@ -3,9 +3,6 @@ package com.bjbloemker.resources;
 import com.bjbloemker.api.*;
 import com.bjbloemker.core.*;
 import com.google.gson.JsonElement;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,7 +12,7 @@ import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GeneralResourcesTest {
+class GeneralServicesTest {
     static ArrayList<ParkObj> parks;
     static ArrayList<NoteObj> notes;
     static ArrayList<OrderObj> orders;
@@ -106,36 +103,36 @@ class GeneralResourcesTest {
     void findParkById() {
         String id1 = parks.get(0).getPIDAsString();
         ParkObj park1 = parks.get(0);
-        assertEquals(park1, GeneralResources.findParkById(id1));
+        assertEquals(park1, GeneralServices.findParkById(id1));
     }
     @Test
     void findParkByIdNull() {
-        assertNull(GeneralResources.findParkById("fake_idetifier"));
+        assertNull(GeneralServices.findParkById("fake_idetifier"));
     }
 
 
     @Test
     void findNoteByParkId() {
         NoteObj localNote = notes.get(0);
-        NoteObj toCompare = GeneralResources.findNoteByParkId(parks.get(0).getPIDAsString());
+        NoteObj toCompare = GeneralServices.findNoteByParkId(parks.get(0).getPIDAsString());
         assertEquals(localNote, toCompare);
     }
 
     @Test
     void findNoteByParkIdNull() {
-        assertNull(GeneralResources.findNoteByParkId("fake_idetifier"));
+        assertNull(GeneralServices.findNoteByParkId("fake_idetifier"));
     }
 
     @Test
     void findOrderById() {
         OrderObj order = orders.get(0);
         String id  = orders.get(0).getOIDAsString();
-        assertEquals(order, GeneralResources.findOrderById(id));
+        assertEquals(order, GeneralServices.findOrderById(id));
     }
 
     @Test
     void findOrderByIdNull() {
-        assertNull(GeneralResources.findOrderById("fake_identifier"));
+        assertNull(GeneralServices.findOrderById("fake_identifier"));
     }
 
 
@@ -143,43 +140,43 @@ class GeneralResourcesTest {
     void findNoteByNoteId() {
         NoteObj note = notes.get(0);
         String id = notes.get(0).getNIDAsString();
-        assertEquals(note, GeneralResources.findNoteByNoteId(id));
+        assertEquals(note, GeneralServices.findNoteByNoteId(id));
     }
 
     @Test
     void findNoteByNoteIdNull() {
-        assertNull(GeneralResources.findNoteByNoteId("fake_idetifier"));
+        assertNull(GeneralServices.findNoteByNoteId("fake_idetifier"));
     }
 
     @Test
     void findVisitorById() {
         VisitorObj visitor = visitors.get(0);
         String id = visitors.get(0).getVIDAsString();
-        assertEquals(visitor, GeneralResources.findVisitorById(id));
+        assertEquals(visitor, GeneralServices.findVisitorById(id));
     }
 
     @Test
     void findVisitorByIdNull() {
-        assertNull(GeneralResources.findVisitorById("fake_idetifier"));
+        assertNull(GeneralServices.findVisitorById("fake_idetifier"));
     }
 
     @Test
     void findVisitorByEmail() {
         VisitorObj visitor = visitors.get(0);
         String email = visitors.get(0).getEmail();
-        assertEquals(visitor, GeneralResources.findVisitorByEmail(email));
+        assertEquals(visitor, GeneralServices.findVisitorByEmail(email));
     }
 
     @Test
     void findVisitorByEmailNull() {
-        assertNull(GeneralResources.findVisitorByEmail("fake_idetifier"));
+        assertNull(GeneralServices.findVisitorByEmail("fake_idetifier"));
     }
 
     @Test
     void parksWithoutProperty() {
         ParkObj park1 = parks.get(0);
         ParkObj park2 = parks.get(1);
-        JsonElement element = GeneralResources.parksWithoutProperty(parks, "payment_info");
+        JsonElement element = GeneralServices.parksWithoutProperty(parks, "payment_info");
         String goal = "[{\"pid\":\""+park1.getPIDAsString()+"\",\"location_info\":{\"name\":\"Park1\",\"region\":\"Region1\",\"address\":\"1111 Street Ln Chicago, IL\",\"phone\":\"(555) 123-4567\",\"web\":\"www.park1.gov\",\"geo\":{\"lat\":22.25,\"lng\":-90.55}}}," +
                        "{\"pid\":\""+park2.getPIDAsString()+"\",\"location_info\":{\"name\":\"Park2\",\"region\":\"Region2\",\"address\":\"2222 Lane St Cincinnati, OH\",\"phone\":\"(666) 321-7654\",\"web\":\"www.park2.com\",\"geo\":{\"lat\":98.88,\"lng\":-4.55}}}]";
         assertEquals(goal, element.toString());
@@ -189,7 +186,7 @@ class GeneralResourcesTest {
     void getAllNotesFromPark() {
         String id1 = parks.get(0).getPIDAsString();
         NoteObj note1 = notes.get(0);
-        ArrayList<NoteObj> resultSet = GeneralResources.getAllNotesFromPark(id1);
+        ArrayList<NoteObj> resultSet = GeneralServices.getAllNotesFromPark(id1);
         assertEquals(1, resultSet.size());
         assertEquals(note1, resultSet.get(0));
 
@@ -199,7 +196,7 @@ class GeneralResourcesTest {
     void getAllOrdersFromVisitor() {
         VisitorObj visitor2 = visitors.get(1);
         String id2 = visitor2.getVIDAsString();
-        ArrayList<OrderObj> ordersByCustomer = GeneralResources.getAllOrdersFromVisitor(id2);
+        ArrayList<OrderObj> ordersByCustomer = GeneralServices.getAllOrdersFromVisitor(id2);
         OrderObj order2 = orders.get(1);
         assertEquals(1, ordersByCustomer.size());
         assertEquals(order2, ordersByCustomer.get(0));
@@ -219,7 +216,7 @@ class GeneralResourcesTest {
             }
         }
 
-        assertEquals(localNotes, GeneralResources.getAllNotesFromVisitor(vid1));
+        assertEquals(localNotes, GeneralServices.getAllNotesFromVisitor(vid1));
     }
 
     @Test
@@ -232,7 +229,7 @@ class GeneralResourcesTest {
         String goal = "[{\"oid\":\""+order1.getOIDAsString()+"\",\"pid\":\""+order1.getPIDAsString()+"\",\"date\":\""+order1.getDate()+"\",\"type\":\""+vehicleOrder1.getType()+"\",\"amount\":4.5}," +
                        "{\"oid\":\""+order2.getOIDAsString()+"\",\"pid\":\""+order2.getPIDAsString()+"\",\"date\":\""+order2.getDate()+"\",\"type\":\""+vehicleOrder2.getType()+"\",\"amount\":6.5}]";
 
-        assertEquals(goal, GeneralResources.simplifyOrders(orders).toString());
+        assertEquals(goal, GeneralServices.simplifyOrders(orders).toString());
     }
 
     @Test
@@ -243,7 +240,7 @@ class GeneralResourcesTest {
         String goal = "[{\"oid\":\""+order1.getOIDAsString()+"\",\"pid\":\""+order1.getPIDAsString()+"\",\"date\":\""+order1.getDate()+"\"}," +
                        "{\"oid\":\""+order2.getOIDAsString()+"\",\"pid\":\""+order2.getPIDAsString()+"\",\"date\":\""+order2.getDate()+"\"}]";
 
-        assertEquals(goal, GeneralResources.superSimplifyOrders(orders).toString());
+        assertEquals(goal, GeneralServices.superSimplifyOrders(orders).toString());
     }
 
     @Test
@@ -255,7 +252,7 @@ class GeneralResourcesTest {
         String goal =  "[{\"nid\":\""+note1.getNIDAsString()+"\",\"pid\":\""+note1.getPIDAsString()+"\",\"date\":\""+note1.getDate()+"\",\"title\":\""+note1.getTitle()+"\"}," +
                         "{\"nid\":\""+note2.getNIDAsString()+"\",\"pid\":\""+note2.getPIDAsString()+"\",\"date\":\""+note2.getDate()+"\",\"title\":\""+note2.getTitle()+"\"}," +
                         "{\"nid\":\""+note3.getNIDAsString()+"\",\"pid\":\""+note3.getPIDAsString()+"\",\"date\":\""+note3.getDate()+"\",\"title\":\""+note3.getTitle()+"\"}]";
-        assertEquals(goal, GeneralResources.superSimplifyNotes(notes).toString());
+        assertEquals(goal, GeneralServices.superSimplifyNotes(notes).toString());
     }
 
     @Test
@@ -264,7 +261,7 @@ class GeneralResourcesTest {
         VisitorObj visitor2 = visitors.get(1);
         String goal = "[{\"vid\":\""+visitor1.getVIDAsString()+"\",\"name\":\""+visitor1.getName()+"\",\"email\":\""+visitor1.getEmail()+"\"}," +
                 "{\"vid\":\""+visitor2.getVIDAsString()+"\",\"name\":\""+visitor2.getName()+"\",\"email\":\""+visitor2.getEmail()+"\"}]";
-        assertEquals(goal, GeneralResources.simplifyVisitors(visitors).toString());
+        assertEquals(goal, GeneralServices.simplifyVisitors(visitors).toString());
 
     }
 
@@ -276,7 +273,7 @@ class GeneralResourcesTest {
         String goal = "[{\"vid\":\""+visitor1.getVIDAsString()+"\",\"name\":\""+visitor1.getName()+"\",\"email\":\""+visitor1.getEmail()+"\"}," +
                        "{\"vid\":\""+visitor2.getVIDAsString()+"\",\"name\":\""+visitor2.getName()+"\",\"email\":\""+visitor2.getEmail()+"\"}]";
 
-        assertEquals(goal, GeneralResources.visitorsWithoutProperty(visitors, "payment_info").toString());
+        assertEquals(goal, GeneralServices.visitorsWithoutProperty(visitors, "payment_info").toString());
 
     }
 
@@ -284,7 +281,7 @@ class GeneralResourcesTest {
     void calculateCost() {
         ParkObj park1 = parks.get(0);
         VehicleObj vehicle1 = vehicles.get(0);
-        assertEquals(3, GeneralResources.calculateCost(vehicle1, park1));
+        assertEquals(3, GeneralServices.calculateCost(vehicle1, park1));
     }
 
     @AfterAll

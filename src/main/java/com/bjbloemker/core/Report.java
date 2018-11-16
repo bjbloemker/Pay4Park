@@ -1,23 +1,12 @@
 package com.bjbloemker.core;
 
+import com.bjbloemker.api.ReportObj;
+
 import java.util.ArrayList;
 
-public class Report {
-    String rid;
-    String name;
-    String startDate;
-    String endDate;
-    int totalOrders;
-    double totalRevenue;
-    ArrayList<Park> parks;
+public class Report extends ReportObj {
 
-    public Report(String rid, String name, String startDate, String endDate, int totalOrders, double totalRevenue, ArrayList<Park> parks) {
-        this.rid = rid;
-        this.name = name;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.totalOrders = totalOrders;
-        this.totalRevenue = totalRevenue;
-        this.parks = parks;
+    public Report(String rid, String title) {
+        super(rid, title);
     }
 }

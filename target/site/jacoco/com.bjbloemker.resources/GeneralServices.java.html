@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneralServices.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker.resources</a> &gt; <span class="el_source">GeneralServices.java</span></div><h1>GeneralServices.java</h1><pre class="source lang-java linenums">package com.bjbloemker.resources;
+
+import com.bjbloemker.api.*;
+import com.bjbloemker.core.*;
+import com.bjbloemker.exceptions.InvalidVehicleTypeException;
+import com.bjbloemker.exceptions.NullVehicleException;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="nc" id="L15">public class GeneralServices {</span>
+<span class="fc" id="L16">    private static Gson gson = new Gson();</span>
+    private static com.bjbloemker.resources.JsonParser localJsonParser;
+
+    public static Park findParkById(String id){
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.parks.size(); i++){</span>
+<span class="fc" id="L21">            ParkObj park = MemoryManager.parks.get(i);</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">            if(park.getPIDAsString().equals(id)){</span>
+<span class="fc" id="L23">                return (Park) park;</span>
+            }
+        }
+<span class="fc" id="L26">        return null;</span>
+    }
+
+    public static Note findNoteByParkId(String id){
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.notes.size(); i++){</span>
+<span class="fc" id="L31">            NoteObj note = MemoryManager.notes.get(i);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">                if(note.getPIDAsString().equals(id)){</span>
+<span class="fc" id="L33">                return (Note) note;</span>
+            }
+        }
+<span class="fc" id="L36">        return null;</span>
+    }
+
+    public static OrderObj findOrderById(String id) {
+<span class="fc bfc" id="L40" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.orders.size(); i++){</span>
+<span class="fc" id="L41">            OrderObj order = MemoryManager.orders.get(i);</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">            if(order.getOIDAsString().equals(id)){</span>
+<span class="fc" id="L43">                return order;</span>
+            }
+        }
+<span class="fc" id="L46">        return null;</span>
+    }
+
+    public static NoteObj findNoteByNoteId(String id){
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.notes.size(); i++){</span>
+<span class="fc" id="L51">            NoteObj note = MemoryManager.notes.get(i);</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if(note.getNIDAsString().equals(id)){</span>
+<span class="fc" id="L53">                return note;</span>
+            }
+        }
+<span class="fc" id="L56">        return null;</span>
+    }
+
+    public static VisitorObj findVisitorById(String id){
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.visitors.size(); i++){</span>
+<span class="fc" id="L61">            VisitorObj visitor = MemoryManager.visitors.get(i);</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">            if(visitor.getVIDAsString().equals(id)){</span>
+<span class="fc" id="L63">                return visitor;</span>
+            }
+        }
+<span class="fc" id="L66">        return null;</span>
+    }
+
+    public static VisitorObj findVisitorByEmail(String email){
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.visitors.size(); i++){</span>
+<span class="fc" id="L71">            VisitorObj visitor = MemoryManager.visitors.get(i);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            if(visitor.getEmail().equals(email)){</span>
+<span class="fc" id="L73">                return visitor;</span>
+            }
+        }
+<span class="fc" id="L76">        return null;</span>
+    }
+
+
+
+
+
+
+    public static JsonElement parksWithoutProperty(List&lt;ParkObj&gt; parks,String property){
+<span class="fc" id="L85">        JsonArray output = new JsonArray();</span>
+
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        for(ParkObj currentPark : parks){</span>
+<span class="fc" id="L88">            JsonObject parkAsJsonObject = (JsonObject) gson.toJsonTree(currentPark);</span>
+<span class="fc" id="L89">            parkAsJsonObject.remove(property);</span>
+<span class="fc" id="L90">            output.add(parkAsJsonObject);</span>
+<span class="fc" id="L91">        }</span>
+
+<span class="fc" id="L93">        return output;</span>
+    }
+
+
+    public static ArrayList&lt;NoteObj&gt; getAllNotesFromPark(String pid){
+<span class="fc" id="L98">        ArrayList&lt;NoteObj&gt; notes = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.notes.size(); i++){</span>
+<span class="fc" id="L101">            NoteObj currentNote = MemoryManager.notes.get(i);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">            if(currentNote.getPIDAsString().equals(pid)){</span>
+<span class="fc" id="L103">                notes.add(currentNote);</span>
+            }
+        }
+
+<span class="fc" id="L107">        return notes;</span>
+    }
+
+    public static ArrayList&lt;OrderObj&gt; getAllOrdersFromVisitor(String vid){
+<span class="fc" id="L111">        ArrayList&lt;OrderObj&gt; orders = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.orders.size(); i++){</span>
+<span class="fc" id="L114">            OrderObj currentOrder = MemoryManager.orders.get(i);</span>
+<span class="fc" id="L115">            VisitorObj visitorFromOrder = currentOrder.getVisitor();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">            if(visitorFromOrder.getVIDAsString().equals(vid)){</span>
+<span class="fc" id="L117">                orders.add(currentOrder);</span>
+            }
+        }
+
+<span class="fc" id="L121">        return orders;</span>
+    }
+
+    public static ArrayList&lt;NoteObj&gt; getAllNotesFromVisitor(String vid){
+<span class="fc" id="L125">        ArrayList&lt;NoteObj&gt; notes = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.notes.size(); i++){</span>
+<span class="fc" id="L128">            NoteObj currentNote = MemoryManager.notes.get(i);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            if(currentNote.getVIDAsString().equals(vid)){</span>
+<span class="fc" id="L130">                notes.add(currentNote);</span>
+            }
+        }
+<span class="fc" id="L133">        return notes;</span>
+    }
+
+
+
+    public static JsonElement simplifyOrders(List&lt;OrderObj&gt; orders){
+<span class="fc" id="L139">        JsonArray output = new JsonArray();</span>
+
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        for(int i = 0; i &lt; orders.size(); i++){</span>
+<span class="fc" id="L142">            OrderObj currentOrder = orders.get(i);</span>
+<span class="fc" id="L143">            JsonObject orderAsJsonObject = (JsonObject) gson.toJsonTree(currentOrder);</span>
+<span class="fc" id="L144">            JsonObject outputOrderAsJson = new JsonObject();</span>
+
+<span class="fc" id="L146">            String oid = orderAsJsonObject.get(&quot;oid&quot;).getAsString();</span>
+<span class="fc" id="L147">            String pid = orderAsJsonObject.get(&quot;pid&quot;).getAsString();</span>
+<span class="fc" id="L148">            String date = currentOrder.getDate();</span>
+
+<span class="fc" id="L150">            JsonObject vehicleAsJsonObject = orderAsJsonObject.get(&quot;vehicle&quot;).getAsJsonObject();</span>
+<span class="fc" id="L151">            VehicleObj vehicle = null;</span>
+            try {
+<span class="fc" id="L153">                vehicle = localJsonParser.JsonToVehicle(vehicleAsJsonObject);</span>
+<span class="nc" id="L154">            } catch (NullVehicleException e) {</span>
+<span class="nc" id="L155">                e.printStackTrace();</span>
+<span class="nc" id="L156">            } catch (InvalidVehicleTypeException e) {</span>
+<span class="nc" id="L157">                e.printStackTrace();</span>
+<span class="pc" id="L158">            }</span>
+
+<span class="fc" id="L160">            ParkObj park = findParkById(currentOrder.getPIDAsString());</span>
+<span class="fc" id="L161">            String vehicleType = vehicle.getType();</span>
+
+<span class="fc" id="L163">            outputOrderAsJson.addProperty(&quot;oid&quot;, oid);</span>
+<span class="fc" id="L164">            outputOrderAsJson.addProperty(&quot;pid&quot;, pid);</span>
+<span class="fc" id="L165">            outputOrderAsJson.addProperty(&quot;date&quot;, date);</span>
+<span class="fc" id="L166">            outputOrderAsJson.addProperty(&quot;type&quot;, vehicleType);</span>
+<span class="fc" id="L167">            outputOrderAsJson.addProperty(&quot;amount&quot;, calculateCost(vehicle, park));</span>
+
+<span class="fc" id="L169">            output.add(outputOrderAsJson);</span>
+        }
+
+<span class="fc" id="L172">        return output;</span>
+    }
+
+    public static JsonElement superSimplifyOrders(List&lt;OrderObj&gt; orders){
+<span class="fc" id="L176">        JsonArray output = new JsonArray();</span>
+
+<span class="fc bfc" id="L178" title="All 2 branches covered.">        for (OrderObj currentOrder : orders) {</span>
+<span class="fc" id="L179">            JsonObject outputOrderAsJson = new JsonObject();</span>
+
+<span class="fc" id="L181">            String oid = currentOrder.getOIDAsString();</span>
+<span class="fc" id="L182">            String pid = currentOrder.getPIDAsString();</span>
+<span class="fc" id="L183">            String date = currentOrder.getDate();</span>
+
+<span class="fc" id="L185">            outputOrderAsJson.addProperty(&quot;oid&quot;, oid);</span>
+<span class="fc" id="L186">            outputOrderAsJson.addProperty(&quot;pid&quot;, pid);</span>
+<span class="fc" id="L187">            outputOrderAsJson.addProperty(&quot;date&quot;, date);</span>
+
+<span class="fc" id="L189">            output.add(outputOrderAsJson);</span>
+<span class="fc" id="L190">        }</span>
+
+<span class="fc" id="L192">        return output;</span>
+    }
+
+    public static JsonElement superSimplifyNotes(List&lt;NoteObj&gt; notes){
+<span class="fc" id="L196">        JsonArray output = new JsonArray();</span>
+
+<span class="fc bfc" id="L198" title="All 2 branches covered.">        for(NoteObj currentNote : notes){</span>
+<span class="fc" id="L199">            JsonObject outputOrderAsJson = new JsonObject();</span>
+
+<span class="fc" id="L201">            String nid = currentNote.getNIDAsString();</span>
+<span class="fc" id="L202">            String pid = currentNote.getPIDAsString();</span>
+<span class="fc" id="L203">            String date = currentNote.getDate();</span>
+<span class="fc" id="L204">            String title = currentNote.getTitle();</span>
+
+<span class="fc" id="L206">            outputOrderAsJson.addProperty(&quot;nid&quot;, nid);</span>
+<span class="fc" id="L207">            outputOrderAsJson.addProperty(&quot;pid&quot;, pid);</span>
+<span class="fc" id="L208">            outputOrderAsJson.addProperty(&quot;date&quot;, date);</span>
+<span class="fc" id="L209">            outputOrderAsJson.addProperty(&quot;title&quot;, title);</span>
+
+<span class="fc" id="L211">            output.add(outputOrderAsJson);</span>
+<span class="fc" id="L212">        }</span>
+
+<span class="fc" id="L214">        return output;</span>
+    }
+
+    public static JsonElement simplifyVisitors(List&lt;VisitorObj&gt; visitors){
+<span class="fc" id="L218">        JsonArray output = new JsonArray();</span>
+
+<span class="fc bfc" id="L220" title="All 2 branches covered.">        for (VisitorObj currentVisitor : visitors) {</span>
+<span class="fc" id="L221">            JsonObject outputVisitorAsJson = new JsonObject();</span>
+
+<span class="fc" id="L223">            String vid = currentVisitor.getVIDAsString();</span>
+<span class="fc" id="L224">            String name = currentVisitor.getName();</span>
+<span class="fc" id="L225">            String email = currentVisitor.getEmail();</span>
+
+<span class="fc" id="L227">            outputVisitorAsJson.addProperty(&quot;vid&quot;, vid);</span>
+<span class="fc" id="L228">            outputVisitorAsJson.addProperty(&quot;name&quot;, name);</span>
+<span class="fc" id="L229">            outputVisitorAsJson.addProperty(&quot;email&quot;, email);</span>
+
+<span class="fc" id="L231">            output.add(outputVisitorAsJson);</span>
+<span class="fc" id="L232">        }</span>
+
+<span class="fc" id="L234">        return output;</span>
+    }
+
+
+
+    public static JsonElement visitorsWithoutProperty(List&lt;VisitorObj&gt; visitors, String property){
+<span class="fc" id="L240">        JsonArray output = new JsonArray();</span>
+
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        for (VisitorObj currentVisitor : visitors) {</span>
+<span class="fc" id="L243">            JsonObject visitorAsJsonObject = (JsonObject) gson.toJsonTree(currentVisitor);</span>
+<span class="fc" id="L244">            visitorAsJsonObject.remove(property);</span>
+
+<span class="fc" id="L246">            output.add(visitorAsJsonObject);</span>
+<span class="fc" id="L247">        }</span>
+
+<span class="fc" id="L249">        return output;</span>
+    }
+
+
+
+
+    public static double calculateCost(VehicleObj vehicle, ParkObj park){
+<span class="fc" id="L256">        String vehicleState = vehicle.getState();</span>
+<span class="fc" id="L257">        String vehicleType = vehicle.getType();</span>
+<span class="fc" id="L258">        String parkAddr = park.getLocationInfo().getAddress();</span>
+<span class="fc" id="L259">        int positionInArray = 1;//0 for in state, 1 for out of state</span>
+
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        if(parkAddr.contains(vehicleState)){</span>
+<span class="fc" id="L262">            positionInArray = 0;</span>
+        }
+
+<span class="fc" id="L265">        ChargeInfoObj chargeInfo = park.getPaymentInfo();</span>
+<span class="pc bpc" id="L266" title="1 of 2 branches missed.">        if(vehicleType.equalsIgnoreCase(&quot;motorcycle&quot;)){</span>
+<span class="nc" id="L267">            return chargeInfo.getMotorcycle()[positionInArray];</span>
+        }
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        if(vehicleType.equalsIgnoreCase(&quot;car&quot;)){</span>
+<span class="fc" id="L270">            return chargeInfo.getCar()[positionInArray];</span>
+        }
+<span class="pc bpc" id="L272" title="1 of 2 branches missed.">        if(vehicleType.equalsIgnoreCase(&quot;rv&quot;)){</span>
+<span class="fc" id="L273">            return chargeInfo.getRv()[positionInArray];</span>
+        }
+
+        try {
+<span class="nc" id="L277">            throw new InvalidVehicleTypeException(&quot;Vehicle type must by motorcycle, RV, or Car&quot;);</span>
+<span class="nc" id="L278">        } catch (InvalidVehicleTypeException e) {</span>
+<span class="nc" id="L279">            e.printStackTrace();</span>
+        }
+<span class="nc" id="L281">        return -1;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>
