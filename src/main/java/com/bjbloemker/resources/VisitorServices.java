@@ -79,25 +79,6 @@ public abstract class VisitorServices {
         return output;
     }
 
-    protected static JsonElement simplifyVisitors(List<VisitorObj> visitors){
-        JsonArray output = new JsonArray();
-
-        for (VisitorObj currentVisitor : visitors) {
-            JsonObject outputVisitorAsJson = new JsonObject();
-
-            String vid = currentVisitor.getVIDAsString();
-            String name = currentVisitor.getName();
-            String email = currentVisitor.getEmail();
-
-            outputVisitorAsJson.addProperty("vid", vid);
-            outputVisitorAsJson.addProperty("name", name);
-            outputVisitorAsJson.addProperty("email", email);
-
-            output.add(outputVisitorAsJson);
-        }
-
-        return output;
-    }
 
     protected static JsonElement visitorsWithoutProperty(List<VisitorObj> visitors, String property){
         JsonArray output = new JsonArray();

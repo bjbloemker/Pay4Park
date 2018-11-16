@@ -21,28 +21,25 @@ import java.util.List;
 
 <span class="fc" id="L22">    public static List&lt;ReportObj&gt; reports = Collections.synchronizedList(new ArrayList&lt;ReportObj&gt;());</span>
 
-    private static ReportObj admissionReport;
-    private static ReportObj revenueReport;
-
     public static void initReports(){
-<span class="fc" id="L28">        admissionReport = new Report(ADMISSION_REPORT_ID, ADMISSION_REPORT_TITLE);</span>
-<span class="fc" id="L29">        revenueReport = new Report(REVENUE_REPORT_ID, REVENUE_REPORT_TITLE);</span>
-<span class="fc" id="L30">        reports.add(admissionReport);</span>
-<span class="fc" id="L31">        reports.add(revenueReport);</span>
-<span class="fc" id="L32">    }</span>
+<span class="fc" id="L25">        ReportObj admissionReport = new Report(ADMISSION_REPORT_ID, ADMISSION_REPORT_TITLE);</span>
+<span class="fc" id="L26">        ReportObj revenueReport = new Report(REVENUE_REPORT_ID, REVENUE_REPORT_TITLE);</span>
+<span class="fc" id="L27">        reports.add(admissionReport);</span>
+<span class="fc" id="L28">        reports.add(revenueReport);</span>
+<span class="fc" id="L29">    }</span>
 
     public static VisitorObj requestAddToVisitor(VisitorObj visitor){
-<span class="fc" id="L35">        boolean add = true;</span>
+<span class="fc" id="L32">        boolean add = true;</span>
 
-<span class="fc bfc" id="L37" title="All 2 branches covered.">        for(VisitorObj v : visitors)</span>
-<span class="fc bfc" id="L38" title="All 2 branches covered.">            if(v.getEmail().equals(visitor.getEmail()))</span>
-<span class="fc" id="L39">                add = false;</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        for(VisitorObj v : visitors)</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">            if(v.getEmail().equals(visitor.getEmail()))</span>
+<span class="fc" id="L36">                add = false;</span>
 
-<span class="fc bfc" id="L41" title="All 2 branches covered.">        if(add){</span>
-<span class="fc" id="L42">            MemoryManager.visitors.add(visitor);</span>
-<span class="fc" id="L43">            return visitor;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        if(add){</span>
+<span class="fc" id="L39">            MemoryManager.visitors.add(visitor);</span>
+<span class="fc" id="L40">            return visitor;</span>
         }
-<span class="fc" id="L45">        return null;//null if visitor already exist</span>
+<span class="fc" id="L42">        return null;//null if visitor already exist</span>
 
     }
 

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NotesResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker.resources</a> &gt; <span class="el_source">NotesResource.java</span></div><h1>NotesResource.java</h1><pre class="source lang-java linenums">package com.bjbloemker.resources;
 
+import com.bjbloemker.api.ErrorObj;
 import com.bjbloemker.api.NoteObj;
+import com.bjbloemker.api.OrderObj;
 import com.bjbloemker.api.ParkObj;
+import com.bjbloemker.core.Error;
 import com.bjbloemker.core.MemoryManager;
 import com.bjbloemker.core.Note;
 import com.google.gson.Gson;
@@ -10,83 +13,108 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 
 @Path(&quot;/parkpay/notes&quot;)
 @Produces(&quot;application/json&quot;)
-<span class="fc" id="L18">public class NotesResource {</span>
-<span class="fc" id="L19">    private static Gson gson = new Gson();</span>
-<span class="fc" id="L20">    private static com.google.gson.JsonParser parser = new com.google.gson.JsonParser();  //gson parser</span>
+<span class="fc" id="L22">public class NotesResource extends NotesServices{</span>
+<span class="fc" id="L23">    private static Gson gson = new Gson();</span>
+<span class="fc" id="L24">    private static com.google.gson.JsonParser parser = new com.google.gson.JsonParser();  //gson parser</span>
     private static com.bjbloemker.resources.JsonParser localJsonParser;
 
     @GET
     public Response searchNote(@QueryParam(&quot;key&quot;) String key) {
-<span class="fc" id="L25">        boolean keyPresent = true;</span>
+<span class="fc" id="L29">        boolean keyPresent = true;</span>
 
-<span class="pc bpc" id="L27" title="1 of 4 branches missed.">        if(key == null || key.length() == 0)</span>
-<span class="fc" id="L28">            keyPresent = false;</span>
+<span class="pc bpc" id="L31" title="1 of 4 branches missed.">        if(key == null || key.length() == 0)</span>
+<span class="fc" id="L32">            keyPresent = false;</span>
 
-<span class="fc" id="L30">        ArrayList&lt;NoteObj&gt; results = new ArrayList&lt;&gt;();</span>
 
-<span class="fc bfc" id="L32" title="All 2 branches covered.">        if(keyPresent) {</span>
-<span class="fc" id="L33">            key = key.toUpperCase();</span>
-<span class="fc bfc" id="L34" title="All 2 branches covered.">            for (int i = 0; i &lt; MemoryManager.notes.size(); i++) {</span>
-<span class="fc" id="L35">                NoteObj note = MemoryManager.notes.get(i);</span>
-<span class="fc" id="L36">                String title = note.getTitle().toUpperCase();</span>
-<span class="fc" id="L37">                String content = note.getText().toUpperCase();</span>
-<span class="fc" id="L38">                String date = note.getDate().toUpperCase();</span>
-
-<span class="pc bpc" id="L40" title="1 of 2 branches missed.">                if (title.contains(key) ||</span>
-<span class="fc bfc" id="L41" title="All 2 branches covered.">                        content.contains(key) ||</span>
-<span class="pc bpc" id="L42" title="1 of 2 branches missed.">                        date.contains(key))</span>
-<span class="fc" id="L43">                    results.add(note);</span>
-            }
+<span class="fc" id="L35">        ArrayList&lt;NoteObj&gt; results = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">        if(keyPresent){</span>
+<span class="fc" id="L37">            key = key.toUpperCase();</span>
+<span class="fc" id="L38">            results = GeneralServices.searchNotes(key, null, null);</span>
         }
 
-<span class="fc" id="L47">        JsonArray primaryArray = new JsonArray();</span>
-<span class="fc bfc" id="L48" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.parks.size(); i++){</span>
-<span class="fc" id="L49">            JsonObject outputObject = new JsonObject();</span>
-<span class="fc" id="L50">            ParkObj currentPark = MemoryManager.parks.get(i);</span>
-<span class="fc" id="L51">            String currentPID = currentPark.getPIDAsString();</span>
 
-<span class="fc" id="L53">            outputObject.addProperty(&quot;pid&quot;, currentPID);</span>
+<span class="fc" id="L42">        JsonArray primaryArray = new JsonArray();</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.parks.size(); i++){</span>
+<span class="fc" id="L44">            JsonObject outputObject = new JsonObject();</span>
+<span class="fc" id="L45">            ParkObj currentPark = MemoryManager.parks.get(i);</span>
+<span class="fc" id="L46">            String currentPID = currentPark.getPIDAsString();</span>
+
+<span class="fc" id="L48">            outputObject.addProperty(&quot;pid&quot;, currentPID);</span>
 
             //build notes array
-<span class="fc" id="L56">            JsonArray noteArray = new JsonArray();</span>
-<span class="fc" id="L57">            ArrayList&lt;NoteObj&gt; notesByPark = GeneralServices.getAllNotesFromPark(currentPID);</span>
+<span class="fc" id="L51">            JsonArray noteArray = new JsonArray();</span>
+<span class="fc" id="L52">            ArrayList&lt;NoteObj&gt; notesByPark = getAllNotesFromPark(currentPID);</span>
 
-<span class="fc bfc" id="L59" title="All 2 branches covered.">            for(int j = 0; j &lt; notesByPark.size(); j++){</span>
-<span class="fc" id="L60">                NoteObj currentNote = notesByPark.get(j);</span>
-<span class="fc bfc" id="L61" title="All 4 branches covered.">                if(results.contains(currentNote) || keyPresent == false){</span>
-<span class="fc" id="L62">                    JsonElement noteToAdd = gson.toJsonTree(currentNote);</span>
-<span class="fc" id="L63">                    noteToAdd.getAsJsonObject().remove(&quot;pid&quot;);</span>
-<span class="fc" id="L64">                    noteToAdd.getAsJsonObject().remove(&quot;vid&quot;);</span>
-<span class="fc" id="L65">                    noteToAdd.getAsJsonObject().remove(&quot;text&quot;);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            for(int j = 0; j &lt; notesByPark.size(); j++){</span>
+<span class="fc" id="L55">                NoteObj currentNote = notesByPark.get(j);</span>
+<span class="fc bfc" id="L56" title="All 4 branches covered.">                if(results.contains(currentNote) || keyPresent == false){</span>
+<span class="fc" id="L57">                    JsonElement noteToAdd = gson.toJsonTree(currentNote);</span>
+<span class="fc" id="L58">                    noteToAdd.getAsJsonObject().remove(&quot;pid&quot;);</span>
+<span class="fc" id="L59">                    noteToAdd.getAsJsonObject().remove(&quot;vid&quot;);</span>
+<span class="fc" id="L60">                    noteToAdd.getAsJsonObject().remove(&quot;text&quot;);</span>
 
-<span class="fc" id="L67">                    noteArray.add(noteToAdd);</span>
+<span class="fc" id="L62">                    noteArray.add(noteToAdd);</span>
                 }
             }
 
-<span class="fc bfc" id="L71" title="All 2 branches covered.">            if(noteArray.size() != 0){</span>
-<span class="fc" id="L72">                outputObject.add(&quot;notes&quot;, noteArray);</span>
-<span class="fc" id="L73">                primaryArray.add(outputObject);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            if(noteArray.size() != 0){</span>
+<span class="fc" id="L67">                outputObject.add(&quot;notes&quot;, noteArray);</span>
+<span class="fc" id="L68">                primaryArray.add(outputObject);</span>
             }
         }
-<span class="fc" id="L76">        return Response.status(Response.Status.OK).entity(gson.toJson(primaryArray)).build();</span>
+
+
+<span class="fc" id="L73">        return Response.status(Response.Status.OK).entity(gson.toJson(primaryArray)).build();</span>
     }
 
     @GET
     @Path(&quot;/{nid}&quot;)
     public Response getNoteDetail(@PathParam(&quot;nid&quot;) String id) {
-<span class="fc" id="L82">        NoteObj note = GeneralServices.findNoteByNoteId(id);</span>
-<span class="fc bfc" id="L83" title="All 2 branches covered.">        if (note == null)</span>
-<span class="fc" id="L84">            return Response.status(Response.Status.NOT_FOUND).build();</span>
-<span class="fc" id="L85">        return Response.status(Response.Status.OK).entity(gson.toJson((Note) note)).build();</span>
+<span class="fc" id="L79">        NoteObj note = GeneralServices.findNoteByNoteId(id);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        if (note == null)</span>
+<span class="fc" id="L81">            return Response.status(Response.Status.NOT_FOUND).build();</span>
+<span class="fc" id="L82">        return Response.status(Response.Status.OK).entity(gson.toJson((Note) note)).build();</span>
     }
 
 
-    //TODO: UPDATE NOTE
+    @PUT
+    @Path(&quot;/{nid}&quot;)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response createNoteWithPark(String data, @PathParam(&quot;nid&quot;) String nid){
+<span class="nc" id="L90">        JsonObject jsonObject = parser.parse(data).getAsJsonObject();</span>
+<span class="nc" id="L91">        ErrorObj error = new Error(&quot;http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation&quot;, &quot;Your request data didn't pass validation&quot;, 400, &quot;/notes/&quot;+nid);</span>
+
+<span class="nc" id="L93">        NoteObj oldNote = GeneralServices.findNoteByNoteId(nid);</span>
+
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        if(oldNote == null)</span>
+<span class="nc" id="L96">            return Response.status(Response.Status.NOT_FOUND).build();</span>
+
+<span class="nc" id="L98">        String pid = oldNote.getPIDAsString();</span>
+        String vid;
+        String title;
+        String content;
+
+        try {
+<span class="nc" id="L104">            vid = jsonObject.get(&quot;vid&quot;).getAsString();</span>
+<span class="nc" id="L105">            title = jsonObject.get(&quot;title&quot;).getAsString();</span>
+<span class="nc" id="L106">            content = jsonObject.get(&quot;text&quot;).getAsString();</span>
+<span class="nc" id="L107">        }catch (NullPointerException e){</span>
+<span class="nc" id="L108">            ((Error) error).setDetail(&quot;A note must have a vid, title, and text to be updated&quot;);</span>
+<span class="nc" id="L109">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="nc" id="L110">        }</span>
+
+<span class="nc" id="L112">        NoteObj note = new Note(title, content, pid, vid);</span>
+<span class="nc" id="L113">        note.setNid(oldNote.getNIDAsString());</span>
+<span class="nc" id="L114">        MemoryManager.notes.remove(oldNote);</span>
+<span class="nc" id="L115">        MemoryManager.notes.add(note);</span>
+<span class="nc" id="L116">        return Response.status(Response.Status.OK).build();</span>
+    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

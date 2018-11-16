@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public abstract class NoteObj {
-    protected UUID nid;
+    protected String nid;
     protected String pid;
     protected String vid;
     protected String date;
@@ -15,7 +15,7 @@ public abstract class NoteObj {
 
 
 <span class="fc" id="L17">    public NoteObj(String title, String text, String pid, String vid) {</span>
-<span class="fc" id="L18">        this.nid = UUID.randomUUID();</span>
+<span class="fc" id="L18">        this.nid = UUID.randomUUID().toString();</span>
 <span class="fc" id="L19">        this.date = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;).format(new Date());</span>
 <span class="fc" id="L20">        this.title = title;</span>
 <span class="fc" id="L21">        this.text = text;</span>
@@ -47,12 +47,12 @@ public abstract class NoteObj {
 <span class="fc" id="L47">        return text;</span>
     }
 
-    public void setText(String text) {
-<span class="nc" id="L51">        this.text = text;</span>
-<span class="nc" id="L52">    }</span>
-
     public String getPIDAsString() {
-<span class="fc" id="L55">        return pid;</span>
+<span class="fc" id="L51">        return pid;</span>
     }
+
+    public void setNid(String nid) {
+<span class="nc" id="L55">        this.nid = nid;</span>
+<span class="nc" id="L56">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

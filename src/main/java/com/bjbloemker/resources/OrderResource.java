@@ -160,14 +160,14 @@ public class OrderResource extends OrderServices {
     @GET
     public Response searchOrder(@QueryParam("key") String key) {
         if(key == null || key.length() == 0){
-            JsonElement output = simplifyOrders(MemoryManager.orders);
+            JsonElement output = GeneralServices.simplifyOrders(MemoryManager.orders);
             String outputAsString = gson.toJson(output);
             return Response.status(Response.Status.OK).entity(outputAsString).build();
         }
         key = key.toUpperCase();
         ArrayList<OrderObj> results = GeneralServices.searchOrder(key, null, null);
 
-        JsonElement output = simplifyOrders(results);
+        JsonElement output = GeneralServices.simplifyOrders(results);
         String outputAsString = gson.toJson(output);
         return Response.status(Response.Status.OK).entity(outputAsString).build();
     }

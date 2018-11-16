@@ -24,6 +24,7 @@ public class Pay4ParkApplication extends Application<Pay4ParkConfiguration> {
         environment.jersey().register(new OrderResource());
         environment.jersey().register(new VisitorsResource());
         environment.jersey().register(new ReportResource());
+        environment.jersey().register(new SearchResource());
         MemoryManager.initReports();
     }
 

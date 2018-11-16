@@ -164,7 +164,7 @@ class GeneralServicesTest {
     void parksWithoutProperty() {
         ParkObj park1 = parks.get(0);
         ParkObj park2 = parks.get(1);
-        JsonElement element = ParkServices.parksWithoutProperty(parks, "payment_info");
+        JsonElement element = GeneralServices.parksWithoutProperty(parks, "payment_info");
         String goal = "[{\"pid\":\""+park1.getPIDAsString()+"\",\"location_info\":{\"name\":\"Park1\",\"region\":\"Region1\",\"address\":\"1111 Street Ln Chicago, IL\",\"phone\":\"(555) 123-4567\",\"web\":\"www.park1.gov\",\"geo\":{\"lat\":22.25,\"lng\":-90.55}}}," +
                        "{\"pid\":\""+park2.getPIDAsString()+"\",\"location_info\":{\"name\":\"Park2\",\"region\":\"Region2\",\"address\":\"2222 Lane St Cincinnati, OH\",\"phone\":\"(666) 321-7654\",\"web\":\"www.park2.com\",\"geo\":{\"lat\":98.88,\"lng\":-4.55}}}]";
         assertEquals(goal, element.toString());
@@ -217,7 +217,7 @@ class GeneralServicesTest {
         String goal = "[{\"oid\":\""+order1.getOIDAsString()+"\",\"pid\":\""+order1.getPIDAsString()+"\",\"date\":\""+order1.getDate()+"\",\"type\":\""+vehicleOrder1.getType()+"\",\"amount\":4.5}," +
                        "{\"oid\":\""+order2.getOIDAsString()+"\",\"pid\":\""+order2.getPIDAsString()+"\",\"date\":\""+order2.getDate()+"\",\"type\":\""+vehicleOrder2.getType()+"\",\"amount\":6.5}]";
 
-        assertEquals(goal, OrderServices.simplifyOrders(orders).toString());
+        assertEquals(goal, GeneralServices.simplifyOrders(orders).toString());
     }
 
     @Test
@@ -249,7 +249,7 @@ class GeneralServicesTest {
         VisitorObj visitor2 = visitors.get(1);
         String goal = "[{\"vid\":\""+visitor1.getVIDAsString()+"\",\"name\":\""+visitor1.getName()+"\",\"email\":\""+visitor1.getEmail()+"\"}," +
                 "{\"vid\":\""+visitor2.getVIDAsString()+"\",\"name\":\""+visitor2.getName()+"\",\"email\":\""+visitor2.getEmail()+"\"}]";
-        assertEquals(goal, VisitorServices.simplifyVisitors(visitors).toString());
+        assertEquals(goal, GeneralServices.simplifyVisitors(visitors).toString());
 
     }
 

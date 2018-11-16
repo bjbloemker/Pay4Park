@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 @Path("/parkpay/parks")
 @Produces("application/json")
-public class ParkResource extends ParkServices {
+public class ParkResource {
     private static Gson gson = new Gson();
     private static JsonParser parser = new JsonParser();  //gson parser
     private static com.bjbloemker.resources.JsonParser localJsonParser;
@@ -110,7 +110,7 @@ public class ParkResource extends ParkServices {
     public Response searchPark(@QueryParam("key") String key) {
 
         if(key == null || key.length() == 0){
-            JsonElement output = parksWithoutProperty(MemoryManager.parks, "payment_info");
+            JsonElement output = GeneralServices.parksWithoutProperty(MemoryManager.parks, "payment_info");
             String outputAsString = gson.toJson(output);
             return Response.status(Response.Status.OK).entity(outputAsString).build();
         }
@@ -118,7 +118,7 @@ public class ParkResource extends ParkServices {
         key = key.toUpperCase();
         ArrayList<ParkObj> results = GeneralServices.searchParks(key);
 
-        JsonElement output = parksWithoutProperty(results,"payment_info");
+        JsonElement output = GeneralServices.parksWithoutProperty(results,"payment_info");
         String outputAsString = gson.toJson(output);
         return Response.status(Response.Status.OK).entity(outputAsString).build();
     }

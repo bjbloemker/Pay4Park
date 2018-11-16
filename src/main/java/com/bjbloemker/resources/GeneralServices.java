@@ -268,5 +268,74 @@ public class GeneralServices {
 
     }
 
+    public static JsonElement simplifyOrders(List<OrderObj> orders){
+        JsonArray output = new JsonArray();
+
+        for(int i = 0; i < orders.size(); i++){
+            OrderObj currentOrder = orders.get(i);
+            JsonObject orderAsJsonObject = (JsonObject) gson.toJsonTree(currentOrder);
+            JsonObject outputOrderAsJson = new JsonObject();
+
+            String oid = orderAsJsonObject.get("oid").getAsString();
+            String pid = orderAsJsonObject.get("pid").getAsString();
+            String date = currentOrder.getDate();
+
+            JsonObject vehicleAsJsonObject = orderAsJsonObject.get("vehicle").getAsJsonObject();
+            VehicleObj vehicle = null;
+            try {
+                vehicle = localJsonParser.JsonToVehicle(vehicleAsJsonObject);
+            } catch (NullVehicleException e) {
+                e.printStackTrace();
+            } catch (InvalidVehicleTypeException e) {
+                e.printStackTrace();
+            }
+
+            ParkObj park = GeneralServices.findParkById(currentOrder.getPIDAsString());
+            String vehicleType = vehicle.getType();
+
+            outputOrderAsJson.addProperty("oid", oid);
+            outputOrderAsJson.addProperty("pid", pid);
+            outputOrderAsJson.addProperty("date", date);
+            outputOrderAsJson.addProperty("type", vehicleType);
+            outputOrderAsJson.addProperty("amount", GeneralServices.calculateCost(vehicle, park));
+
+            output.add(outputOrderAsJson);
+        }
+
+        return output;
+    }
+
+    public static JsonElement parksWithoutProperty(List<ParkObj> parks, String property){
+        JsonArray output = new JsonArray();
+
+        for(ParkObj currentPark : parks){
+            JsonObject parkAsJsonObject = (JsonObject) gson.toJsonTree(currentPark);
+            parkAsJsonObject.remove(property);
+            output.add(parkAsJsonObject);
+        }
+
+        return output;
+    }
+
+    public static JsonElement simplifyVisitors(List<VisitorObj> visitors){
+        JsonArray output = new JsonArray();
+
+        for (VisitorObj currentVisitor : visitors) {
+            JsonObject outputVisitorAsJson = new JsonObject();
+
+            String vid = currentVisitor.getVIDAsString();
+            String name = currentVisitor.getName();
+            String email = currentVisitor.getEmail();
+
+            outputVisitorAsJson.addProperty("vid", vid);
+            outputVisitorAsJson.addProperty("name", name);
+            outputVisitorAsJson.addProperty("email", email);
+
+            output.add(outputVisitorAsJson);
+        }
+
+        return output;
+    }
+
 
 }

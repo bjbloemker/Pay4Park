@@ -24,8 +24,9 @@ import io.dropwizard.setup.Environment;
 <span class="nc" id="L24">        environment.jersey().register(new OrderResource());</span>
 <span class="nc" id="L25">        environment.jersey().register(new VisitorsResource());</span>
 <span class="nc" id="L26">        environment.jersey().register(new ReportResource());</span>
-<span class="nc" id="L27">        MemoryManager.initReports();</span>
-<span class="nc" id="L28">    }</span>
+<span class="nc" id="L27">        environment.jersey().register(new SearchResource());</span>
+<span class="nc" id="L28">        MemoryManager.initReports();</span>
+<span class="nc" id="L29">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

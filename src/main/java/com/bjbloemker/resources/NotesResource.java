@@ -68,6 +68,8 @@ public class NotesResource extends NotesServices{
                 primaryArray.add(outputObject);
             }
         }
+
+
         return Response.status(Response.Status.OK).entity(gson.toJson(primaryArray)).build();
     }
 

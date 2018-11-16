@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 @Path(&quot;/parkpay/orders&quot;)
 @Produces(&quot;application/json&quot;)
-<span class="fc" id="L18">public class OrderResource {</span>
+<span class="fc" id="L18">public class OrderResource extends OrderServices {</span>
 <span class="fc" id="L19">    private static Gson gson = new Gson();</span>
 <span class="fc" id="L20">    private static com.google.gson.JsonParser parser = new com.google.gson.JsonParser();  //gson parser</span>
     private static com.bjbloemker.resources.JsonParser localJsonParser;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
     @GET
     @Path(&quot;/{oid}&quot;)
     public Response getOrderDetail(@PathParam(&quot;oid&quot;) String id) {
-<span class="fc" id="L26">        OrderObj order = GeneralServices.findOrderById(id);</span>
+<span class="fc" id="L26">        OrderObj order = findOrderById(id);</span>
 <span class="fc bfc" id="L27" title="All 2 branches covered.">        if(order == null)</span>
 <span class="fc" id="L28">            return Response.status(Response.Status.NOT_FOUND).build();</span>
 
@@ -146,65 +146,30 @@ import java.util.ArrayList;
 <span class="fc" id="L146">            order = new Order(pid, vehicle, visitor);</span>
         }
 
-<span class="fc" id="L149">        MemoryManager.orders.add(order);</span>
+
+<span class="fc" id="L150">        System.out.println(&quot;Place 1: &quot; +  order);</span>
+<span class="fc" id="L151">        MemoryManager.orders.add(order);</span>
 
 
-<span class="fc" id="L152">        JsonObject output = new JsonObject();</span>
-<span class="fc" id="L153">        output.addProperty(&quot;oid&quot;, order.getPIDAsString());</span>
-<span class="fc" id="L154">        String outputAsString = gson.toJson(output);</span>
-<span class="fc" id="L155">        return Response.status(Response.Status.CREATED).entity(outputAsString).header(&quot;Location&quot;, &quot;parkpay/orders/&quot; + order.getOIDAsString()).build();</span>
+<span class="fc" id="L154">        JsonObject output = new JsonObject();</span>
+<span class="fc" id="L155">        output.addProperty(&quot;oid&quot;, order.getPIDAsString());</span>
+<span class="fc" id="L156">        String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L157">        return Response.status(Response.Status.CREATED).entity(outputAsString).header(&quot;Location&quot;, &quot;parkpay/orders/&quot; + order.getOIDAsString()).build();</span>
     }
 
     @GET
     public Response searchOrder(@QueryParam(&quot;key&quot;) String key) {
-<span class="pc bpc" id="L160" title="1 of 4 branches missed.">        if(key == null || key.length() == 0){</span>
-<span class="fc" id="L161">            JsonElement output = GeneralServices.simplifyOrders(MemoryManager.orders);</span>
-<span class="fc" id="L162">            String outputAsString = gson.toJson(output);</span>
-<span class="fc" id="L163">            return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
+<span class="pc bpc" id="L162" title="1 of 4 branches missed.">        if(key == null || key.length() == 0){</span>
+<span class="fc" id="L163">            JsonElement output = GeneralServices.simplifyOrders(MemoryManager.orders);</span>
+<span class="fc" id="L164">            String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L165">            return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
         }
+<span class="fc" id="L167">        key = key.toUpperCase();</span>
+<span class="fc" id="L168">        ArrayList&lt;OrderObj&gt; results = GeneralServices.searchOrder(key, null, null);</span>
 
-<span class="fc" id="L166">        key = key.toUpperCase();</span>
-<span class="fc" id="L167">        ArrayList&lt;OrderObj&gt; results = new ArrayList&lt;&gt;();</span>
-
-<span class="fc bfc" id="L169" title="All 2 branches covered.">        for(int i =0; i&lt; MemoryManager.orders.size(); i++){</span>
-<span class="fc" id="L170">            OrderObj order = (Order) MemoryManager.orders.get(i);</span>
-
-<span class="fc" id="L172">            String OIDAsString = order.getOIDAsString().toUpperCase();</span>
-<span class="fc" id="L173">            String PIDAsString = order.getPIDAsString().toUpperCase();</span>
-
-<span class="fc" id="L175">            VehicleObj vehicleOfOrder = order.getVehicle();</span>
-<span class="fc" id="L176">            String state = vehicleOfOrder.getState().toUpperCase();</span>
-<span class="fc" id="L177">            String plate = vehicleOfOrder.getPlate().toUpperCase();</span>
-<span class="fc" id="L178">            String type = vehicleOfOrder.getType().toUpperCase();</span>
-
-<span class="fc" id="L180">            VisitorObj visitor = order.getVisitor();</span>
-<span class="fc" id="L181">            String VIDAsString = visitor.getVIDAsString().toUpperCase();</span>
-<span class="fc" id="L182">            String visitorName = visitor.getName().toUpperCase();</span>
-<span class="fc" id="L183">            String visitorEmail = visitor.getEmail().toUpperCase();</span>
-
-<span class="fc" id="L185">            PaymentInfoObj paymentInfoOfVisitorOfOrder = visitor.getPaymentInfo();</span>
-<span class="fc" id="L186">            String card = paymentInfoOfVisitorOfOrder.getCard().toUpperCase();</span>
-<span class="fc" id="L187">            String nameOnCard = paymentInfoOfVisitorOfOrder.getNameOnCard().toUpperCase();</span>
-<span class="fc" id="L188">            String expirationDate = paymentInfoOfVisitorOfOrder.getExpirationDate().toUpperCase();</span>
-<span class="fc" id="L189">            String zipCode = (paymentInfoOfVisitorOfOrder.getZip() + &quot;&quot;).toUpperCase();</span>
-
-<span class="fc bfc" id="L191" title="All 2 branches covered.">            if(OIDAsString.contains(key) ||</span>
-<span class="fc bfc" id="L192" title="All 2 branches covered.">                    state.contains(key) ||</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">                    plate.contains(key) ||</span>
-<span class="fc bfc" id="L194" title="All 2 branches covered.">                    type.contains(key) ||</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">                    VIDAsString.contains(key) ||</span>
-<span class="fc bfc" id="L196" title="All 2 branches covered.">                    visitorName.contains(key) ||</span>
-<span class="fc bfc" id="L197" title="All 2 branches covered.">                    visitorEmail.contains(key) ||</span>
-<span class="fc bfc" id="L198" title="All 2 branches covered.">                    card.contains(key) ||</span>
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">                    nameOnCard.contains(key) ||</span>
-<span class="fc bfc" id="L200" title="All 2 branches covered.">                    expirationDate.contains(key) ||</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">                    zipCode.contains(key))</span>
-<span class="fc" id="L202">                results.add(order);</span>
-        }
-
-<span class="fc" id="L205">        JsonElement output = GeneralServices.simplifyOrders(results);</span>
-<span class="fc" id="L206">        String outputAsString = gson.toJson(output);</span>
-<span class="fc" id="L207">        return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
+<span class="fc" id="L170">        JsonElement output = GeneralServices.simplifyOrders(results);</span>
+<span class="fc" id="L171">        String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L172">        return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
     }
 
 

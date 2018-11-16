@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @Path(&quot;/parkpay/reports&quot;)
 @Produces(&quot;application/json&quot;)
-<span class="fc" id="L17">public class ReportResource {</span>
+<span class="fc" id="L17">public class ReportResource extends ReportServices {</span>
 <span class="fc" id="L18">    private static Gson gson = new Gson();</span>
     private static final String BEGINING_OF_TIME = &quot;10000101&quot;;
     private static final String END_OF_TIME = &quot;99991231&quot;;
@@ -60,7 +60,7 @@ import java.util.ArrayList;
 <span class="fc" id="L60">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
         }
 
-<span class="fc bfc" id="L63" title="All 4 branches covered.">        if(!validateDate(startDate) || !validateDate(endDate)){</span>
+<span class="fc bfc" id="L63" title="All 4 branches covered.">        if(!GeneralServices.validateDate(startDate) || !GeneralServices.validateDate(endDate)){</span>
 <span class="fc" id="L64">            ((Error) error).setDetail(&quot;Wrong date format&quot;);</span>
 <span class="fc" id="L65">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
         }
@@ -148,67 +148,6 @@ import java.util.ArrayList;
 <span class="nc" id="L148">        return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
     }
 
-
-    private String convertSimpleDateToPrettyDate(String simpleDate){
-<span class="fc" id="L153">        String yyyy = simpleDate.substring(0,4);</span>
-<span class="fc" id="L154">        String mm = simpleDate.substring(4,6);</span>
-<span class="fc" id="L155">        String dd = simpleDate.substring(6,8);</span>
-
-<span class="fc" id="L157">        return yyyy + &quot;-&quot; + mm + &quot;-&quot; + dd;</span>
-    }
-
-    private boolean validateDate(String simpleDate){
-<span class="fc" id="L161">        final String MAX_MONTH = &quot;12&quot;;</span>
-<span class="fc" id="L162">        String max_day = &quot;31&quot;;</span>
-<span class="fc" id="L163">        String mm = simpleDate.substring(4,6);</span>
-<span class="fc" id="L164">        String dd = simpleDate.substring(6,8);</span>
-<span class="fc bfc" id="L165" title="All 2 branches covered.">        if(mm.compareTo(MAX_MONTH) &gt; 0)</span>
-<span class="fc" id="L166">            return false;</span>
-
-<span class="fc bfc" id="L168" title="All 10 branches covered.">        if((mm.equals(&quot;01&quot;) || mm.equals(&quot;02&quot;) || mm.equals(&quot;03&quot;) || mm.equals(&quot;05&quot;) || mm.equals(&quot;07&quot;)</span>
-<span class="fc bfc" id="L169" title="All 8 branches covered.">                || mm.equals(&quot;08&quot;) || mm.equals(&quot;10&quot;) || mm.equals(&quot;12&quot;)) &amp;&amp; dd.compareTo(max_day) &lt;= 0) {</span>
-<span class="fc" id="L170">            return true;</span>
-        }
-<span class="fc" id="L172">        max_day = &quot;30&quot;;</span>
-<span class="pc bpc" id="L173" title="1 of 10 branches missed.">        if ((mm.equals(&quot;04&quot;) || mm.equals(&quot;06&quot;) || mm.equals(&quot;09&quot;) || mm.equals(&quot;11&quot;)) &amp;&amp; dd.compareTo(max_day) &lt;= 0 ){</span>
-<span class="fc" id="L174">            return true;</span>
-        }
-<span class="fc" id="L176">        max_day = &quot;29&quot;;</span>
-<span class="pc bpc" id="L177" title="1 of 2 branches missed.">        if(dd.compareTo(max_day) &lt;= 0){</span>
-<span class="nc" id="L178">            return true;</span>
-        }
-<span class="fc" id="L180">        return false;</span>
-
-    }
-
-
-    private static int getOrderCountByParkId(String pid, String startDate, String endDate){
-<span class="fc" id="L186">        ParkObj park = GeneralServices.findParkById(pid);</span>
-<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        if(park == null)</span>
-<span class="nc" id="L188">            return -1;</span>
-<span class="fc" id="L189">        int count = 0;</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">        for(OrderObj order : MemoryManager.orders){</span>
-<span class="fc" id="L191">            String orderDate = order.getDate().replace(&quot;-&quot;,&quot;&quot;);//formating the same</span>
-<span class="pc bpc" id="L192" title="1 of 6 branches missed.">            if(startDate.compareTo(orderDate) &lt;= 0 &amp;&amp; endDate.compareTo(orderDate) &gt; 0 &amp;&amp; order.getPIDAsString().equals(pid)){</span>
-<span class="fc" id="L193">                count++;</span>
-            }
-<span class="fc" id="L195">        }</span>
-<span class="fc" id="L196">        return count;</span>
-    }
-
-    private static double getRevenueByParkId(String pid, String startDate, String endDate){
-<span class="fc" id="L200">        ParkObj park = GeneralServices.findParkById(pid);</span>
-<span class="pc bpc" id="L201" title="1 of 2 branches missed.">        if(park == null)</span>
-<span class="nc" id="L202">            return -1;</span>
-<span class="fc" id="L203">        double sum = 0;</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">        for(OrderObj order : MemoryManager.orders){</span>
-<span class="fc" id="L205">            String orderDate = order.getDate().replace(&quot;-&quot;,&quot;&quot;);//formating the same</span>
-<span class="pc bpc" id="L206" title="1 of 6 branches missed.">            if(startDate.compareTo(orderDate) &lt;= 0 &amp;&amp; endDate.compareTo(orderDate) &gt; 0 &amp;&amp; order.getPIDAsString().equals(pid)){</span>
-<span class="fc" id="L207">                sum += GeneralServices.calculateCost(order.getVehicle(), park);</span>
-            }
-<span class="fc" id="L209">        }</span>
-<span class="fc" id="L210">        return sum;</span>
-    }
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

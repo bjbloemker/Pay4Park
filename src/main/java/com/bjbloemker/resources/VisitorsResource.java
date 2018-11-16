@@ -56,7 +56,7 @@ public class VisitorsResource extends VisitorServices{
         key = key.toUpperCase();
         ArrayList<VisitorObj> results = GeneralServices.searchVisitors(key);
 
-        JsonElement output = simplifyVisitors(results);
+        JsonElement output = GeneralServices.simplifyVisitors(results);
         String outputAsString = gson.toJson(output);
         return Response.status(Response.Status.OK).entity(outputAsString).build();
     }

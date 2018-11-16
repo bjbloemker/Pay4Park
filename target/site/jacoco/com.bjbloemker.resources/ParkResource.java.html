@@ -5,6 +5,7 @@ import com.bjbloemker.core.Error;
 import com.bjbloemker.exceptions.*;
 import com.google.gson.*;
 import com.google.gson.JsonParser;
+import sun.java2d.loops.GeneralRenderer;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -14,19 +15,19 @@ import java.util.ArrayList;
 
 @Path(&quot;/parkpay/parks&quot;)
 @Produces(&quot;application/json&quot;)
-<span class="fc" id="L17">public class ParkResource {</span>
-<span class="fc" id="L18">    private static Gson gson = new Gson();</span>
-<span class="fc" id="L19">    private static JsonParser parser = new JsonParser();  //gson parser</span>
+<span class="fc" id="L18">public class ParkResource {</span>
+<span class="fc" id="L19">    private static Gson gson = new Gson();</span>
+<span class="fc" id="L20">    private static JsonParser parser = new JsonParser();  //gson parser</span>
     private static com.bjbloemker.resources.JsonParser localJsonParser;
 
     @GET
     @Path(&quot;/{pid}&quot;)
     public Response getParkDetail(@PathParam(&quot;pid&quot;) String id) {
-<span class="fc" id="L25">        ParkObj park = GeneralServices.findParkById(id);</span>
-<span class="fc bfc" id="L26" title="All 2 branches covered.">        if(park == null)</span>
-<span class="fc" id="L27">            return Response.status(Response.Status.NOT_FOUND).build();</span>
+<span class="fc" id="L26">        ParkObj park = GeneralServices.findParkById(id);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if(park == null)</span>
+<span class="fc" id="L28">            return Response.status(Response.Status.NOT_FOUND).build();</span>
 
-<span class="fc" id="L29">        return Response.status(Response.Status.OK).entity(gson.toJson(park)).build();</span>
+<span class="fc" id="L30">        return Response.status(Response.Status.OK).entity(gson.toJson(park)).build();</span>
     }
 
 
@@ -34,196 +35,182 @@ import java.util.ArrayList;
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createPark(String data){
 
-<span class="fc" id="L37">        JsonObject jsonObject = parser.parse(data).getAsJsonObject();</span>
-<span class="fc" id="L38">        ErrorObj error = new Error(&quot;http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation&quot;, &quot;Your request data didn't pass validation&quot;, Response.Status.BAD_REQUEST.getStatusCode(), &quot;/parks&quot;);</span>
+<span class="fc" id="L38">        JsonObject jsonObject = parser.parse(data).getAsJsonObject();</span>
+<span class="fc" id="L39">        ErrorObj error = new Error(&quot;http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation&quot;, &quot;Your request data didn't pass validation&quot;, Response.Status.BAD_REQUEST.getStatusCode(), &quot;/parks&quot;);</span>
 
         JsonObject locationInfoAsJsonObject;
         try {
-<span class="fc" id="L42">            locationInfoAsJsonObject = jsonObject.get(&quot;location_info&quot;).getAsJsonObject();</span>
-<span class="nc" id="L43">        }catch (NullPointerException e){</span>
-<span class="nc" id="L44">            ((Error) error).setDetail(&quot;Location information is required but missing in your request&quot;);</span>
-<span class="nc" id="L45">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L46">        }</span>
+<span class="fc" id="L43">            locationInfoAsJsonObject = jsonObject.get(&quot;location_info&quot;).getAsJsonObject();</span>
+<span class="nc" id="L44">        }catch (NullPointerException e){</span>
+<span class="nc" id="L45">            ((Error) error).setDetail(&quot;Location information is required but missing in your request&quot;);</span>
+<span class="nc" id="L46">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L47">        }</span>
 
 
-<span class="fc" id="L49">        LocationInfoObj location_info = null;</span>
+        LocationInfoObj location_info;
         try {
-<span class="fc" id="L51">            location_info = localJsonParser.JsonToLocation(locationInfoAsJsonObject);</span>
-<span class="fc" id="L52">        } catch (NullAddressException e) {</span>
-<span class="fc" id="L53">            ((Error) error).setDetail(&quot;Address is required but missing in your request&quot;);</span>
-<span class="fc" id="L54">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L55">        } catch (NullNameException e) {</span>
-<span class="fc" id="L56">            ((Error) error).setDetail(&quot;Name is required but missing in your request&quot;);</span>
-<span class="fc" id="L57">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L58">        } catch (NullPhoneException e) {</span>
-<span class="fc" id="L59">            ((Error) error).setDetail(&quot;Phone number is required but missing in your request&quot;);</span>
-<span class="fc" id="L60">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L61">        } catch (NullWebException e) {</span>
-<span class="fc" id="L62">            ((Error) error).setDetail(&quot;Website is required but missing in your request&quot;);</span>
-<span class="fc" id="L63">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L64">        } catch (NullGeoException e) {</span>
-<span class="fc" id="L65">            ((Error) error).setDetail(&quot;Geo information is required but missing in your request&quot;);</span>
-<span class="fc" id="L66">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L67">        }</span>
+<span class="fc" id="L52">            location_info = localJsonParser.JsonToLocation(locationInfoAsJsonObject);</span>
+<span class="fc" id="L53">        } catch (NullAddressException e) {</span>
+<span class="fc" id="L54">            ((Error) error).setDetail(&quot;Address is required but missing in your request&quot;);</span>
+<span class="fc" id="L55">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L56">        } catch (NullNameException e) {</span>
+<span class="fc" id="L57">            ((Error) error).setDetail(&quot;Name is required but missing in your request&quot;);</span>
+<span class="fc" id="L58">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L59">        } catch (NullPhoneException e) {</span>
+<span class="fc" id="L60">            ((Error) error).setDetail(&quot;Phone number is required but missing in your request&quot;);</span>
+<span class="fc" id="L61">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L62">        } catch (NullWebException e) {</span>
+<span class="fc" id="L63">            ((Error) error).setDetail(&quot;Website is required but missing in your request&quot;);</span>
+<span class="fc" id="L64">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L65">        } catch (NullGeoException e) {</span>
+<span class="fc" id="L66">            ((Error) error).setDetail(&quot;Geo information is required but missing in your request&quot;);</span>
+<span class="fc" id="L67">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L68">        }</span>
 
         JsonObject chargeInfoAsJsonObject;
         try{
-<span class="fc" id="L71">            chargeInfoAsJsonObject = jsonObject.get(&quot;payment_info&quot;).getAsJsonObject();</span>
-<span class="fc" id="L72">        }catch (NullPointerException e){</span>
-<span class="fc" id="L73">            ((Error) error).setDetail(&quot;Charge info is required but missing in your request&quot;);</span>
-<span class="fc" id="L74">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L75">        }</span>
+<span class="fc" id="L72">            chargeInfoAsJsonObject = jsonObject.get(&quot;payment_info&quot;).getAsJsonObject();</span>
+<span class="fc" id="L73">        }catch (NullPointerException e){</span>
+<span class="fc" id="L74">            ((Error) error).setDetail(&quot;Charge info is required but missing in your request&quot;);</span>
+<span class="fc" id="L75">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L76">        }</span>
 
         ChargeInfoObj charge_info;
         try {
-<span class="fc" id="L79">            charge_info = localJsonParser.JsonToChargeInfo(chargeInfoAsJsonObject);</span>
-<span class="nc" id="L80">        } catch (InvalidPriceException e) {</span>
-<span class="nc" id="L81">            ((Error) error).setDetail(&quot;All payment data must be a number greater than or equal to zero&quot;);</span>
-<span class="nc" id="L82">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="nc" id="L83">        } catch (NullChargeInfoException e) {</span>
-<span class="nc" id="L84">            ((Error) error).setDetail(&quot;Payment date must be included for MOTORCYCLE, CAR, and RV&quot;);</span>
-<span class="nc" id="L85">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L86">        }</span>
+<span class="fc" id="L80">            charge_info = localJsonParser.JsonToChargeInfo(chargeInfoAsJsonObject);</span>
+<span class="nc" id="L81">        } catch (InvalidPriceException e) {</span>
+<span class="nc" id="L82">            ((Error) error).setDetail(&quot;All payment data must be a number greater than or equal to zero&quot;);</span>
+<span class="nc" id="L83">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="nc" id="L84">        } catch (NullChargeInfoException e) {</span>
+<span class="nc" id="L85">            ((Error) error).setDetail(&quot;Payment date must be included for MOTORCYCLE, CAR, and RV&quot;);</span>
+<span class="nc" id="L86">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L87">        }</span>
 
-<span class="fc" id="L88">        ParkObj park = new Park(location_info, charge_info);</span>
-<span class="fc" id="L89">        MemoryManager.parks.add(park);</span>
+<span class="fc" id="L89">        ParkObj park = new Park(location_info, charge_info);</span>
+<span class="fc" id="L90">        MemoryManager.parks.add(park);</span>
 
-<span class="fc" id="L91">        JsonObject output = new JsonObject();</span>
-<span class="fc" id="L92">        output.addProperty(&quot;pid&quot;, park.getPIDAsString());</span>
-<span class="fc" id="L93">        String outputAsString = gson.toJson(output);</span>
-<span class="fc" id="L94">        return Response.status(Response.Status.CREATED).entity(outputAsString).header(&quot;Location&quot;, &quot;parkpay/parks/&quot; + park.getPIDAsString()).build();</span>
+<span class="fc" id="L92">        JsonObject output = new JsonObject();</span>
+<span class="fc" id="L93">        output.addProperty(&quot;pid&quot;, park.getPIDAsString());</span>
+<span class="fc" id="L94">        String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L95">        return Response.status(Response.Status.CREATED).entity(outputAsString).header(&quot;Location&quot;, &quot;parkpay/parks/&quot; + park.getPIDAsString()).build();</span>
     }
 
     @DELETE
     @Path(&quot;/{pid}&quot;)
     public Response deletePark(@PathParam(&quot;pid&quot;) String id) {
-<span class="fc" id="L100">        ParkObj park = GeneralServices.findParkById(id);</span>
-<span class="fc bfc" id="L101" title="All 2 branches covered.">        if(park != null){</span>
-<span class="fc" id="L102">            MemoryManager.parks.remove(park);</span>
-<span class="fc" id="L103">            return Response.status(Response.Status.NO_CONTENT).build();</span>
+<span class="fc" id="L101">        ParkObj park = GeneralServices.findParkById(id);</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        if(park != null){</span>
+<span class="fc" id="L103">            MemoryManager.parks.remove(park);</span>
+<span class="fc" id="L104">            return Response.status(Response.Status.NO_CONTENT).build();</span>
         }
-<span class="fc" id="L105">        return Response.status(Response.Status.NOT_FOUND).build();</span>
+<span class="fc" id="L106">        return Response.status(Response.Status.NOT_FOUND).build();</span>
     }
 
     @GET
     public Response searchPark(@QueryParam(&quot;key&quot;) String key) {
 
-<span class="pc bpc" id="L111" title="2 of 4 branches missed.">        if(key == null || key.length() == 0){</span>
-<span class="nc" id="L112">            JsonElement output = GeneralServices.parksWithoutProperty(MemoryManager.parks, &quot;payment_info&quot;);</span>
-<span class="nc" id="L113">            String outputAsString = gson.toJson(output);</span>
-<span class="nc" id="L114">            return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
+<span class="pc bpc" id="L112" title="2 of 4 branches missed.">        if(key == null || key.length() == 0){</span>
+<span class="nc" id="L113">            JsonElement output = GeneralServices.parksWithoutProperty(MemoryManager.parks, &quot;payment_info&quot;);</span>
+<span class="nc" id="L114">            String outputAsString = gson.toJson(output);</span>
+<span class="nc" id="L115">            return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
         }
 
-<span class="fc" id="L117">        key = key.toUpperCase();</span>
-<span class="fc" id="L118">        ArrayList&lt;ParkObj&gt; results = new ArrayList&lt;ParkObj&gt;();</span>
+<span class="fc" id="L118">        key = key.toUpperCase();</span>
+<span class="fc" id="L119">        ArrayList&lt;ParkObj&gt; results = GeneralServices.searchParks(key);</span>
 
-<span class="fc bfc" id="L120" title="All 2 branches covered.">        for(int i =0; i&lt; MemoryManager.parks.size(); i++){</span>
-<span class="fc" id="L121">            ParkObj park = (Park) MemoryManager.parks.get(i);</span>
-<span class="fc" id="L122">            LocationInfo locationInfo = (LocationInfo) park.getLocationInfo();</span>
-<span class="fc" id="L123">            String parkName = locationInfo.getName().toUpperCase();</span>
-<span class="fc" id="L124">            String parkAddr = locationInfo.getAddress().toUpperCase();</span>
-<span class="fc" id="L125">            String parkPhone = locationInfo.getPhone().toUpperCase();</span>
-<span class="fc" id="L126">            String parkWeb = locationInfo.getWeb().toUpperCase();</span>
-<span class="fc" id="L127">            String parkReg = locationInfo.getRegion().toUpperCase();</span>
-
-<span class="fc" id="L129">            GeoCordsObj geoCords = locationInfo.getGeo();</span>
-<span class="fc" id="L130">            String parkLat = (geoCords.getLat() + &quot;&quot;).toUpperCase();</span>
-<span class="fc" id="L131">            String parkLng = (geoCords.getLng() + &quot;&quot;).toUpperCase();</span>
-
-<span class="fc bfc" id="L133" title="All 2 branches covered.">            if(parkName.contains(key) ||</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">                    parkAddr.contains(key) ||</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">                    parkPhone.contains(key) ||</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">                    parkWeb.contains(key) ||</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">                    parkReg.contains(key) ||</span>
-<span class="fc bfc" id="L138" title="All 2 branches covered.">                    parkLat.contains(key) ||</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">                    parkLng.contains(key))</span>
-<span class="fc" id="L140">                results.add(park);</span>
-        }
-
-<span class="fc" id="L143">        JsonElement output = GeneralServices.parksWithoutProperty(results,&quot;payment_info&quot;);</span>
-<span class="fc" id="L144">        String outputAsString = gson.toJson(output);</span>
-<span class="fc" id="L145">        return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
+<span class="fc" id="L121">        JsonElement output = GeneralServices.parksWithoutProperty(results,&quot;payment_info&quot;);</span>
+<span class="fc" id="L122">        String outputAsString = gson.toJson(output);</span>
+<span class="fc" id="L123">        return Response.status(Response.Status.OK).entity(outputAsString).build();</span>
     }
 
     @POST
     @Path(&quot;/{pid}/notes&quot;)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createNoteWithPark(String data, @PathParam(&quot;pid&quot;) String pid){
-<span class="fc" id="L152">        JsonObject jsonObject = parser.parse(data).getAsJsonObject();</span>
+<span class="fc" id="L130">        JsonObject jsonObject = parser.parse(data).getAsJsonObject();</span>
+<span class="fc" id="L131">        ErrorObj error = new Error(&quot;http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation&quot;, &quot;Your request data didn't pass validation&quot;, 400, &quot;/parks/&quot;+pid);</span>
 
-<span class="fc" id="L154">        String vid = jsonObject.get(&quot;vid&quot;).getAsString();</span>
-<span class="fc" id="L155">        String title = jsonObject.get(&quot;title&quot;).getAsString();</span>
-<span class="fc" id="L156">        String content = jsonObject.get(&quot;text&quot;).getAsString();</span>
+        String vid;
+        String title;
+        String content;
 
-<span class="fc" id="L158">        ArrayList&lt;OrderObj&gt; orders = GeneralServices.getAllOrdersFromVisitor(vid);</span>
+        try {
+<span class="fc" id="L138">            vid = jsonObject.get(&quot;vid&quot;).getAsString();</span>
+<span class="fc" id="L139">            title = jsonObject.get(&quot;title&quot;).getAsString();</span>
+<span class="fc" id="L140">            content = jsonObject.get(&quot;text&quot;).getAsString();</span>
+<span class="nc" id="L141">        }catch (NullPointerException e){</span>
+<span class="nc" id="L142">            ((Error) error).setDetail(&quot;A note must have a vid, title, and text&quot;);</span>
+<span class="nc" id="L143">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L144">        }</span>
 
-<span class="fc" id="L160">        boolean beenToPark = false;</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">        for(int i = 0; i &lt; orders.size(); i++){</span>
-<span class="fc" id="L162">            OrderObj currentOrder = orders.get(i);</span>
-<span class="fc" id="L163">            String currentOrderPID = currentOrder.getPIDAsString();</span>
-<span class="pc bpc" id="L164" title="1 of 2 branches missed.">            if(currentOrderPID.equals(pid))</span>
-<span class="fc" id="L165">                beenToPark = true;</span>
+
+<span class="fc" id="L147">        ArrayList&lt;OrderObj&gt; orders = GeneralServices.getAllOrdersFromVisitor(vid);</span>
+
+<span class="fc" id="L149">        boolean beenToPark = false;</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        for (OrderObj currentOrder : orders) {</span>
+<span class="fc" id="L151">            String currentOrderPID = currentOrder.getPIDAsString();</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">            if (currentOrderPID.equals(pid))</span>
+<span class="fc" id="L153">                beenToPark = true;</span>
+<span class="fc" id="L154">        }</span>
+
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        if(!beenToPark){</span>
+<span class="fc" id="L157">           ((Error) error).setDetail(&quot;You may not post a note to a park unless you paid for admission at that park&quot;);</span>
+<span class="fc" id="L158">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
         }
 
-<span class="fc bfc" id="L168" title="All 2 branches covered.">        if(!beenToPark){</span>
-<span class="fc" id="L169">            ErrorObj error = new Error(&quot;http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation&quot;, &quot;Your request data didn't pass validation&quot;, 400, &quot;/parks/&quot;+pid);</span>
-<span class="fc" id="L170">            ((Error) error).setDetail(&quot;You may not post a note to a park unless you paid for admission at that park&quot;);</span>
-<span class="fc" id="L171">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-        }
+<span class="fc" id="L161">        NoteObj note = new Note(title, content, pid, vid);</span>
+<span class="fc" id="L162">        MemoryManager.notes.add(note);</span>
 
-<span class="fc" id="L174">        NoteObj note = new Note(title, content, pid, vid);</span>
-<span class="fc" id="L175">        MemoryManager.notes.add(note);</span>
-
-<span class="fc" id="L177">        JsonObject output = new JsonObject();</span>
-<span class="fc" id="L178">        output.addProperty(&quot;nid&quot;, note.getNIDAsString());</span>
-<span class="fc" id="L179">        return Response.status(Response.Status.CREATED).entity(gson.toJson(output)).build();</span>
+<span class="fc" id="L164">        JsonObject output = new JsonObject();</span>
+<span class="fc" id="L165">        output.addProperty(&quot;nid&quot;, note.getNIDAsString());</span>
+<span class="fc" id="L166">        return Response.status(Response.Status.CREATED).entity(gson.toJson(output)).build();</span>
     }
 
     @GET
     @Path(&quot;/{pid}/notes&quot;)
     public Response notesByPark(@PathParam(&quot;pid&quot;) String pid){
-<span class="fc" id="L185">        JsonArray output = new JsonArray();</span>
-<span class="fc" id="L186">        JsonObject outputObject = new JsonObject();</span>
+<span class="fc" id="L172">        JsonArray output = new JsonArray();</span>
+<span class="fc" id="L173">        JsonObject outputObject = new JsonObject();</span>
 
-<span class="fc" id="L188">        outputObject.addProperty(&quot;pid&quot;, pid);</span>
+<span class="fc" id="L175">        outputObject.addProperty(&quot;pid&quot;, pid);</span>
 
-<span class="fc" id="L190">        JsonArray notesJson = new JsonArray();</span>
+<span class="fc" id="L177">        JsonArray notesJson = new JsonArray();</span>
 
-<span class="fc bfc" id="L192" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.notes.size(); i++){</span>
-<span class="fc" id="L193">            NoteObj note = MemoryManager.notes.get(i);</span>
-<span class="fc" id="L194">            String PIDForNote = note.getPIDAsString();</span>
-<span class="pc bpc" id="L195" title="1 of 2 branches missed.">            if(PIDForNote.equals(pid)){</span>
-<span class="fc" id="L196">                JsonObject simplifiedNote = new JsonObject();</span>
-<span class="fc" id="L197">                String nid = note.getNIDAsString();</span>
-<span class="fc" id="L198">                String date = note.getDate();</span>
-<span class="fc" id="L199">                String title = note.getTitle();</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.notes.size(); i++){</span>
+<span class="fc" id="L180">            NoteObj note = MemoryManager.notes.get(i);</span>
+<span class="fc" id="L181">            String PIDForNote = note.getPIDAsString();</span>
+<span class="pc bpc" id="L182" title="1 of 2 branches missed.">            if(PIDForNote.equals(pid)){</span>
+<span class="fc" id="L183">                JsonObject simplifiedNote = new JsonObject();</span>
+<span class="fc" id="L184">                String nid = note.getNIDAsString();</span>
+<span class="fc" id="L185">                String date = note.getDate();</span>
+<span class="fc" id="L186">                String title = note.getTitle();</span>
 
-<span class="fc" id="L201">                simplifiedNote.addProperty(&quot;nid&quot;, nid);</span>
-<span class="fc" id="L202">                simplifiedNote.addProperty(&quot;date&quot;, date);</span>
-<span class="fc" id="L203">                simplifiedNote.addProperty(&quot;title&quot;, title);</span>
-<span class="fc" id="L204">                notesJson.add(simplifiedNote);</span>
+<span class="fc" id="L188">                simplifiedNote.addProperty(&quot;nid&quot;, nid);</span>
+<span class="fc" id="L189">                simplifiedNote.addProperty(&quot;date&quot;, date);</span>
+<span class="fc" id="L190">                simplifiedNote.addProperty(&quot;title&quot;, title);</span>
+<span class="fc" id="L191">                notesJson.add(simplifiedNote);</span>
             }
         }
 
-<span class="fc" id="L208">        outputObject.add(&quot;notes&quot;, notesJson);</span>
+<span class="fc" id="L195">        outputObject.add(&quot;notes&quot;, notesJson);</span>
 
-<span class="fc" id="L210">        output.add(outputObject);</span>
-<span class="fc" id="L211">        return Response.status(Response.Status.OK).entity(gson.toJson(output)).build();</span>
+<span class="fc" id="L197">        output.add(outputObject);</span>
+<span class="fc" id="L198">        return Response.status(Response.Status.OK).entity(gson.toJson(output)).build();</span>
     }
 
     @GET
     @Path(&quot;/{pid}/notes/{nid}&quot;)
     public Response getNoteWithPark(@PathParam(&quot;pid&quot;) String pid, @PathParam(&quot;nid&quot;) String nid){
-<span class="fc" id="L217">        NoteObj note = GeneralServices.findNoteByNoteId(nid);</span>
-<span class="fc" id="L218">        ParkObj park = GeneralServices.findParkById(pid);</span>
+<span class="fc" id="L204">        NoteObj note = GeneralServices.findNoteByNoteId(nid);</span>
+<span class="fc" id="L205">        ParkObj park = GeneralServices.findParkById(pid);</span>
 
-<span class="pc bpc" id="L220" title="1 of 4 branches missed.">        if(note == null || park == null)</span>
-<span class="fc" id="L221">            return Response.status(Response.Status.BAD_REQUEST).build();</span>
+<span class="pc bpc" id="L207" title="1 of 4 branches missed.">        if(note == null || park == null)</span>
+<span class="fc" id="L208">            return Response.status(Response.Status.BAD_REQUEST).build();</span>
 
-<span class="pc bpc" id="L223" title="1 of 2 branches missed.">        if(!note.getPIDAsString().equals(pid))</span>
-<span class="nc" id="L224">            return Response.status(Response.Status.NOT_FOUND).build();</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">        if(!note.getPIDAsString().equals(pid))</span>
+<span class="nc" id="L211">            return Response.status(Response.Status.NOT_FOUND).build();</span>
 
-<span class="fc" id="L226">        return Response.status(Response.Status.OK).entity(gson.toJson(note)).build();</span>
+<span class="fc" id="L213">        return Response.status(Response.Status.OK).entity(gson.toJson(note)).build();</span>
     }
 
     @PUT
@@ -231,60 +218,60 @@ import java.util.ArrayList;
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updatePark(String data, @PathParam(&quot;pid&quot;) String pid){
 
-<span class="fc" id="L234">        ParkObj oldPark = GeneralServices.findParkById(pid);</span>
-<span class="fc bfc" id="L235" title="All 2 branches covered.">        if(oldPark == null)</span>
-<span class="fc" id="L236">            return Response.status(Response.Status.NOT_FOUND).build();</span>
+<span class="fc" id="L221">        ParkObj oldPark = GeneralServices.findParkById(pid);</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        if(oldPark == null)</span>
+<span class="fc" id="L223">            return Response.status(Response.Status.NOT_FOUND).build();</span>
 
-<span class="fc" id="L238">        ErrorObj error = new Error(&quot;http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation&quot;, &quot;Your request data didn't pass validation&quot;, Response.Status.BAD_REQUEST.getStatusCode(), &quot;/parks&quot;);</span>
-<span class="fc" id="L239">        JsonObject jsonObject = parser.parse(data).getAsJsonObject();</span>
+<span class="fc" id="L225">        ErrorObj error = new Error(&quot;http://cs.iit.edu/~virgil/cs445/project/api/problems/data-validation&quot;, &quot;Your request data didn't pass validation&quot;, Response.Status.BAD_REQUEST.getStatusCode(), &quot;/parks&quot;);</span>
+<span class="fc" id="L226">        JsonObject jsonObject = parser.parse(data).getAsJsonObject();</span>
 
-<span class="fc" id="L241">        JsonObject locationInfoAsJsonObject = jsonObject.get(&quot;location_info&quot;).getAsJsonObject();</span>
+<span class="fc" id="L228">        JsonObject locationInfoAsJsonObject = jsonObject.get(&quot;location_info&quot;).getAsJsonObject();</span>
         LocationInfoObj location_info;
         try {
-<span class="fc" id="L244">            location_info = localJsonParser.JsonToLocation(locationInfoAsJsonObject);</span>
-<span class="fc" id="L245">        }  catch (NullNameException e) {</span>
-<span class="fc" id="L246">            ((Error) error).setDetail(&quot;Name is required but missing in your request&quot;);</span>
-<span class="fc" id="L247">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L248">        } catch (NullPhoneException e) {</span>
-<span class="fc" id="L249">            ((Error) error).setDetail(&quot;Phone number is required but missing in your request&quot;);</span>
-<span class="fc" id="L250">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L251">        } catch (NullWebException e) {</span>
-<span class="fc" id="L252">            ((Error) error).setDetail(&quot;Website is required but missing in your request&quot;);</span>
-<span class="fc" id="L253">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L254">        } catch (NullGeoException e) {</span>
-<span class="fc" id="L255">            ((Error) error).setDetail(&quot;Geo information is required but missing in your request&quot;);</span>
-<span class="fc" id="L256">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L257">        } catch (NullAddressException e) {</span>
-<span class="fc" id="L258">            ((Error) error).setDetail(&quot;Address is required but missing in your request&quot;);</span>
-<span class="fc" id="L259">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L260">        }</span>
+<span class="fc" id="L231">            location_info = localJsonParser.JsonToLocation(locationInfoAsJsonObject);</span>
+<span class="fc" id="L232">        }  catch (NullNameException e) {</span>
+<span class="fc" id="L233">            ((Error) error).setDetail(&quot;Name is required but missing in your request&quot;);</span>
+<span class="fc" id="L234">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L235">        } catch (NullPhoneException e) {</span>
+<span class="fc" id="L236">            ((Error) error).setDetail(&quot;Phone number is required but missing in your request&quot;);</span>
+<span class="fc" id="L237">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L238">        } catch (NullWebException e) {</span>
+<span class="fc" id="L239">            ((Error) error).setDetail(&quot;Website is required but missing in your request&quot;);</span>
+<span class="fc" id="L240">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L241">        } catch (NullGeoException e) {</span>
+<span class="fc" id="L242">            ((Error) error).setDetail(&quot;Geo information is required but missing in your request&quot;);</span>
+<span class="fc" id="L243">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L244">        } catch (NullAddressException e) {</span>
+<span class="fc" id="L245">            ((Error) error).setDetail(&quot;Address is required but missing in your request&quot;);</span>
+<span class="fc" id="L246">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L247">        }</span>
 
         JsonObject chargeInfoAsJsonObject;
         try{
-<span class="fc" id="L264">            chargeInfoAsJsonObject = jsonObject.get(&quot;payment_info&quot;).getAsJsonObject();</span>
-<span class="fc" id="L265">        }catch (NullPointerException e){</span>
-<span class="fc" id="L266">            ((Error) error).setDetail(&quot;Charge info is required but missing in your request&quot;);</span>
-<span class="fc" id="L267">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L268">        }</span>
+<span class="fc" id="L251">            chargeInfoAsJsonObject = jsonObject.get(&quot;payment_info&quot;).getAsJsonObject();</span>
+<span class="fc" id="L252">        }catch (NullPointerException e){</span>
+<span class="fc" id="L253">            ((Error) error).setDetail(&quot;Charge info is required but missing in your request&quot;);</span>
+<span class="fc" id="L254">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L255">        }</span>
 
         ChargeInfoObj charge_info;
         try {
-<span class="fc" id="L272">            charge_info = localJsonParser.JsonToChargeInfo(chargeInfoAsJsonObject);</span>
-<span class="fc" id="L273">        } catch (InvalidPriceException e) {</span>
-<span class="fc" id="L274">            ((Error) error).setDetail(&quot;All payment data must be a number greater than or equal to zero&quot;);</span>
-<span class="fc" id="L275">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="nc" id="L276">        } catch (NullChargeInfoException e) {</span>
-<span class="nc" id="L277">            ((Error) error).setDetail(&quot;Payment data must be included for MOTORCYCLE, CAR, and RV&quot;);</span>
-<span class="nc" id="L278">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
-<span class="fc" id="L279">        }</span>
+<span class="fc" id="L259">            charge_info = localJsonParser.JsonToChargeInfo(chargeInfoAsJsonObject);</span>
+<span class="fc" id="L260">        } catch (InvalidPriceException e) {</span>
+<span class="fc" id="L261">            ((Error) error).setDetail(&quot;All payment data must be a number greater than or equal to zero&quot;);</span>
+<span class="fc" id="L262">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="nc" id="L263">        } catch (NullChargeInfoException e) {</span>
+<span class="nc" id="L264">            ((Error) error).setDetail(&quot;Payment data must be included for MOTORCYCLE, CAR, and RV&quot;);</span>
+<span class="nc" id="L265">            return Response.status(Response.Status.BAD_REQUEST).entity(gson.toJson(error)).build();</span>
+<span class="fc" id="L266">        }</span>
 
-<span class="fc" id="L281">        ParkObj newPark = new Park(location_info, charge_info);</span>
-<span class="fc" id="L282">        newPark.setPid(oldPark.getPIDAsString());</span>
+<span class="fc" id="L268">        ParkObj newPark = new Park(location_info, charge_info);</span>
+<span class="fc" id="L269">        newPark.setPid(oldPark.getPIDAsString());</span>
 
-<span class="fc" id="L284">        MemoryManager.parks.remove(oldPark);</span>
-<span class="fc" id="L285">        MemoryManager.parks.add(newPark);</span>
+<span class="fc" id="L271">        MemoryManager.parks.remove(oldPark);</span>
+<span class="fc" id="L272">        MemoryManager.parks.add(newPark);</span>
 
-<span class="fc" id="L287">        return Response.status(Response.Status.NO_CONTENT).build();</span>
+<span class="fc" id="L274">        return Response.status(Response.Status.NO_CONTENT).build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

@@ -4,15 +4,13 @@ import com.bjbloemker.api.PaymentInfoObj;
 
 public class PaymentInfo extends PaymentInfoObj{
 
-
     public PaymentInfo(String card, String nameOnCard, String expirationDate, int zip) {
-<span class="fc" id="L9">        super(card, nameOnCard, expirationDate, zip);</span>
-<span class="fc" id="L10">    }</span>
+<span class="fc" id="L8">        super(card, nameOnCard, expirationDate, zip);</span>
+<span class="fc" id="L9">    }</span>
 
     public String getHiddenCard(){
-<span class="fc" id="L13">        String lastFour = card.substring(card.length()-4);</span>
-<span class="fc" id="L14">        return &quot;xxxxxxxxxxx&quot; + lastFour;</span>
-
+<span class="fc" id="L12">        String lastFour = card.substring(card.length()-4);</span>
+<span class="fc" id="L13">        return &quot;xxxxxxxxxxx&quot; + lastFour;</span>
     }
 
 }
