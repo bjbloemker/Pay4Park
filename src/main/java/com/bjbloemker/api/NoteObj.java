@@ -47,10 +47,6 @@ public abstract class NoteObj {
         return text;
     }
 
-    public void setText(String text) {
-        this.text = text;
-    }
-
     public String getPIDAsString() {
         return pid;
     }
