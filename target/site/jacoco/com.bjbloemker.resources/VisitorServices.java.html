@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VisitorServices.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker.resources</a> &gt; <span class="el_source">VisitorServices.java</span></div><h1>VisitorServices.java</h1><pre class="source lang-java linenums">package com.bjbloemker.resources;
+
+import com.bjbloemker.api.NoteObj;
+import com.bjbloemker.api.OrderObj;
+import com.bjbloemker.api.VisitorObj;
+import com.bjbloemker.core.MemoryManager;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="fc" id="L15">public abstract class VisitorServices {</span>
+<span class="fc" id="L16">    private static Gson gson = new Gson();</span>
+
+    protected static VisitorObj findVisitorById(String id){
+<span class="fc bfc" id="L19" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.visitors.size(); i++){</span>
+<span class="fc" id="L20">            VisitorObj visitor = MemoryManager.visitors.get(i);</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">            if(visitor.getVIDAsString().equals(id)){</span>
+<span class="fc" id="L22">                return visitor;</span>
+            }
+        }
+<span class="fc" id="L25">        return null;</span>
+    }
+
+    protected static ArrayList&lt;NoteObj&gt; getAllNotesFromVisitor(String vid){
+<span class="fc" id="L29">        ArrayList&lt;NoteObj&gt; notes = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        for(int i = 0; i &lt; MemoryManager.notes.size(); i++){</span>
+<span class="fc" id="L32">            NoteObj currentNote = MemoryManager.notes.get(i);</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">            if(currentNote.getVIDAsString().equals(vid)){</span>
+<span class="fc" id="L34">                notes.add(currentNote);</span>
+            }
+        }
+<span class="fc" id="L37">        return notes;</span>
+    }
+
+    protected static JsonElement superSimplifyOrders(List&lt;OrderObj&gt; orders){
+<span class="fc" id="L41">        JsonArray output = new JsonArray();</span>
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (OrderObj currentOrder : orders) {</span>
+<span class="fc" id="L44">            JsonObject outputOrderAsJson = new JsonObject();</span>
+
+<span class="fc" id="L46">            String oid = currentOrder.getOIDAsString();</span>
+<span class="fc" id="L47">            String pid = currentOrder.getPIDAsString();</span>
+<span class="fc" id="L48">            String date = currentOrder.getDate();</span>
+
+<span class="fc" id="L50">            outputOrderAsJson.addProperty(&quot;oid&quot;, oid);</span>
+<span class="fc" id="L51">            outputOrderAsJson.addProperty(&quot;pid&quot;, pid);</span>
+<span class="fc" id="L52">            outputOrderAsJson.addProperty(&quot;date&quot;, date);</span>
+
+<span class="fc" id="L54">            output.add(outputOrderAsJson);</span>
+<span class="fc" id="L55">        }</span>
+
+<span class="fc" id="L57">        return output;</span>
+    }
+
+    protected static JsonElement superSimplifyNotes(List&lt;NoteObj&gt; notes){
+<span class="fc" id="L61">        JsonArray output = new JsonArray();</span>
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        for(NoteObj currentNote : notes){</span>
+<span class="fc" id="L64">            JsonObject outputOrderAsJson = new JsonObject();</span>
+
+<span class="fc" id="L66">            String nid = currentNote.getNIDAsString();</span>
+<span class="fc" id="L67">            String pid = currentNote.getPIDAsString();</span>
+<span class="fc" id="L68">            String date = currentNote.getDate();</span>
+<span class="fc" id="L69">            String title = currentNote.getTitle();</span>
+
+<span class="fc" id="L71">            outputOrderAsJson.addProperty(&quot;nid&quot;, nid);</span>
+<span class="fc" id="L72">            outputOrderAsJson.addProperty(&quot;pid&quot;, pid);</span>
+<span class="fc" id="L73">            outputOrderAsJson.addProperty(&quot;date&quot;, date);</span>
+<span class="fc" id="L74">            outputOrderAsJson.addProperty(&quot;title&quot;, title);</span>
+
+<span class="fc" id="L76">            output.add(outputOrderAsJson);</span>
+<span class="fc" id="L77">        }</span>
+
+<span class="fc" id="L79">        return output;</span>
+    }
+
+
+    protected static JsonElement visitorsWithoutProperty(List&lt;VisitorObj&gt; visitors, String property){
+<span class="fc" id="L84">        JsonArray output = new JsonArray();</span>
+
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (VisitorObj currentVisitor : visitors) {</span>
+<span class="fc" id="L87">            JsonObject visitorAsJsonObject = (JsonObject) gson.toJsonTree(currentVisitor);</span>
+<span class="fc" id="L88">            visitorAsJsonObject.remove(property);</span>
+
+<span class="fc" id="L90">            output.add(visitorAsJsonObject);</span>
+<span class="fc" id="L91">        }</span>
+
+<span class="fc" id="L93">        return output;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

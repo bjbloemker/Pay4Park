@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.bjbloemker.resources.JsonParserTest" time="0.06" tests="26" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.bjbloemker.resources.SearchResourceTest" time="0" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="gopherProxySet" value="false"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>
@@ -62,30 +62,6 @@
     <property name="java.class.version" value="52.0"/>
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
   </properties>
-  <testcase name="jsonToVehicleBadVehicleCreationsMissingPlate" classname="com.bjbloemker.resources.JsonParserTest" time="0.004"/>
-  <testcase name="jsonToVehicleBadVehicleCreationsMissingstate" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
-  <testcase name="jsonToVisitorMissingEmail" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
-  <testcase name="jsonToLocationNullRegion" classname="com.bjbloemker.resources.JsonParserTest" time="0"/>
-  <testcase name="jsonToPaymentInfoMissingExpiration" classname="com.bjbloemker.resources.JsonParserTest" time="0.002"/>
-  <testcase name="jsonToVisitorMissingName" classname="com.bjbloemker.resources.JsonParserTest" time="0"/>
-  <testcase name="jsonToChargeInfoBadPrices" classname="com.bjbloemker.resources.JsonParserTest" time="0.004"/>
-  <testcase name="jsonToVehicleBadVehicleCreationsMissingType" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
-  <testcase name="jsonToGeoCords" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
-  <testcase name="jsonToPaymentInfoMissingZip" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
-  <testcase name="jsonToLocation" classname="com.bjbloemker.resources.JsonParserTest" time="0.002"/>
-  <testcase name="jsonToVehicle" classname="com.bjbloemker.resources.JsonParserTest" time="0"/>
-  <testcase name="jsonToVisitor" classname="com.bjbloemker.resources.JsonParserTest" time="0"/>
-  <testcase name="jsonToPaymentInfoMissingCard" classname="com.bjbloemker.resources.JsonParserTest" time="0.002"/>
-  <testcase name="jsonToPaymentInfoMissingName" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
-  <testcase name="jsonToVisitorInvalidEmails" classname="com.bjbloemker.resources.JsonParserTest" time="0.003"/>
-  <testcase name="jsonToLocationNullAddr" classname="com.bjbloemker.resources.JsonParserTest" time="0.002"/>
-  <testcase name="jsonToLocationNullName" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
-  <testcase name="jsonToChargeInfo" classname="com.bjbloemker.resources.JsonParserTest" time="0"/>
-  <testcase name="jsonToPaymentInfo" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
-  <testcase name="jsonToLocationNullPhone" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
-  <testcase name="jsonToPaymentInfoInvalidCard" classname="com.bjbloemker.resources.JsonParserTest" time="0"/>
-  <testcase name="jsonToLocationNullGeo" classname="com.bjbloemker.resources.JsonParserTest" time="0.004"/>
-  <testcase name="jsonToLocationNullWeb" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
-  <testcase name="jsonToGeoCordsNull1" classname="com.bjbloemker.resources.JsonParserTest" time="0"/>
-  <testcase name="jsonToVehicleBadVehicleType" classname="com.bjbloemker.resources.JsonParserTest" time="0.001"/>
+  <testcase name="searchNullKey" classname="com.bjbloemker.resources.SearchResourceTest" time="0"/>
+  <testcase name="searchSomeStuff" classname="com.bjbloemker.resources.SearchResourceTest" time="0"/>
 </testsuite>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportServices.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker.resources</a> &gt; <span class="el_source">ReportServices.java</span></div><h1>ReportServices.java</h1><pre class="source lang-java linenums">package com.bjbloemker.resources;
+
+import com.bjbloemker.api.OrderObj;
+import com.bjbloemker.api.ParkObj;
+import com.bjbloemker.core.MemoryManager;
+
+<span class="fc" id="L7">public abstract class ReportServices {</span>
+    protected String convertSimpleDateToPrettyDate(String simpleDate){
+<span class="fc" id="L9">        String yyyy = simpleDate.substring(0,4);</span>
+<span class="fc" id="L10">        String mm = simpleDate.substring(4,6);</span>
+<span class="fc" id="L11">        String dd = simpleDate.substring(6,8);</span>
+
+<span class="fc" id="L13">        return yyyy + &quot;-&quot; + mm + &quot;-&quot; + dd;</span>
+    }
+
+
+
+
+    protected static int getOrderCountByParkId(String pid, String startDate, String endDate){
+<span class="fc" id="L20">        ParkObj park = GeneralServices.findParkById(pid);</span>
+<span class="pc bpc" id="L21" title="1 of 2 branches missed.">        if(park == null)</span>
+<span class="nc" id="L22">            return -1;</span>
+<span class="fc" id="L23">        int count = 0;</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        for(OrderObj order : MemoryManager.orders){</span>
+<span class="fc" id="L25">            String orderDate = order.getDate().replace(&quot;-&quot;,&quot;&quot;);//formating the same</span>
+<span class="pc bpc" id="L26" title="1 of 6 branches missed.">            if(startDate.compareTo(orderDate) &lt;= 0 &amp;&amp; endDate.compareTo(orderDate) &gt; 0 &amp;&amp; order.getPIDAsString().equals(pid)){</span>
+<span class="fc" id="L27">                count++;</span>
+            }
+<span class="fc" id="L29">        }</span>
+<span class="fc" id="L30">        return count;</span>
+    }
+
+    protected static double getRevenueByParkId(String pid, String startDate, String endDate){
+<span class="fc" id="L34">        ParkObj park = GeneralServices.findParkById(pid);</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">        if(park == null)</span>
+<span class="nc" id="L36">            return -1;</span>
+<span class="fc" id="L37">        double sum = 0;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        for(OrderObj order : MemoryManager.orders){</span>
+<span class="fc" id="L39">            String orderDate = order.getDate().replace(&quot;-&quot;,&quot;&quot;);//formating the same</span>
+<span class="pc bpc" id="L40" title="1 of 6 branches missed.">            if(startDate.compareTo(orderDate) &lt;= 0 &amp;&amp; endDate.compareTo(orderDate) &gt; 0 &amp;&amp; order.getPIDAsString().equals(pid)){</span>
+<span class="fc" id="L41">                sum += GeneralServices.calculateCost(order.getVehicle(), park);</span>
+            }
+<span class="fc" id="L43">        }</span>
+<span class="fc" id="L44">        return sum;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

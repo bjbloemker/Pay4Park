@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SearchResource.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Pay4Park</a> &gt; <a href="index.source.html" class="el_package">com.bjbloemker.resources</a> &gt; <span class="el_source">SearchResource.java</span></div><h1>SearchResource.java</h1><pre class="source lang-java linenums">package com.bjbloemker.resources;
+
+import com.bjbloemker.api.NoteObj;
+import com.bjbloemker.api.OrderObj;
+import com.bjbloemker.api.ParkObj;
+import com.bjbloemker.api.VisitorObj;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
+import java.util.ArrayList;
+
+
+@Path(&quot;/parkpay/search&quot;)
+@Produces(&quot;application/json&quot;)
+<span class="fc" id="L21">public class SearchResource {</span>
+<span class="fc" id="L22">    private static Gson gson = new Gson();</span>
+
+    private static final String BEGINING_OF_TIME = &quot;10000101&quot;;
+    private static final String END_OF_TIME = &quot;99991231&quot;;
+
+    @GET
+    public Response search(@QueryParam(&quot;key&quot;) String key, @QueryParam(&quot;start_date&quot;) String startDate, @QueryParam(&quot;end_date&quot;) String endDate){
+
+<span class="pc bpc" id="L30" title="1 of 4 branches missed.">        if(key == null || key.equals(&quot;&quot;))</span>
+<span class="fc" id="L31">            return Response.status(Response.Status.OK).build();</span>
+
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        if(startDate == null)</span>
+<span class="fc" id="L34">            startDate = BEGINING_OF_TIME;</span>
+
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if(endDate == null)</span>
+<span class="fc" id="L37">            endDate = END_OF_TIME;</span>
+
+<span class="fc" id="L39">        ArrayList&lt;ParkObj&gt; parks = GeneralServices.searchParks(key);</span>
+<span class="fc" id="L40">        ArrayList&lt;OrderObj&gt; orders = GeneralServices.searchOrder(key, startDate, endDate);</span>
+<span class="fc" id="L41">        ArrayList&lt;VisitorObj&gt; visitors = GeneralServices.searchVisitors(key);</span>
+<span class="fc" id="L42">        ArrayList&lt;NoteObj&gt; notes = GeneralServices.searchNotes(key, startDate, endDate);</span>
+
+<span class="fc" id="L44">        JsonObject searchResults = new JsonObject();</span>
+
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if(parks.size() != 0){</span>
+<span class="nc" id="L47">            JsonElement output = GeneralServices.parksWithoutProperty(parks,&quot;payment_info&quot;);</span>
+<span class="nc" id="L48">            searchResults.add(&quot;parks&quot;, output);</span>
+        }
+
+<span class="pc bpc" id="L51" title="1 of 2 branches missed.">        if(orders.size() != 0){</span>
+<span class="nc" id="L52">            JsonElement output = GeneralServices.simplifyOrders(orders);</span>
+<span class="nc" id="L53">            searchResults.add(&quot;orders&quot;,output);</span>
+        }
+
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">        if(visitors.size() != 0){</span>
+<span class="nc" id="L57">            JsonElement output = GeneralServices.simplifyVisitors(visitors);</span>
+<span class="nc" id="L58">            searchResults.add(&quot;visitors&quot;,output);</span>
+        }
+
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if(notes.size() != 0){</span>
+<span class="nc" id="L62">            com.google.gson.JsonParser parser = new com.google.gson.JsonParser();</span>
+<span class="nc" id="L63">            JsonElement output = parser.parse(gson.toJson(notes));</span>
+<span class="nc" id="L64">            searchResults.add(&quot;notes&quot;, output);</span>
+        }
+
+<span class="pc bpc" id="L67" title="4 of 8 branches missed.">        if(parks.size() == 0 &amp;&amp; orders.size() == 0 &amp;&amp; visitors.size() == 0 &amp;&amp; notes.size() == 0)</span>
+<span class="fc" id="L68">            return Response.status(Response.Status.OK).build();</span>
+
+
+<span class="nc" id="L71">        return Response.status(Response.Status.OK).entity(gson.toJson(searchResults)).build();</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.2.201808211720</span></div></body></html>

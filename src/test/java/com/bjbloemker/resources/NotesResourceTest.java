@@ -85,9 +85,6 @@ class NotesResourceTest extends DataForTesting{
         ParkResource.createNoteWithPark(toSend, pid);
     }
 
-
-
-
     @AfterAll
     static void cleanUp(){
         MemoryManager.parks.clear();
